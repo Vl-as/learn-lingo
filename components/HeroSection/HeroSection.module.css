@@ -1,0 +1,84 @@
+.heroInner {
+  display: flex;
+  gap: 24px;
+}
+
+.content {
+  padding: 98px 64px;
+  flex: 1;
+  background-color: #f8f8f8;
+  border-radius: 30px;
+}
+
+.title {
+  margin-bottom: 32px;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.16667;
+  letter-spacing: -0.02em;
+}
+
+.accent {
+  position: relative;
+  padding: 0 7px;
+}
+
+.accentRectangle {
+  left: 0;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-45%);
+  position: absolute;
+  display: block;
+  height: 40px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #cbded3;
+}
+
+.accentText {
+  position: relative;
+  z-index: 2;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.04em;
+}
+
+.text {
+  margin-bottom: 64px;
+  max-width: 470px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  letter-spacing: -0.02em;
+}
+
+.button {
+  max-width: 267px;
+}
+
+.mediaBox {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 30px;
+  width: 568px;
+  min-height: 530px;
+  background-color: #cbded3;
+  overflow: hidden;
+}
+
+.girlImage {
+  position: absolute;
+  bottom: 111px;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+}
+
+.computerImage {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+}

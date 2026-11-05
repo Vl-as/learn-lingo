@@ -1,0 +1,9 @@
+.page {
+  padding: 88px 0 32px;
+  flex: 1;
+  width: 100%;
+}
+
+.hero {
+  margin-bottom: 24px;
+}
