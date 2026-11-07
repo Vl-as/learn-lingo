@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import Container from '../Container/Container';
 import css from './HeroSection.module.css';
-import Button from '../Button/Button';
 import clsx from 'clsx';
+import LinkButton from '../LinkButton/LinkButton';
 
 interface HeroSectionProps {
   className?: string;
 }
 
-function HeroSection({ className }: HeroSectionProps) {
+async function HeroSection({ className }: HeroSectionProps) {
   return (
     <section className={clsx(css.hero, className)}>
       <Container className={css.heroInner}>
@@ -26,7 +26,9 @@ function HeroSection({ className }: HeroSectionProps) {
             Elevate your language proficiency to new heights by connecting with
             highly qualified and experienced tutors.
           </p>
-          <Button className={css.button}>Get started</Button>
+          <LinkButton href="/teachers" className={css.button}>
+            Get started
+          </LinkButton>
         </div>
         <div className={css.mediaBox}>
           <Image

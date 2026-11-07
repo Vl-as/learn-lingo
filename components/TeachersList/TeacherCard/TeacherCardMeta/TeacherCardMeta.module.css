@@ -1,0 +1,45 @@
+.list {
+  display: flex;
+  align-items: center;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #121417;
+  padding-right: 16px;
+}
+
+.item:not(:first-child) {
+  margin-left: 16px;
+}
+
+.item:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  content: '';
+  display: block;
+  width: 1px;
+  height: 16px;
+  background-color: rgba(18, 20, 23, 0.2);
+}
+
+.iconBook {
+  stroke: currentColor;
+  fill: transparent;
+}
+
+.iconStar {
+  color: #ffc531;
+}
+
+.price {
+  color: #38cd3e;
+}

@@ -22,9 +22,8 @@
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.8" d="M17.5 3.5h1.4c1.96 0 2.94 0 3.689 0.381 0.659 0.336 1.194 0.871 1.53 1.53 0.381 0.749 0.381 1.729 0.381 3.689v9.8c0 1.96 0 2.94-0.381 3.689-0.336 0.659-0.871 1.194-1.53 1.53-0.749 0.381-1.729 0.381-3.689 0.381h-1.4"></path>
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.8" d="M11.667 19.833l5.833-5.833-5.833-5.833M17.5 14h-14"></path>
 </symbol>
-<symbol id="icon-star" viewBox="0 0 30 28">
-<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.8" d="M11.667 19.833l5.833-5.833-5.833-5.833M17.5 14h-14"></path>
-</symbol>
+<symbol id="icon-star" viewBox="0 0 32 32"><path fill='currentColor' d="M15.12 1.68a1 1 0 0 1 1.77 0l3.77 7.15a1 1 0 0 0 .72.52l7.97 1.38a1 1 0 0 1 .55 1.69l-5.64 5.8a1 1 0 0 0-.28.84l1.16 8a1 1 0 0 1-1.44 1.05l-7.26-3.57a1 1 0 0 0-.88 0L8.3 28.1a1 1 0 0 1-1.43-1.04l1.15-8.01a1 1 0 0 0-.27-.84l-5.64-5.8a1 1 0 0 1 .54-1.69l7.98-1.38a1 1 0 0 0 .71-.52z"/></symbol>
+
 <symbol id="icon-ukraine" viewBox="0 0 28 28">
 <path fill="#ffda44" style="fill: var(--color2, #ffda44)" d="M14 28c7.732 0 14-6.268 14-14s-6.268-14-14-14c-7.732 0-14 6.268-14 14s6.268 14 14 14z"></path>
 <path fill="#338af3" style="fill: var(--color3, #338af3)" d="M0 14c0-7.732 6.268-14 14-14s14 6.268 14 14z"></path>
