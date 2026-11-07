@@ -1,9 +1,13 @@
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border: none;
   border-radius: 12px;
-  padding: 0 16px;
+  padding: 0 12px;
   min-height: 60px;
-  width: 100%;
+  width: fit-content;
 
   background-color: #9fbaae;
   font-weight: 700;

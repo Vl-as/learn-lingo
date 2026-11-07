@@ -54,7 +54,7 @@
 }
 
 .button {
-  max-width: 267px;
+  min-width: 267px;
 }
 
 .mediaBox {

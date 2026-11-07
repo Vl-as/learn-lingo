@@ -1,0 +1,56 @@
+.header {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 100%;
+  min-height: 48px;
+}
+
+.headerInner {
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #121417;
+}
+
+.navbar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.logIn.logIn {
+  background-color: transparent;
+  min-height: 48px;
+}
+
+.logInIcon.logInIcon {
+  fill: transparent;
+  stroke: #9fbaae;
+}
+
+.registration.registration {
+  min-width: 166px;
+  background-color: #121417;
+  color: #fff;
+  min-height: 48px;
+}

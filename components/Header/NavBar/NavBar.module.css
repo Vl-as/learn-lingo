@@ -1,0 +1,24 @@
+.list {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.link {
+  position: relative;
+  padding: 10px 0;
+  line-height: 1.25;
+  color: #121417;
+
+  transition: color 0.3s ease-in-out;
+}
+
+.link:focus-visible {
+  color: #cbded3;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: #cbded3;
+  }
+}
