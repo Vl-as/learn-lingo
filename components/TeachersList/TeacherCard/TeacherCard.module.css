@@ -7,6 +7,10 @@
   background-color: #fff;
 }
 
+.content {
+  flex: 1;
+}
+
 .header {
   margin-bottom: 32px;
   display: flex;
@@ -71,10 +75,60 @@
   margin-bottom: 16px;
 }
 
+.moreButton {
+  margin-bottom: 32px;
+  border: none;
+  background-color: transparent;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #121417;
+
+  transition: color 0.3s ease-in-out;
+}
+
+.moreButton:focus-visible {
+  color: #9fbaae;
+}
+
 .extraInformation {
   margin-bottom: 32px;
 }
 
 .description {
   margin-bottom: 32px;
+}
+
+.bookButton {
+  margin-top: 32px;
+  min-width: 232px;
+}
+
+.buttonFavorite {
+  margin-left: auto;
+  border: none;
+  background-color: transparent;
+}
+
+.iconHeart {
+  fill: transparent;
+  stroke: #121417;
+  transition: stroke 0.3s ease-in-out;
+}
+
+.buttonFavorite:focus-visible .iconHeart {
+  stroke: #8a8a89;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .moreButton:hover {
+    color: #9fbaae;
+  }
+
+  .buttonFavorite:hover .iconHeart {
+    stroke: #8a8a89;
+  }
 }

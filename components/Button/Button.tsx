@@ -5,10 +5,11 @@ import clsx from 'clsx';
 function Button({
   children,
   className,
+  type = 'button',
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button className={clsx(css.button, className)} {...props}>
+    <button type={type} className={clsx(css.button, className)} {...props}>
       {children}
     </button>
   );

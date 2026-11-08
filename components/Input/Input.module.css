@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input {
+  width: 100%;
+  min-height: 54px;
+
+  border: 1px solid rgba(18, 20, 23, 0.1);
+  border-radius: 12px;
+  padding: 0 18px;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  color: #121417;
+
+  outline: none;
+
+  transition: border-color 0.3s ease-in-out;
+}
+
+.errorInput {
+  border-color: #e0a39a;
+  color: #e0a39a;
+}
+
+.input:not(.errorInput):focus-visible {
+  border-color: #9fbaae;
+}
+
+.error {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28571;
+  color: #e0a39a;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .input:not(.errorInput):hover {
+    border-color: #9fbaae;
+  }
+}

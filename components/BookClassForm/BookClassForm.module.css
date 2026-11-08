@@ -1,0 +1,107 @@
+.container {
+  max-width: 472px;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.text {
+  margin-bottom: 20px;
+  line-height: 1.375;
+  color: rgba(18, 20, 23, 0.8);
+}
+
+.teacherInfo {
+  margin-bottom: 40px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.avatarFrame {
+  flex-shrink: 0;
+  width: 44px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.avatar {
+  object-fit: cover;
+}
+
+.label {
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: #8a8a89;
+}
+
+.teacherName {
+  font-weight: 500;
+  color: #121417;
+}
+
+.question {
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.33333;
+  color: #121417;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  text-align: center;
+  color: #121417;
+}
+
+.radio {
+  width: 24px;
+  height: 24px;
+  accent-color: #37965d;
+}
+
+.radioButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 40px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.button {
+  width: 100%;
+}
+
+.inputField:not(:last-of-type) {
+  margin-bottom: 18px;
+}
+
+.inputField:last-of-type {
+  margin-bottom: 40px;
+}
+
+.error {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28571;
+  color: #e0a39a;
+}
