@@ -1,0 +1,39 @@
+.header {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.avatarFrame {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border: 1px solid #9fbaae;
+  border-radius: 50%;
+}
+
+.name {
+  margin-bottom: 2px;
+  font-weight: 500;
+  color: #8a8a89;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28571;
+}
+
+.iconStar {
+  color: #ffc531;
+}
+
+.comment {
+  font-weight: 500;
+}

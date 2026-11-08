@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header/Header';
+import TanstackProvider from '@/components/TanstackPropider/TanstackPropider';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -18,8 +19,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={roboto.variable}>
       <body>
-        <Header />
-        {children}
+        <TanstackProvider>
+          <Header />
+          {children}
+        </TanstackProvider>
       </body>
     </html>
   );

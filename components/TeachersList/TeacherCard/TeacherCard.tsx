@@ -2,6 +2,8 @@ import { Teacher } from '@/types/teacher';
 import css from './TeacherCard.module.css';
 import Image from 'next/image';
 import TeacherCardMeta from './TeacherCardMeta/TeacherCardMeta';
+import TeacherCardLevels from './TeacherCardLevels/TeacherCardLevels';
+import TeacherCardReviews from './TeacherCardReviews/TeacherCardReviews';
 
 interface TeacherCardProps {
   teacher: Teacher;
@@ -9,7 +11,7 @@ interface TeacherCardProps {
 
 function TeacherCard({ teacher }: TeacherCardProps) {
   return (
-    <li className={css.card}>
+    <li className={css.card} data-teacher-card>
       <div className={css.avatarFrame}>
         <Image
           src={teacher.avatar_url}
@@ -48,6 +50,11 @@ function TeacherCard({ teacher }: TeacherCardProps) {
             {teacher.conditions}
           </p>
         </div>
+        <div className={css.extraInformation}>
+          <p className={css.description}>{teacher.experience}</p>
+          <TeacherCardReviews reviews={teacher.reviews} />
+        </div>
+        <TeacherCardLevels levels={teacher.levels} />
       </div>
     </li>
   );

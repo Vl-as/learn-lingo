@@ -14,10 +14,11 @@
 }
 
 .avatarFrame {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #fbe9ba;
+  border: 3px solid #9fbaae;
   border-radius: 100px;
   width: 120px;
   aspect-ratio: 1 / 1;
@@ -53,7 +54,7 @@
   line-height: 1.5;
 }
 
-.text:not(last-child) {
+.text:not(:last-child) {
   margin-bottom: 8px;
 }
 
@@ -64,4 +65,16 @@
 .languages {
   text-decoration: underline;
   text-decoration-skip-ink: none;
+}
+
+.details {
+  margin-bottom: 16px;
+}
+
+.extraInformation {
+  margin-bottom: 32px;
+}
+
+.description {
+  margin-bottom: 32px;
 }

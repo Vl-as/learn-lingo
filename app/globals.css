@@ -16,6 +16,7 @@ body {
   flex-direction: column;
   font-family: var(--font-roboto);
   color: #121417;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

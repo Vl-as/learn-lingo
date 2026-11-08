@@ -1,0 +1,20 @@
+.list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(18, 20, 23, 0.2);
+  border-radius: 35px;
+  padding: 0 12px;
+  min-height: 32px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14286;
+}
