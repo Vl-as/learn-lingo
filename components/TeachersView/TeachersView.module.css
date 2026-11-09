@@ -1,0 +1,13 @@
+.list {
+  margin-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.filters {
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}

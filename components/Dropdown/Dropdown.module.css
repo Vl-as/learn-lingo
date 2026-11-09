@@ -1,0 +1,77 @@
+.label {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28571;
+  color: #8a8a89;
+}
+
+.dropdown {
+  position: relative;
+  max-width: fit-content;
+}
+
+.mainField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  border-radius: 14px;
+  padding: 0 33px 0 18px;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11111;
+  color: rgba(18, 20, 23, 0.2);
+
+  border: none;
+  background-color: #fff;
+}
+
+.mainField.chosen {
+  color: #121417;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+  fill: none;
+  stroke: #121417;
+}
+
+.icon.reverse {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.list {
+  position: absolute;
+  left: 0;
+  top: 52px;
+  width: 100%;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.option {
+  border: none;
+  background-color: transparent;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11111;
+  color: rgba(18, 20, 23, 0.2);
+
+  transition: color 0.3s ease-in-out;
+}
+
+.option.chosen {
+  color: #121417;
+}

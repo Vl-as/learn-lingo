@@ -1,12 +1,12 @@
+import TeachersView from '@/components/TeachersView/TeachersView';
 import css from './CatalogPage.module.css';
 import Container from '@/components/Container/Container';
-import TeachersList from '@/components/TeachersList/TeachersList';
 
 function CatalogPage() {
   return (
     <main className={css.page}>
       <Container className={css.container}>
-        <TeachersList />
+        <TeachersView />
       </Container>
     </main>
   );
