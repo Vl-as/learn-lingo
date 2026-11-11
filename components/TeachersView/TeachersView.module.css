@@ -11,3 +11,16 @@
   align-items: center;
   gap: 20px;
 }
+
+.languageFilter {
+  min-width: 221px;
+}
+
+.levelFilter {
+  min-width: 198px;
+  width: 198px;
+}
+
+.priceFilter {
+  min-width: 124px;
+}

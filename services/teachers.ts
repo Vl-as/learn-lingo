@@ -1,44 +1,37 @@
 import { db } from '@/lib/firebase';
 import { Teacher } from '@/types/teacher';
 import {
-  get,
-  limitToFirst,
-  orderByKey,
+  collection,
+  getDocs,
+  limit,
+  orderBy,
   query,
-  ref,
+  QueryDocumentSnapshot,
+  DocumentData,
   startAfter,
-} from 'firebase/database';
+} from 'firebase/firestore';
 
 const PAGE_SIZE = 4;
 
-export async function fetchTeachers(cursor?: string | null) {
+export async function fetchTeachers(
+  cursor?: QueryDocumentSnapshot<DocumentData> | null
+) {
+  const teachersRef = collection(db, 'teachers');
+
   const q = cursor
-    ? query(
-        ref(db, 'teachers'),
-        orderByKey(),
-        startAfter(cursor),
-        limitToFirst(PAGE_SIZE)
-      )
-    : query(ref(db, 'teachers'), orderByKey(), limitToFirst(PAGE_SIZE));
+    ? query(teachersRef, orderBy('name'), startAfter(cursor), limit(PAGE_SIZE))
+    : query(teachersRef, orderBy('name'), limit(PAGE_SIZE));
 
-  const snapshot = await get(q);
+  const snapshot = await getDocs(q);
 
-  if (!snapshot.exists()) {
-    return {
-      teachers: [],
-      nextCursor: null,
-      hasMore: false,
-    };
-  }
-
-  const teachers = Object.entries(snapshot.val()).map(([id, teacher]) => ({
-    id,
-    ...(teacher as Omit<Teacher, 'id'>),
+  const teachers = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...(doc.data() as Omit<Teacher, 'id'>),
   }));
 
   return {
     teachers,
-    nextCursor: teachers.at(-1)?.id ?? null,
-    hasMore: teachers.length === PAGE_SIZE,
+    nextCursor: snapshot.docs.at(-1) ?? null,
+    hasMore: snapshot.docs.length === PAGE_SIZE,
   };
 }

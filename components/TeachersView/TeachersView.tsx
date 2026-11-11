@@ -6,6 +6,7 @@ import TeachersList from '../TeachersList/TeachersList';
 import css from './TeachersView.module.css';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import TeacherCardSkeleton from '../TeachersList/TeacherCardSkeleton/TeacherCardSkeleton';
+import { QueryDocumentSnapshot } from 'firebase/firestore';
 
 const languages: string[] = [
   'French',
@@ -35,7 +36,7 @@ function TeachersView() {
   } = useInfiniteQuery({
     queryKey: ['teachers'],
     queryFn: ({ pageParam }) => fetchTeachers(pageParam),
-    initialPageParam: null as string | null,
+    initialPageParam: null as QueryDocumentSnapshot | null,
     getNextPageParam: lastPage =>
       lastPage.hasMore ? lastPage.nextCursor : undefined,
   });
@@ -50,6 +51,7 @@ function TeachersView() {
             list={languages}
             initialValue="Language"
             label="Languages"
+            className={css.languageFilter}
           />
         </li>
         <li>
@@ -57,6 +59,7 @@ function TeachersView() {
             list={levels}
             initialValue="Level"
             label="Level of knowledge"
+            className={css.levelFilter}
           />
         </li>
         <li>
@@ -65,6 +68,7 @@ function TeachersView() {
             initialValue="Price"
             label="Price"
             symbol="$"
+            className={css.priceFilter}
           />
         </li>
       </ul>

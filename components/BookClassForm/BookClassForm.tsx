@@ -63,6 +63,7 @@ function BookClassForm({ avatar, fullName }: BookClassFormProps) {
             alt={`${fullName} avatar`}
             width={44}
             height={44}
+            priority
           />
         </div>
         <div>

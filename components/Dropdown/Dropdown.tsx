@@ -23,19 +23,61 @@ function Dropdown({
   const [placeholder, setPlaceholder] = useState(initialValue);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement | null>(null);
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
 
   const toggleDropdown = () => {
     setIsOpen(prev => !prev);
   };
 
-  const handleClick = (value: string) => {
+  const handleClick = (value: string, index: number) => {
     setPlaceholder(value);
     setIsOpen(false);
+    setHighlightedIndex(index);
   };
 
   const labelClick = () => {
     if (dropdownRef.current) dropdownRef.current.focus();
     setIsOpen(true);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+
+        if (!isOpen) {
+          setIsOpen(true);
+        } else {
+          setHighlightedIndex(prev => (prev < list.length - 1 ? prev + 1 : 0));
+        }
+        break;
+
+      case 'ArrowUp':
+        e.preventDefault();
+
+        if (!isOpen) {
+          setIsOpen(true);
+        } else {
+          setHighlightedIndex(prev => (prev > 0 ? prev - 1 : list.length - 1));
+        }
+        break;
+
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+
+        if (!isOpen) {
+          setIsOpen(true);
+        } else {
+          setPlaceholder(list[highlightedIndex]);
+          setIsOpen(false);
+        }
+        break;
+
+      case 'Escape':
+        setIsOpen(false);
+        break;
+    }
   };
 
   useEffect(() => {
@@ -46,16 +88,11 @@ function Dropdown({
       )
         setIsOpen(false);
     };
-    const handlerKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsOpen(false);
-    };
 
     document.addEventListener('click', handleClickBackdrop);
-    document.addEventListener('keydown', handlerKeyDown);
 
     return () => {
       document.removeEventListener('click', handleClickBackdrop);
-      document.removeEventListener('keydown', handlerKeyDown);
     };
   });
 
@@ -69,14 +106,18 @@ function Dropdown({
           ref={dropdownRef}
           className={clsx(
             css.mainField,
-            placeholder !== initialValue && css.chosen
+            placeholder !== initialValue && css.chosen,
+            isOpen && css.isOpen
           )}
           onClick={toggleDropdown}
+          onKeyDown={handleKeyDown}
           type="button"
         >
-          {symbol && placeholder !== initialValue
-            ? `${placeholder} ${symbol}`
-            : placeholder}
+          <span>
+            {symbol && placeholder !== initialValue
+              ? `${placeholder} ${symbol}`
+              : placeholder}
+          </span>
           <Icon
             width={20}
             height={20}
@@ -91,9 +132,10 @@ function Dropdown({
                 <button
                   className={clsx(
                     css.option,
-                    placeholder === value && css.chosen
+                    placeholder === value && css.chosen,
+                    highlightedIndex === index && css.focus
                   )}
-                  onClick={() => handleClick(value)}
+                  onClick={() => handleClick(value, index)}
                   type="button"
                 >
                   {value}
