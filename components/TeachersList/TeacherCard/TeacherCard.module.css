@@ -75,7 +75,7 @@
   margin-bottom: 16px;
 }
 
-.moreButton {
+.additionalInfoButton {
   margin-bottom: 32px;
   border: none;
   background-color: transparent;
@@ -90,7 +90,7 @@
   transition: color 0.3s ease-in-out;
 }
 
-.moreButton:focus-visible {
+.additionalInfoButton:focus-visible {
   color: #9fbaae;
 }
 
@@ -124,7 +124,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .moreButton:hover {
+  .additionalInfoButton:hover {
     color: #9fbaae;
   }
 

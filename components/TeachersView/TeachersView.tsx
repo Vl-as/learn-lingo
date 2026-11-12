@@ -6,7 +6,10 @@ import TeachersList from '../TeachersList/TeachersList';
 import css from './TeachersView.module.css';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import TeacherCardSkeleton from '../TeachersList/TeacherCardSkeleton/TeacherCardSkeleton';
-import { QueryDocumentSnapshot } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Icon from '../Icon/Icon';
+import { Filters } from '@/types/filters';
 
 const languages: string[] = [
   'French',
@@ -14,6 +17,8 @@ const languages: string[] = [
   'German',
   'Ukrainian',
   'Polish',
+  'Vietnamese',
+  'Mandarin Chinese',
 ];
 
 const levels: string[] = [
@@ -25,7 +30,43 @@ const levels: string[] = [
 
 const prices: string[] = ['10', '20', '30', '40'];
 
-function TeachersView() {
+interface TeachersViewProps {
+  selectedFilters: Filters;
+}
+
+function TeachersView({ selectedFilters }: TeachersViewProps) {
+  const [filters, setFilters] = useState(selectedFilters);
+  const router = useRouter();
+
+  const changeFilters = (value: string, key: string) => {
+    setFilters(prev => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      language: '',
+      level: '',
+      price: '',
+    });
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      }
+    });
+
+    router.replace(`/teachers?${params.toString()}`, {
+      scroll: false,
+    });
+  }, [filters, router]);
+
   const {
     data,
     isLoading,
@@ -34,50 +75,76 @@ function TeachersView() {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['teachers'],
-    queryFn: ({ pageParam }) => fetchTeachers(pageParam),
-    initialPageParam: null as QueryDocumentSnapshot | null,
-    getNextPageParam: lastPage =>
-      lastPage.hasMore ? lastPage.nextCursor : undefined,
+    queryKey: ['teachers', filters],
+    queryFn: ({ pageParam = 0 }) => fetchTeachers(pageParam, filters),
+    initialPageParam: 0,
+    getNextPageParam: lastPage => lastPage.nextPage,
   });
 
   const teachers = data?.pages.flatMap(page => page.teachers) ?? [];
+  const isFiltered = Object.values(filters).some(value => value !== '');
 
   return (
     <>
-      <ul className={css.filters}>
-        <li>
-          <Dropdown
-            list={languages}
-            initialValue="Language"
-            label="Languages"
-            className={css.languageFilter}
-          />
-        </li>
-        <li>
-          <Dropdown
-            list={levels}
-            initialValue="Level"
-            label="Level of knowledge"
-            className={css.levelFilter}
-          />
-        </li>
-        <li>
-          <Dropdown
-            list={prices}
-            initialValue="Price"
-            label="Price"
-            symbol="$"
-            className={css.priceFilter}
-          />
-        </li>
-      </ul>
+      <div className={css.filtersWrapper}>
+        <ul className={css.filters}>
+          <li>
+            <Dropdown
+              list={languages}
+              initialValue={'Language'}
+              label="Languages"
+              className={css.languageFilter}
+              onChange={changeFilters}
+              name={'language'}
+              filters={filters}
+            />
+          </li>
+          <li>
+            <Dropdown
+              list={levels}
+              initialValue="Level"
+              label="Level of knowledge"
+              className={css.levelFilter}
+              onChange={changeFilters}
+              name={'level'}
+              filters={filters}
+            />
+          </li>
+          <li>
+            <Dropdown
+              list={prices}
+              initialValue="Price"
+              label="Price"
+              symbol="$"
+              className={css.priceFilter}
+              onChange={changeFilters}
+              name={'price'}
+              filters={filters}
+            />
+          </li>
+        </ul>
+        {isFiltered && (
+          <button
+            className={css.clearFilters}
+            type="button"
+            onClick={clearFilters}
+          >
+            <Icon
+              className={css.iconCross}
+              name="cross"
+              width={20}
+              height={20}
+            />
+          </button>
+        )}
+      </div>
       {!isError && teachers.length > 0 && (
         <TeachersList
           hasNextPage={hasNextPage}
           onLoadMore={fetchNextPage}
           teachers={teachers}
           isFetchingNextPage={isFetchingNextPage}
+          chosenLevel={filters.level}
         />
       )}
       {isLoading && (

@@ -18,3 +18,8 @@
   font-size: 14px;
   line-height: 1.14286;
 }
+
+.level.chosenLevel {
+  border-color: #9fbaae;
+  background-color: #9fbaae;
+}

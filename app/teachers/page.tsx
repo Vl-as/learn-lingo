@@ -1,14 +1,19 @@
-import TeachersView from '@/components/TeachersView/TeachersView';
-import css from './CatalogPage.module.css';
-import Container from '@/components/Container/Container';
+import { Suspense } from 'react';
+import CatalogPrerenderPage from './CatalogPrerenderPage';
 
-function CatalogPage() {
+interface CatalogPageProps {
+  searchParams: Promise<{
+    language?: string;
+    price?: string;
+    level?: string;
+  }>;
+}
+
+async function CatalogPage({ searchParams }: CatalogPageProps) {
   return (
-    <main className={css.page}>
-      <Container className={css.container}>
-        <TeachersView />
-      </Container>
-    </main>
+    <Suspense>
+      <CatalogPrerenderPage searchParams={searchParams} />
+    </Suspense>
   );
 }
 

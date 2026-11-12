@@ -14,9 +14,10 @@ import BookClassForm from '@/components/BookClassForm/BookClassForm';
 
 interface TeacherCardProps {
   teacher: Teacher;
+  chosenLevel: string;
 }
 
-function TeacherCard({ teacher }: TeacherCardProps) {
+function TeacherCard({ teacher, chosenLevel }: TeacherCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -70,21 +71,19 @@ function TeacherCard({ teacher }: TeacherCardProps) {
             {teacher.conditions}
           </p>
         </div>
-        {!isOpen && (
-          <button
-            onClick={() => setIsOpen(prev => !prev)}
-            className={css.moreButton}
-          >
-            Read more
-          </button>
-        )}
+        <button
+          onClick={() => setIsOpen(prev => !prev)}
+          className={css.additionalInfoButton}
+        >
+          {isOpen ? 'Show less' : 'Read more'}
+        </button>
         {isOpen && (
           <div className={css.extraInformation}>
             <p className={css.description}>{teacher.experience}</p>
             <TeacherCardReviews reviews={teacher.reviews} />
           </div>
         )}
-        <TeacherCardLevels levels={teacher.levels} />
+        <TeacherCardLevels levels={teacher.levels} chosenLevel={chosenLevel} />
         {isOpen && (
           <Button
             onClick={() => setIsModalOpen(true)}

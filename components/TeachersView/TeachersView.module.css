@@ -5,6 +5,12 @@
   gap: 32px;
 }
 
+.filtersWrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .filters {
   margin-bottom: 32px;
   display: flex;
@@ -23,4 +29,40 @@
 
 .priceFilter {
   min-width: 124px;
+}
+
+.clearFilters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+
+  box-shadow: 0px 0px 10px rgba(18, 20, 23, 0.05);
+
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.iconCross {
+  fill: transparent;
+  stroke: #121417;
+
+  transition: stroke 0.3s ease-in-out;
+}
+
+.clearFilters:focus-visible .iconCross {
+  stroke: #9fbaae;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .clearFilters:hover .iconCross {
+    stroke: #9fbaae;
+  }
+
+  .clearFilters:hover {
+    box-shadow: 0px 0px 15px rgba(18, 20, 23, 0.15);
+  }
 }

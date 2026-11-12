@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import css from './Dropdown.module.css';
 import clsx from 'clsx';
 import Icon from '../Icon/Icon';
+import { Filters } from '@/types/filters';
+
+type FilterKey = 'language' | 'level' | 'price';
 
 interface DropdownProps {
   list: string[];
@@ -11,6 +14,9 @@ interface DropdownProps {
   className?: string;
   label: string;
   symbol?: string;
+  onChange: (value: string, key: string) => void;
+  name: FilterKey;
+  filters: Filters;
 }
 
 function Dropdown({
@@ -19,20 +25,23 @@ function Dropdown({
   label,
   className,
   symbol,
+  onChange,
+  name,
+  filters,
 }: DropdownProps) {
-  const [placeholder, setPlaceholder] = useState(initialValue);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
+  const placeholder = filters[name] !== '' ? filters[name] : initialValue;
 
   const toggleDropdown = () => {
     setIsOpen(prev => !prev);
   };
 
   const handleClick = (value: string, index: number) => {
-    setPlaceholder(value);
     setIsOpen(false);
     setHighlightedIndex(index);
+    onChange(value, name);
   };
 
   const labelClick = () => {
@@ -69,8 +78,9 @@ function Dropdown({
         if (!isOpen) {
           setIsOpen(true);
         } else {
-          setPlaceholder(list[highlightedIndex]);
+          const value = list[highlightedIndex];
           setIsOpen(false);
+          onChange(value, name);
         }
         break;
 
@@ -94,7 +104,7 @@ function Dropdown({
     return () => {
       document.removeEventListener('click', handleClickBackdrop);
     };
-  });
+  }, []);
 
   return (
     <div>

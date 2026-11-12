@@ -8,6 +8,7 @@ interface TeachersListProps {
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
   onLoadMore: () => void;
+  chosenLevel: string;
 }
 
 function TeachersList({
@@ -15,12 +16,17 @@ function TeachersList({
   hasNextPage,
   isFetchingNextPage,
   onLoadMore,
+  chosenLevel,
 }: TeachersListProps) {
   return (
     <>
       <ul className={css.list}>
         {teachers.map(teacher => (
-          <TeacherCard key={teacher.id} teacher={teacher} />
+          <TeacherCard
+            key={teacher.id}
+            teacher={teacher}
+            chosenLevel={chosenLevel}
+          />
         ))}
       </ul>
       {hasNextPage && (
