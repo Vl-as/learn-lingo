@@ -42,6 +42,7 @@
 }
 
 .info {
+  margin-bottom: 16px;
   width: 150px;
   height: 16px;
   background-color: #ececec;
@@ -49,14 +50,37 @@
 }
 
 .text {
+  margin-bottom: 16px;
   width: 100%;
   height: 14px;
   background-color: #ececec;
   border-radius: 20px;
 }
 
-.textShort {
+.textSmall {
+  margin-bottom: 16px;
   width: 70%;
+  height: 14px;
+  background-color: #ececec;
+  border-radius: 20px;
+}
+
+.textShort {
+  margin-bottom: 20px;
+  width: 90px;
+  height: 14px;
+  background-color: #ececec;
+  border-radius: 20px;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.listItem {
+  width: 80px;
   height: 14px;
   background-color: #ececec;
   border-radius: 20px;

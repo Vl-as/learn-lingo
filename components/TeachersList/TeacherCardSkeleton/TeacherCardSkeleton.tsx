@@ -11,7 +11,14 @@ function TeacherCardSkeleton() {
         </div>
         <div className={css.info} />
         <div className={css.text} />
+        <div className={css.textSmall} />
         <div className={css.textShort} />
+
+        <ul className={css.list}>
+          <li className={css.listItem}></li>
+          <li className={css.listItem}></li>
+          <li className={css.listItem}></li>
+        </ul>
       </div>
     </li>
   );

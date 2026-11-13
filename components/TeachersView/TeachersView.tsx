@@ -4,7 +4,7 @@ import { fetchTeachers } from '@/services/teachers';
 import Dropdown from '../Dropdown/Dropdown';
 import TeachersList from '../TeachersList/TeachersList';
 import css from './TeachersView.module.css';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import TeacherCardSkeleton from '../TeachersList/TeacherCardSkeleton/TeacherCardSkeleton';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -78,6 +78,7 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
     queryKey: ['teachers', filters],
     queryFn: ({ pageParam = 0 }) => fetchTeachers(pageParam, filters),
     initialPageParam: 0,
+    placeholderData: keepPreviousData,
     getNextPageParam: lastPage => lastPage.nextPage,
   });
 

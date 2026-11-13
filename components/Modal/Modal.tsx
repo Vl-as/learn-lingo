@@ -20,9 +20,13 @@ function Modal({ children, onClose }: ModalProps) {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', handleKeyDown);
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
     };
   });
 
