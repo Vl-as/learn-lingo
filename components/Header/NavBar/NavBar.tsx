@@ -4,6 +4,8 @@ import Link from 'next/link';
 import css from './NavBar.module.css';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import { useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -16,6 +18,7 @@ interface NavBar {
 
 function NavBar({ className }: NavBar) {
   const path = usePathname();
+  const { user } = useContext(AuthContext);
 
   return (
     <nav className={className}>
@@ -30,6 +33,19 @@ function NavBar({ className }: NavBar) {
             </Link>
           </li>
         ))}
+        {user && (
+          <li>
+            <Link
+              className={clsx(
+                css.link,
+                '/favorites' === path && css.currentPage
+              )}
+              href={'/favorites'}
+            >
+              Favorites
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   );

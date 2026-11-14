@@ -119,6 +119,10 @@
   transition: stroke 0.3s ease-in-out;
 }
 
+.iconHeartFull {
+  fill: #e0a39a;
+}
+
 .buttonFavorite:focus-visible .iconHeart {
   stroke: #8a8a89;
 }

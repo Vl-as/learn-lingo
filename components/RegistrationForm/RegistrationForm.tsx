@@ -1,3 +1,5 @@
+'use client';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import css from './RegistrationForm.module.css';
 import { useForm } from 'react-hook-form';
@@ -5,6 +7,14 @@ import * as Yup from 'yup';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import PasswordField from '../PasswordField/PasswordField';
+import { useMutation } from '@tanstack/react-query';
+import { registerUser } from '@/services/auth';
+
+type RegistrationFormValues = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 const registrationSchema = Yup.object({
   name: Yup.string().min(2).max(50).required(),
@@ -12,17 +22,30 @@ const registrationSchema = Yup.object({
   password: Yup.string().min(8).max(50).required(),
 });
 
-function RegistrationForm() {
+interface RegistrationFormProps {
+  onSuccess: () => void;
+}
+
+function RegistrationForm({onSuccess}: RegistrationFormProps) {
+  const { mutate } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      onSuccess()
+    },
+    onError: error => {
+      console.error(error.message);
+    },
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<RegistrationFormValues>({
     resolver: yupResolver(registrationSchema),
   });
 
-  const onSubmit = () => {
-    console.log('submit');
+  const onSubmit = (data: RegistrationFormValues) => {
+    mutate(data);
   };
   return (
     <div className={css.container}>

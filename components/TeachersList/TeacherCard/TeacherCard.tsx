@@ -7,21 +7,66 @@ import TeacherCardMeta from './TeacherCardMeta/TeacherCardMeta';
 import TeacherCardLevels from './TeacherCardLevels/TeacherCardLevels';
 import TeacherCardReviews from './TeacherCardReviews/TeacherCardReviews';
 import Button from '@/components/Button/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon/Icon';
 import Modal from '@/components/Modal/Modal';
 import BookClassForm from '@/components/BookClassForm/BookClassForm';
+import clsx from 'clsx';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addFavorite, removeFavorite } from '@/services/favorites';
 
 interface TeacherCardProps {
   teacher: Teacher;
   chosenLevel: string;
+  isFavorite?: boolean;
 }
 
-function TeacherCard({ teacher, chosenLevel }: TeacherCardProps) {
+function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fullName = `${teacher.name} ${teacher.surname}`;
+
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      if (isFavorite) {
+        await removeFavorite(teacher.id);
+      } else {
+        await addFavorite(teacher.id);
+      }
+    },
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['favorites'] });
+
+      const previousFavorites =
+        queryClient.getQueryData<{ id: string }[]>(['favorites']) ?? [];
+
+      queryClient.setQueryData<{ id: string }[]>(['favorites'], old => {
+        old ??= [];
+
+        const exists = old.some(f => f.id === teacher.id);
+
+        return exists
+          ? old.filter(f => f.id !== teacher.id)
+          : [...old, { id: teacher.id }];
+      });
+
+      return { previousFavorites };
+    },
+
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(['favorites'], context?.previousFavorites);
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['favorites'],
+      });
+    },
+  });
 
   return (
     <li className={css.card} data-teacher-card>
@@ -46,13 +91,26 @@ function TeacherCard({ teacher, chosenLevel }: TeacherCardProps) {
             price={teacher.price_per_hour}
             className={css.meta}
           />
-          <button className={css.buttonFavorite}>
-            <Icon
-              width={26}
-              height={26}
-              className={css.iconHeart}
-              name="heart"
-            />
+          <button
+            className={css.buttonFavorite}
+            type="button"
+            onClick={() => mutate()}
+          >
+            {isFavorite ? (
+              <Icon
+                width={26}
+                height={26}
+                className={css.iconHeartFull}
+                name="heart-full"
+              />
+            ) : (
+              <Icon
+                name="heart-empty"
+                width={26}
+                height={26}
+                className={css.iconHeart}
+              />
+            )}
           </button>
         </div>
         <div className={css.details}>

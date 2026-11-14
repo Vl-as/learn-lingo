@@ -1,7 +1,13 @@
+'use client';
+
 import css from './TeachersList.module.css';
 import TeacherCard from './TeacherCard/TeacherCard';
 import Button from '../Button/Button';
 import { Teacher } from '@/types/teacher';
+import { useQuery } from '@tanstack/react-query';
+import { getFavorites } from '@/services/favorites';
+import { useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
 
 interface TeachersListProps {
   teachers: Teacher[];
@@ -18,6 +24,14 @@ function TeachersList({
   onLoadMore,
   chosenLevel,
 }: TeachersListProps) {
+  const { user } = useContext(AuthContext);
+
+  const { data: favorites = [] } = useQuery({
+    queryKey: ['favorites', user?.uid],
+    queryFn: getFavorites,
+    enabled: !!user,
+  });
+
   return (
     <>
       <ul className={css.list}>
@@ -26,6 +40,7 @@ function TeachersList({
             key={teacher.id}
             teacher={teacher}
             chosenLevel={chosenLevel}
+            isFavorite={favorites?.includes(teacher.id)}
           />
         ))}
       </ul>

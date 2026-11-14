@@ -5,13 +5,34 @@ import * as Yup from 'yup';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import PasswordField from '../PasswordField/PasswordField';
+import { useMutation } from '@tanstack/react-query';
+import { loginUser } from '@/services/auth';
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 const LogInFormSchema = Yup.object({
   email: Yup.string().email().required(),
   password: Yup.string().min(8).max(50).required(),
 });
 
-function LogInForm() {
+interface LogInFormProps {
+  onSuccess: () => void;
+}
+
+function LogInForm({ onSuccess }: LogInFormProps) {
+  const { mutate } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: () => {
+      onSuccess();
+    },
+    onError: error => {
+      console.log(error.message);
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -20,8 +41,8 @@ function LogInForm() {
     resolver: yupResolver(LogInFormSchema),
   });
 
-  const onSubmit = () => {
-    console.log('submit');
+  const onSubmit = (data: LoginFormValues) => {
+    mutate(data);
   };
   return (
     <div className={css.container}>
