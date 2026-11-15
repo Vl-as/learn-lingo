@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getFavorites } from '@/services/favorites';
 import { useContext } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
+import TeacherCardSkeleton from './TeacherCardSkeleton/TeacherCardSkeleton';
 
 interface TeachersListProps {
   teachers: Teacher[];
@@ -15,6 +16,8 @@ interface TeachersListProps {
   isFetchingNextPage: boolean;
   onLoadMore: () => void;
   chosenLevel: string;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 function TeachersList({
@@ -23,6 +26,8 @@ function TeachersList({
   isFetchingNextPage,
   onLoadMore,
   chosenLevel,
+  isLoading,
+  isError,
 }: TeachersListProps) {
   const { user } = useContext(AuthContext);
 
@@ -32,17 +37,25 @@ function TeachersList({
     enabled: !!user,
   });
 
+  if (isError) {
+    <p>Something went wrong</p>;
+  }
+
   return (
     <>
       <ul className={css.list}>
-        {teachers.map(teacher => (
-          <TeacherCard
-            key={teacher.id}
-            teacher={teacher}
-            chosenLevel={chosenLevel}
-            isFavorite={favorites?.includes(teacher.id)}
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <TeacherCardSkeleton key={i} />
+            ))
+          : teachers.map(teacher => (
+              <TeacherCard
+                key={teacher.id}
+                teacher={teacher}
+                chosenLevel={chosenLevel}
+                isFavorite={favorites?.includes(teacher.id)}
+              />
+            ))}
       </ul>
       {hasNextPage && (
         <Button

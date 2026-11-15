@@ -7,13 +7,14 @@ import TeacherCardMeta from './TeacherCardMeta/TeacherCardMeta';
 import TeacherCardLevels from './TeacherCardLevels/TeacherCardLevels';
 import TeacherCardReviews from './TeacherCardReviews/TeacherCardReviews';
 import Button from '@/components/Button/Button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Icon from '@/components/Icon/Icon';
 import Modal from '@/components/Modal/Modal';
 import BookClassForm from '@/components/BookClassForm/BookClassForm';
-import clsx from 'clsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addFavorite, removeFavorite } from '@/services/favorites';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'react-toastify';
 
 interface TeacherCardProps {
   teacher: Teacher;
@@ -24,6 +25,11 @@ interface TeacherCardProps {
 function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAuth();
+  const notify = () =>
+    toast.info(
+      'Sign in or create an account to save teachers to your favorites.'
+    );
 
   const fullName = `${teacher.name} ${teacher.surname}`;
 
@@ -40,6 +46,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
 
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ['favorites'] });
+      await queryClient.removeQueries({ queryKey: ['favoriteTeachers'] });
 
       const previousFavorites =
         queryClient.getQueryData<{ id: string }[]>(['favorites']) ?? [];
@@ -68,6 +75,14 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
     },
   });
 
+  const handleClick = () => {
+    if (!user) {
+      notify();
+    } else {
+      mutate();
+    }
+  };
+
   return (
     <li className={css.card} data-teacher-card>
       <div className={css.avatarFrame}>
@@ -94,7 +109,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
           <button
             className={css.buttonFavorite}
             type="button"
-            onClick={() => mutate()}
+            onClick={handleClick}
           >
             {isFavorite ? (
               <Icon

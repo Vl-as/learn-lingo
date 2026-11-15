@@ -72,6 +72,8 @@
   width: 24px;
   height: 24px;
   accent-color: #37965d;
+
+  cursor: pointer;
 }
 
 .radioButtons {

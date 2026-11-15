@@ -54,3 +54,13 @@
   color: #fff;
   min-height: 48px;
 }
+
+.placeholder {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.logOut.logOut {
+  min-height: 48px;
+  min-width: 100px;
+}

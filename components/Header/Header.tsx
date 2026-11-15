@@ -6,18 +6,18 @@ import Icon from '../Icon/Icon';
 import NavBar from './NavBar/NavBar';
 import Container from '../Container/Container';
 import Button from '../Button/Button';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import Modal from '../Modal/Modal';
 import LogInForm from '../LogInForm/LogInForm';
-import { AuthContext } from '@/contexts/AuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logoutUser } from '@/services/auth';
+import { useAuth } from '@/hooks/useAuth';
 
 function Header() {
   const [isReg, setIsReg] = useState(false);
   const [isLogIn, setIsLogIn] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useAuth();
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
@@ -39,33 +39,39 @@ function Header() {
             LearnLingo
           </Link>
           <NavBar className={css.navbar} />
-          <ul className={css.authButtons}>
-            {user ? (
-              <li>
-                <Button onClick={() => mutate()}>Log out</Button>
-              </li>
-            ) : (
-              <>
+          {
+            <ul className={css.authButtons}>
+              {loading ? (
+                <li className={css.placeholder} />
+              ) : user ? (
                 <li>
-                  <Button
-                    className={css.logIn}
-                    onClick={() => setIsLogIn(true)}
-                  >
-                    <Icon className={css.logInIcon} name="log-in" />
-                    Log in
+                  <Button className={css.logOut} onClick={() => mutate()}>
+                    Log out
                   </Button>
                 </li>
-                <li>
-                  <Button
-                    className={css.registration}
-                    onClick={() => setIsReg(true)}
-                  >
-                    Registration
-                  </Button>
-                </li>
-              </>
-            )}
-          </ul>
+              ) : (
+                <>
+                  <li>
+                    <Button
+                      className={css.logIn}
+                      onClick={() => setIsLogIn(true)}
+                    >
+                      <Icon className={css.logInIcon} name="log-in" />
+                      Log in
+                    </Button>
+                  </li>
+                  <li>
+                    <Button
+                      className={css.registration}
+                      onClick={() => setIsReg(true)}
+                    >
+                      Registration
+                    </Button>
+                  </li>
+                </>
+              )}
+            </ul>
+          }
         </div>
       </Container>
       {isLogIn && (

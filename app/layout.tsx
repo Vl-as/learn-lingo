@@ -4,6 +4,8 @@ import './globals.css';
 import Header from '@/components/Header/Header';
 import TanstackProvider from '@/providers/TanstackPropider/TanstackPropider';
 import AuthProvider from '@/providers/AuthProvider/AuthProvider';
+import 'react-toastify/dist/ReactToastify.css';
+import { Flip, ToastContainer } from 'react-toastify';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -24,6 +26,20 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           <AuthProvider>
             <Header />
             {children}
+            <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              limit={1}
+              hideProgressBar
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+              transition={Flip}
+            />
           </AuthProvider>
         </TanstackProvider>
       </body>

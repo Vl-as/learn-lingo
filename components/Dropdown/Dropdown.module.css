@@ -29,6 +29,11 @@
 
   border: none;
   background-color: #fff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.mainField:focus-visible {
+  box-shadow: 0px 1px 10px rgba(18, 20, 23, 0.1);
 }
 
 .mainField span {
@@ -107,5 +112,9 @@
 @media (hover: hover) and (pointer: fine) {
   .option:not(.chosen):hover {
     color: #9fbaae;
+  }
+
+  .mainField:hover {
+    box-shadow: 0px 1px 10px rgba(18, 20, 23, 0.1);
   }
 }

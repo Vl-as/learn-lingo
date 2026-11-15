@@ -1,5 +1,7 @@
-function FavoritesPage() {
-  return <h1>Favorites</h1>;
+import FavoritesClient from './FavoritesClient';
+
+async function FavoritesPage() {
+  return <FavoritesClient />;
 }
 
 export default FavoritesPage;

@@ -1,4 +1,4 @@
-import { db } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase';
 import { Filters } from '@/types/filters';
 import { Teacher } from '@/types/teacher';
 import {
@@ -7,6 +7,7 @@ import {
   query,
   where,
   QueryConstraint,
+  documentId,
 } from 'firebase/firestore';
 
 const PAGE_SIZE = 4;
@@ -48,5 +49,44 @@ export async function fetchTeachers(pageParam: number = 0, filters?: Filters) {
     teachers: paginatedTeachers,
     nextPage: endIndex < teachers.length ? pageParam + 1 : undefined,
     hasMore: endIndex < teachers.length,
+  };
+}
+
+export async function getFavoriteTeachers(
+  uid: string,
+  pageParam = 0,
+  limit = PAGE_SIZE
+): Promise<{
+  teachers: Teacher[];
+  nextCursor: number | null;
+}> {
+  const favoritesSnapshot = await getDocs(
+    collection(db, 'users', uid, 'favorites')
+  );
+
+  const favoriteIds = favoritesSnapshot.docs.map(doc => doc.id);
+
+  const pageIds = favoriteIds.slice(pageParam, pageParam + limit);
+
+  if (!pageIds.length) {
+    return {
+      teachers: [],
+      nextCursor: null,
+    };
+  }
+
+  const teachersSnapshot = await getDocs(
+    query(collection(db, 'teachers'), where(documentId(), 'in', pageIds))
+  );
+
+  const teachers = teachersSnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Teacher[];
+
+  return {
+    teachers,
+    nextCursor:
+      pageParam + limit < favoriteIds.length ? pageParam + limit : null,
   };
 }

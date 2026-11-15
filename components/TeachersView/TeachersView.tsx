@@ -139,23 +139,15 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
           </button>
         )}
       </div>
-      {!isError && teachers.length > 0 && (
-        <TeachersList
-          hasNextPage={hasNextPage}
-          onLoadMore={fetchNextPage}
-          teachers={teachers}
-          isFetchingNextPage={isFetchingNextPage}
-          chosenLevel={filters.level}
-        />
-      )}
-      {isLoading && (
-        <ul className={css.list}>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <TeacherCardSkeleton key={i} />
-          ))}
-        </ul>
-      )}
-      {isError && <p>Something went wrong</p>}
+      <TeachersList
+        isLoading={isLoading}
+        hasNextPage={hasNextPage}
+        onLoadMore={fetchNextPage}
+        teachers={teachers}
+        isFetchingNextPage={isFetchingNextPage}
+        chosenLevel={filters.level}
+        isError={isError}
+      />
     </>
   );
 }
