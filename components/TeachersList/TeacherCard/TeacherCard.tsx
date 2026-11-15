@@ -35,7 +35,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       if (isFavorite) {
         await removeFavorite(teacher.id);
@@ -110,6 +110,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
             className={css.buttonFavorite}
             type="button"
             onClick={handleClick}
+            disabled={isPending}
           >
             {isFavorite ? (
               <Icon

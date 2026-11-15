@@ -5,7 +5,6 @@ import Dropdown from '../Dropdown/Dropdown';
 import TeachersList from '../TeachersList/TeachersList';
 import css from './TeachersView.module.css';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
-import TeacherCardSkeleton from '../TeachersList/TeacherCardSkeleton/TeacherCardSkeleton';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '../Icon/Icon';

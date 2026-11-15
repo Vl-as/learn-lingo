@@ -110,7 +110,17 @@
 .buttonFavorite {
   margin-left: auto;
   border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: transparent;
+}
+
+.buttonFavorite:active {
+  box-shadow: 0px 1px 10px rgba(18, 20, 23, 0.1);
 }
 
 .iconHeart {
@@ -121,6 +131,11 @@
 
 .iconHeartFull {
   fill: #e0a39a;
+  transition: fill 0.3s ease-in-out;
+}
+
+.buttonFavorite:focus-visible .iconHeartFull {
+  fill: #f2c0bd;
 }
 
 .buttonFavorite:focus-visible .iconHeart {
@@ -134,5 +149,9 @@
 
   .buttonFavorite:hover .iconHeart {
     stroke: #8a8a89;
+  }
+
+  .buttonFavorite:hover .iconHeartFull {
+    fill: #f2c0bd;
   }
 }

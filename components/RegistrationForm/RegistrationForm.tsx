@@ -9,6 +9,7 @@ import Button from '../Button/Button';
 import PasswordField from '../PasswordField/PasswordField';
 import { useMutation } from '@tanstack/react-query';
 import { registerUser } from '@/services/auth';
+import { FirebaseError } from 'firebase/app';
 
 type RegistrationFormValues = {
   name: string;
@@ -17,31 +18,54 @@ type RegistrationFormValues = {
 };
 
 const registrationSchema = Yup.object({
-  name: Yup.string().min(2).max(50).required(),
-  email: Yup.string().email().required(),
-  password: Yup.string().min(8).max(50).required(),
+  name: Yup.string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be at most 50 characters')
+    .required('Name is required'),
+
+  email: Yup.string()
+    .email('Please enter a valid email address')
+    .required('Email is required'),
+
+  password: Yup.string()
+    .min(8, 'Password must be at least 8 characters')
+    .max(50, 'Password must be at most 50 characters')
+    .required('Password is required'),
 });
 
 interface RegistrationFormProps {
   onSuccess: () => void;
 }
 
-function RegistrationForm({onSuccess}: RegistrationFormProps) {
-  const { mutate } = useMutation({
-    mutationFn: registerUser,
-    onSuccess: () => {
-      onSuccess()
-    },
-    onError: error => {
-      console.error(error.message);
-    },
-  });
+function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<RegistrationFormValues>({
     resolver: yupResolver(registrationSchema),
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      onSuccess();
+    },
+    onError: (error: FirebaseError) => {
+      if (error.code === 'auth/email-already-in-use') {
+        setError('email', {
+          type: 'manual',
+          message: 'This email is already in use',
+        });
+        return;
+      }
+
+      setError('email', {
+        type: 'manual',
+        message: 'Something went wrong',
+      });
+    },
   });
 
   const onSubmit = (data: RegistrationFormValues) => {
@@ -59,7 +83,7 @@ function RegistrationForm({onSuccess}: RegistrationFormProps) {
           placeholder="Name"
           type="name"
           {...register('name')}
-          error={errors.email?.message}
+          error={errors.name?.message}
           className={css.inputField}
         />
         <Input
@@ -75,8 +99,14 @@ function RegistrationForm({onSuccess}: RegistrationFormProps) {
           error={errors.password?.message}
           className={css.inputField}
         />
-        <Button className={css.button} type="submit">
-          Sign Up
+        <Button disabled={isPending} className={css.button} type="submit">
+          {isPending ? (
+            <>
+              <span>Signing up</span> <span className={css.loader}></span>
+            </>
+          ) : (
+            'Sign Up'
+          )}
         </Button>
       </form>
     </div>

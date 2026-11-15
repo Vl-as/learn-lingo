@@ -10,7 +10,7 @@ import { useState } from 'react';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import Modal from '../Modal/Modal';
 import LogInForm from '../LogInForm/LogInForm';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { logoutUser } from '@/services/auth';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -19,7 +19,6 @@ function Header() {
   const [isLogIn, setIsLogIn] = useState(false);
   const { user, loading } = useAuth();
 
-  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {

@@ -39,6 +39,11 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
               pauseOnHover
               theme="colored"
               transition={Flip}
+              toastStyle={{
+                background: '#9fbaae',
+                color: '#fff',
+                borderRadius: '12px',
+              }}
             />
           </AuthProvider>
         </TanstackProvider>

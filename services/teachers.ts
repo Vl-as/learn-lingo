@@ -1,4 +1,4 @@
-import { auth, db } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { Filters } from '@/types/filters';
 import { Teacher } from '@/types/teacher';
 import {

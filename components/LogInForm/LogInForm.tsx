@@ -7,6 +7,7 @@ import Button from '../Button/Button';
 import PasswordField from '../PasswordField/PasswordField';
 import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '@/services/auth';
+import { FirebaseError } from 'firebase/app';
 
 interface LoginFormValues {
   email: string;
@@ -14,8 +15,11 @@ interface LoginFormValues {
 }
 
 const LogInFormSchema = Yup.object({
-  email: Yup.string().email().required(),
-  password: Yup.string().min(8).max(50).required(),
+  email: Yup.string()
+    .email('Please enter a valid email address')
+    .required('Email is required'),
+
+  password: Yup.string().required('Password is required'),
 });
 
 interface LogInFormProps {
@@ -23,22 +27,49 @@ interface LogInFormProps {
 }
 
 function LogInForm({ onSuccess }: LogInFormProps) {
-  const { mutate } = useMutation({
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(LogInFormSchema),
+  });
+
+  const { mutate, isPending } = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
       onSuccess();
     },
-    onError: error => {
-      console.log(error.message);
-    },
-  });
+    onError: (error: FirebaseError) => {
+      switch (error.code) {
+        case 'auth/user-not-found':
+          setError('email', {
+            type: 'manual',
+            message: 'No account found with this email',
+          });
+          break;
+        case 'auth/invalid-email':
+        case 'auth/wrong-password':
+        case 'auth/invalid-credential':
+          setError('email', {
+            type: 'manual',
+            message: 'Invalid email or password',
+          });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(LogInFormSchema),
+          setError('password', {
+            type: 'manual',
+            message: 'Invalid email or password',
+          });
+          break;
+
+        default:
+          setError('root', {
+            type: 'manual',
+            message: 'Failed to sign in',
+          });
+      }
+    },
   });
 
   const onSubmit = (data: LoginFormValues) => {
@@ -65,8 +96,14 @@ function LogInForm({ onSuccess }: LogInFormProps) {
           error={errors.password?.message}
           className={css.inputField}
         />
-        <Button className={css.button} type="submit">
-          Log In
+        <Button disabled={isPending} className={css.button} type="submit">
+          {isPending ? (
+            <>
+              <span>Logging in</span> <span className={css.loader}></span>
+            </>
+          ) : (
+            'Log In'
+          )}
         </Button>
       </form>
     </div>
