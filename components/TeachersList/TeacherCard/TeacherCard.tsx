@@ -10,7 +10,7 @@ import Button from '@/components/Button/Button';
 import { useState } from 'react';
 import Icon from '@/components/Icon/Icon';
 import Modal from '@/components/Modal/Modal';
-import BookClassForm from '@/components/BookClassForm/BookClassForm';
+import BookClassForm from '@/components/BookClassForm/BookingForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addFavorite, removeFavorite } from '@/services/favorites';
 import { useAuth } from '@/hooks/useAuth';
@@ -173,7 +173,11 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
             setIsModalOpen(false);
           }}
         >
-          <BookClassForm fullName={fullName} avatar={teacher.avatar_url} />
+          <BookClassForm
+            teacherId={teacher.id}
+            fullName={fullName}
+            avatar={teacher.avatar_url}
+          />
         </Modal>
       )}
     </li>

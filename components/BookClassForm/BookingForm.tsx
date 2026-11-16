@@ -1,10 +1,18 @@
+'use client';
+
 import { useForm } from 'react-hook-form';
-import css from './BookClassForm.module.css';
+import css from './BookingForm.module.css';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
+import { useMutation } from '@tanstack/react-query';
+import { createBooking } from '@/services/bookings';
+import Lottie from 'lottie-react';
+import successAnimation from '@/assets/animations/success.json';
+import clsx from 'clsx';
+import { useAuth } from '@/hooks/useAuth';
 
 const goals = [
   'Career and business',
@@ -14,7 +22,14 @@ const goals = [
   'Culture, travel or hobby',
 ];
 
-const bookSchema = Yup.object({
+interface BookingFormValues {
+  goal: string;
+  name: string;
+  email: string;
+  phone: string;
+}
+
+const bookingSchema = Yup.object({
   goal: Yup.string().required('Please select your learning goal.'),
   name: Yup.string()
     .trim()
@@ -30,23 +45,53 @@ const bookSchema = Yup.object({
     .required('Phone number is required.'),
 });
 
-interface BookClassFormProps {
+interface BookingFormProps {
   avatar: string;
   fullName: string;
+  teacherId: string;
 }
 
-function BookClassForm({ avatar, fullName }: BookClassFormProps) {
+function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(bookSchema),
+    resolver: yupResolver(bookingSchema),
   });
 
-  const onSubmit = () => {
-    console.log('submit');
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationFn: createBooking,
+    onError: () => {
+      setError('root', {
+        type: 'manual',
+        message: 'Something went wrong. Try again later',
+      });
+    },
+  });
+
+  const onSubmit = (data: BookingFormValues) => {
+    mutate({ ...data, teacherId });
   };
+
+  if (isSuccess) {
+    return (
+      <>
+        <Lottie
+          className={css.animation}
+          animationData={successAnimation}
+          loop={false}
+        />
+        <h2 className={clsx(css.title, css.success)}>Request sent!</h2>
+        <p className={css.text}>
+          {fullName} will contact you soon using the email address or phone
+          number you provided.
+        </p>
+      </>
+    );
+  }
 
   return (
     <div className={css.container}>
@@ -82,7 +127,9 @@ function BookClassForm({ avatar, fullName }: BookClassFormProps) {
                 <label className={css.label}>
                   <input
                     className={css.radio}
+                    defaultChecked={index === 0}
                     type="radio"
+                    value={goal}
                     {...register('goal')}
                   />
                   {goal}
@@ -98,6 +145,7 @@ function BookClassForm({ avatar, fullName }: BookClassFormProps) {
           className={css.inputField}
           placeholder="Full Name"
           type="text"
+          defaultValue={user?.displayName ?? ''}
           {...register('name')}
           error={errors.name?.message}
         />
@@ -106,6 +154,7 @@ function BookClassForm({ avatar, fullName }: BookClassFormProps) {
           className={css.inputField}
           placeholder="Email"
           type="email"
+          defaultValue={user?.email ?? ''}
           {...register('email')}
           error={errors.email?.message}
         />
@@ -114,16 +163,26 @@ function BookClassForm({ avatar, fullName }: BookClassFormProps) {
           className={css.inputField}
           placeholder="Phone number"
           type="phone"
+          defaultValue={user?.phoneNumber ?? ''}
           {...register('phone')}
           error={errors.phone?.message}
         />
 
-        <Button className={css.button} type="submit">
-          Book
+        <Button disabled={isPending} className={css.button} type="submit">
+          {isPending ? (
+            <>
+              <span>Booking</span> <span className={css.loader}></span>
+            </>
+          ) : (
+            'Book'
+          )}
         </Button>
+        {errors.root && (
+          <span className={css.error}>{errors.root?.message}</span>
+        )}
       </form>
     </div>
   );
 }
 
-export default BookClassForm;
+export default BookingForm;
