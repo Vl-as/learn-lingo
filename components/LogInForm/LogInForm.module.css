@@ -10,6 +10,7 @@
   letter-spacing: -0.02em;
 }
 
+
 .text {
   margin-bottom: 40px;
   line-height: 1.375;
@@ -26,6 +27,13 @@
 
 .button {
   width: 100%;
+}
+
+.error {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28571;
+  color: #e0a39a;
 }
 
 .loader {

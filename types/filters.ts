@@ -3,3 +3,9 @@ export type Filters = {
   level: string;
   price: string;
 };
+
+export interface CatalogFilters {
+  language?: string;
+  price?: string;
+  level?: string;
+}

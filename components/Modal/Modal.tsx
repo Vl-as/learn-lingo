@@ -28,12 +28,16 @@ function Modal({ children, onClose }: ModalProps) {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
     };
-  });
+  }, [onClose]);
 
   return createPortal(
     <div onClick={backdropClick} className={css.overlay}>
-      <div className={css.modal}>
-        <button onClick={onClose} className={css.closeButton}>
+      <div className={css.modal} role="dialog" aria-modal="true">
+        <button
+          onClick={onClose}
+          className={css.closeButton}
+          aria-label="Close modal"
+        >
           <Icon className={css.iconCross} width={32} height={32} name="cross" />
         </button>
         <div className={css.modalInner}>{children}</div>

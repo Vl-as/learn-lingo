@@ -8,7 +8,7 @@ interface HeroSectionProps {
   className?: string;
 }
 
-async function HeroSection({ className }: HeroSectionProps) {
+function HeroSection({ className }: HeroSectionProps) {
   return (
     <section className={clsx(css.hero, className)}>
       <Container className={css.heroInner}>
@@ -37,15 +37,15 @@ async function HeroSection({ className }: HeroSectionProps) {
             alt="Animated girl smiles"
             width={339}
             height={339}
-            loading="eager"
+            priority
           />
           <Image
             className={css.computerImage}
             src="/mac.webp"
-            alt="Animated computer"
+            alt=""
             width={360}
             height={176}
-            loading="eager"
+            priority
           />
         </div>
       </Container>

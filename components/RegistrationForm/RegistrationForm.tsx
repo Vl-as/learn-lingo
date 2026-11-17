@@ -61,9 +61,9 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         return;
       }
 
-      setError('email', {
+      setError('root', {
         type: 'manual',
-        message: 'Something went wrong',
+        message: 'Something went wrong. Please try again.',
       });
     },
   });
@@ -79,35 +79,43 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         need some information. Please provide us with the following information
       </p>
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          placeholder="Name"
-          type="name"
-          {...register('name')}
-          error={errors.name?.message}
-          className={css.inputField}
-        />
-        <Input
-          placeholder="Email"
-          type="email"
-          {...register('email')}
-          error={errors.email?.message}
-          className={css.inputField}
-        />
-        <PasswordField
-          placeholder="Password"
-          {...register('password')}
-          error={errors.password?.message}
-          className={css.inputField}
-        />
-        <Button disabled={isPending} className={css.button} type="submit">
-          {isPending ? (
-            <>
-              <span>Signing up</span> <span className={css.loader}></span>
-            </>
-          ) : (
-            'Sign Up'
+        <fieldset disabled={isPending}>
+          <Input
+            autoComplete="name"
+            placeholder="Name"
+            type="text"
+            {...register('name')}
+            error={errors.name?.message}
+            className={css.inputField}
+          />
+          <Input
+            autoComplete="email"
+            placeholder="Email"
+            type="email"
+            {...register('email')}
+            error={errors.email?.message}
+            className={css.inputField}
+          />
+          <PasswordField
+            autoComplete="new-password"
+            placeholder="Password"
+            {...register('password')}
+            error={errors.password?.message}
+            className={css.inputField}
+          />
+          <Button disabled={isPending} className={css.button} type="submit">
+            {isPending ? (
+              <>
+                <span>Signing up</span> <span className={css.loader}></span>
+              </>
+            ) : (
+              'Sign Up'
+            )}
+          </Button>
+          {errors.root && (
+            <span className={css.error}>{errors.root.message}</span>
           )}
-        </Button>
+        </fieldset>
       </form>
     </div>
   );

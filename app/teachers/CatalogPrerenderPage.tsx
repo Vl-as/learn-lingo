@@ -9,26 +9,22 @@ import {
 import { fetchTeachers } from '@/services/teachers';
 import { TeachersResponse } from '@/types/teacher';
 import { connection } from 'next/server';
+import { CatalogFilters } from '@/types/filters';
 
 interface CatalogPrerenderPageProps {
-  searchParams: Promise<{
-    language?: string;
-    price?: string;
-    level?: string;
-  }>;
+  searchParams: Promise<CatalogFilters>;
 }
 
 async function CatalogPrerenderPage({
   searchParams,
 }: CatalogPrerenderPageProps) {
+  await connection();
   const params = await searchParams;
   const selectedFilters = {
     language: params.language ?? '',
     level: params.level ?? '',
     price: params.price ?? '',
   };
-
-  await connection();
 
   const queryClient = new QueryClient();
 

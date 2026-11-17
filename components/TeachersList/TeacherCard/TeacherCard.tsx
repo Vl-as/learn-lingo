@@ -10,7 +10,7 @@ import Button from '@/components/Button/Button';
 import { useState } from 'react';
 import Icon from '@/components/Icon/Icon';
 import Modal from '@/components/Modal/Modal';
-import BookClassForm from '@/components/BookClassForm/BookingForm';
+import BookClassForm from '@/components/BookingForm/BookingForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addFavorite, removeFavorite } from '@/services/favorites';
 import { useAuth } from '@/hooks/useAuth';

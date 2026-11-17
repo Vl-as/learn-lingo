@@ -33,11 +33,13 @@ interface TeachersViewProps {
   selectedFilters: Filters;
 }
 
+type FilterKey = keyof Filters;
+
 function TeachersView({ selectedFilters }: TeachersViewProps) {
   const [filters, setFilters] = useState(selectedFilters);
   const router = useRouter();
 
-  const changeFilters = (value: string, key: string) => {
+  const changeFilters = (value: string, key: FilterKey) => {
     setFilters(prev => ({
       ...prev,
       [key]: value,
@@ -61,14 +63,14 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
       }
     });
 
-    router.replace(`/teachers?${params.toString()}`, {
+    router.replace(params.toString() ? `/teachers?${params}` : '/teachers', {
       scroll: false,
     });
   }, [filters, router]);
 
   const {
     data,
-    isLoading,
+    isPending,
     isError,
     fetchNextPage,
     hasNextPage,
@@ -139,7 +141,7 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
         )}
       </div>
       <TeachersList
-        isLoading={isLoading}
+        isLoading={isPending}
         hasNextPage={hasNextPage}
         onLoadMore={fetchNextPage}
         teachers={teachers}

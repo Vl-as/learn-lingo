@@ -1,7 +1,7 @@
 import css from './MainLoader.module.css';
 import Loader from '@/components/Loader/Loader';
 
-function MainLoader() {
+function Loading() {
   return (
     <div className={css.overlay}>
       <div className={css.loadingBox}>
@@ -11,4 +11,4 @@ function MainLoader() {
   );
 }
 
-export default MainLoader;
+export default Loading;

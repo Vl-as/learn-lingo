@@ -9,12 +9,12 @@ function NotFoundPage() {
     <main className={css.main}>
       <Container>
         <div className={css.wrapper}>
-          <h2 className={css.title}>Page not found</h2>
+          <h1 className={css.title}>Page not found</h1>
           <div className={css.bottomWrapper}>
             <Image
               className={css.image}
               src="/not-found.webp"
-              alt=""
+              alt="Page not found illustration"
               width={300}
               height={253}
             />

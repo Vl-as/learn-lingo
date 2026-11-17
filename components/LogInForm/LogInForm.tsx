@@ -32,7 +32,7 @@ function LogInForm({ onSuccess }: LogInFormProps) {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginFormValues>({
     resolver: yupResolver(LogInFormSchema),
   });
 
@@ -44,22 +44,26 @@ function LogInForm({ onSuccess }: LogInFormProps) {
     onError: (error: FirebaseError) => {
       switch (error.code) {
         case 'auth/user-not-found':
-          setError('email', {
-            type: 'manual',
-            message: 'No account found with this email',
-          });
-          break;
-        case 'auth/invalid-email':
         case 'auth/wrong-password':
         case 'auth/invalid-credential':
-          setError('email', {
+          setError('root', {
             type: 'manual',
             message: 'Invalid email or password',
           });
-
+          setError('email', {
+            type: 'manual',
+            message: ' ',
+          });
           setError('password', {
             type: 'manual',
-            message: 'Invalid email or password',
+            message: ' ',
+          });
+          break;
+
+        case 'auth/invalid-email':
+          setError('email', {
+            type: 'manual',
+            message: 'Please enter a valid email address',
           });
           break;
 
@@ -80,31 +84,38 @@ function LogInForm({ onSuccess }: LogInFormProps) {
       <h2 className={css.title}>Log In</h2>
       <p className={css.text}>
         Welcome back! Please enter your credentials to access your account and
-        continue your search for an teacher.
+        continue your search for a teacher.
       </p>
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          placeholder="Email"
-          type="email"
-          {...register('email')}
-          error={errors.email?.message}
-          className={css.inputField}
-        />
-        <PasswordField
-          placeholder="Password"
-          {...register('password')}
-          error={errors.password?.message}
-          className={css.inputField}
-        />
-        <Button disabled={isPending} className={css.button} type="submit">
-          {isPending ? (
-            <>
-              <span>Logging in</span> <span className={css.loader}></span>
-            </>
-          ) : (
-            'Log In'
+        <fieldset disabled={isPending}>
+          <Input
+            autoComplete="email"
+            placeholder="Email"
+            type="email"
+            {...register('email')}
+            error={errors.email?.message}
+            className={css.inputField}
+          />
+          <PasswordField
+            autoComplete="current-password"
+            placeholder="Password"
+            {...register('password')}
+            error={errors.password?.message}
+            className={css.inputField}
+          />
+          <Button disabled={isPending} className={css.button} type="submit">
+            {isPending ? (
+              <>
+                <span>Logging in</span> <span className={css.loader}></span>
+              </>
+            ) : (
+              'Log In'
+            )}
+          </Button>
+          {errors.root && (
+            <span className={css.error}>{errors.root.message}</span>
           )}
-        </Button>
+        </fieldset>
       </form>
     </div>
   );

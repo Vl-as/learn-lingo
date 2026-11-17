@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import CatalogPrerenderPage from './CatalogPrerenderPage';
+import Loading from '../loading';
 
 interface CatalogPageProps {
   searchParams: Promise<{
@@ -9,9 +10,9 @@ interface CatalogPageProps {
   }>;
 }
 
-async function CatalogPage({ searchParams }: CatalogPageProps) {
+function CatalogPage({ searchParams }: CatalogPageProps) {
   return (
-    <Suspense>
+    <Suspense fallback={<Loading />}>
       <CatalogPrerenderPage searchParams={searchParams} />
     </Suspense>
   );

@@ -12,19 +12,23 @@ const links = [
   { href: '/teachers', label: 'Teachers' },
 ];
 
-interface NavBar {
+interface NavBarProps {
   className?: string;
 }
 
-function NavBar({ className }: NavBar) {
+function NavBar({ className }: NavBarProps) {
   const path = usePathname();
   const { user } = useContext(AuthContext);
+
+  const navLinks = user
+    ? [...links, { href: '/favorites', label: 'Favorites' }]
+    : links;
 
   return (
     <nav className={className}>
       <ul className={css.list}>
-        {links.map(({ href, label }) => (
-          <li className={css.item} key={`${href}${label}`}>
+        {navLinks.map(({ href, label }) => (
+          <li className={css.item} key={href}>
             <Link
               className={clsx(css.link, href === path && css.currentPage)}
               href={href}
@@ -33,19 +37,6 @@ function NavBar({ className }: NavBar) {
             </Link>
           </li>
         ))}
-        {user && (
-          <li>
-            <Link
-              className={clsx(
-                css.link,
-                '/favorites' === path && css.currentPage
-              )}
-              href={'/favorites'}
-            >
-              Favorites
-            </Link>
-          </li>
-        )}
       </ul>
     </nav>
   );

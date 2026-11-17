@@ -20,7 +20,7 @@ function StatsSection({ className }: StatsSectionProps) {
         <div className={css.statsInner}>
           <ul className={css.list}>
             {stats.map(({ amount, label }) => (
-              <li className={css.statItem} key={`${amount}${label}`}>
+              <li className={css.statItem} key={label}>
                 <span className={css.amount}>{amount}</span>
                 <span className={css.label}>{label}</span>
               </li>

@@ -13,19 +13,19 @@ import LogInForm from '../LogInForm/LogInForm';
 import { useMutation } from '@tanstack/react-query';
 import { logoutUser } from '@/services/auth';
 import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'react-toastify';
 
 function Header() {
-  const [isReg, setIsReg] = useState(false);
-  const [isLogIn, setIsLogIn] = useState(false);
+  const [modal, setModal] = useState<'login' | 'register' | null>(null);
   const { user, loading } = useAuth();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
-      console.log('Log out was success');
+      toast('Logged out successfully');
     },
     onError: () => {
-      console.log('Log out fell');
+      toast.error('Logout failed');
     },
   });
 
@@ -38,49 +38,49 @@ function Header() {
             LearnLingo
           </Link>
           <NavBar className={css.navbar} />
-          {
-            <ul className={css.authButtons}>
-              {loading ? (
-                <li className={css.placeholder} />
-              ) : user ? (
+          <ul className={css.authButtons}>
+            {loading ? (
+              <li className={css.placeholder} />
+            ) : user ? (
+              <li>
+                <Button disabled={isPending} onClick={() => mutate()}>
+                  {isPending ? 'Logging out...' : 'Log out'}
+                </Button>
+              </li>
+            ) : (
+              <>
                 <li>
-                  <Button className={css.logOut} onClick={() => mutate()}>
-                    Log out
+                  <Button
+                    aria-label="Open login form"
+                    className={css.logIn}
+                    onClick={() => setModal('login')}
+                  >
+                    <Icon className={css.logInIcon} name="log-in" />
+                    Log in
                   </Button>
                 </li>
-              ) : (
-                <>
-                  <li>
-                    <Button
-                      className={css.logIn}
-                      onClick={() => setIsLogIn(true)}
-                    >
-                      <Icon className={css.logInIcon} name="log-in" />
-                      Log in
-                    </Button>
-                  </li>
-                  <li>
-                    <Button
-                      className={css.registration}
-                      onClick={() => setIsReg(true)}
-                    >
-                      Registration
-                    </Button>
-                  </li>
-                </>
-              )}
-            </ul>
-          }
+                <li>
+                  <Button
+                    aria-label="Open register form"
+                    className={css.registration}
+                    onClick={() => setModal('register')}
+                  >
+                    Registration
+                  </Button>
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       </Container>
-      {isLogIn && (
-        <Modal onClose={() => setIsLogIn(false)}>
-          <LogInForm onSuccess={() => setIsLogIn(false)} />
+      {modal === 'login' && (
+        <Modal onClose={() => setModal(null)}>
+          <LogInForm onSuccess={() => setModal(null)} />
         </Modal>
       )}
-      {isReg && (
-        <Modal onClose={() => setIsReg(false)}>
-          <RegistrationForm onSuccess={() => setIsReg(false)} />
+      {modal === 'register' && (
+        <Modal onClose={() => setModal(null)}>
+          <RegistrationForm onSuccess={() => setModal(null)} />
         </Modal>
       )}
     </header>

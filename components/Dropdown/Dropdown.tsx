@@ -14,7 +14,7 @@ interface DropdownProps {
   className?: string;
   label: string;
   symbol?: string;
-  onChange: (value: string, key: string) => void;
+  onChange: (value: string, key: FilterKey) => void;
   name: FilterKey;
   filters: Filters;
 }
@@ -30,7 +30,7 @@ function Dropdown({
   filters,
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLButtonElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
   const placeholder = filters[name] !== '' ? filters[name] : initialValue;
 
@@ -45,7 +45,6 @@ function Dropdown({
   };
 
   const labelClick = () => {
-    if (dropdownRef.current) dropdownRef.current.focus();
     setIsOpen(true);
   };
 
@@ -108,12 +107,11 @@ function Dropdown({
 
   return (
     <div>
-      <label className={css.label} onClick={labelClick}>
+      <label className={css.label} onClick={labelClick} aria-label={label}>
         {label}
       </label>
-      <div className={clsx(css.dropdown, className)}>
+      <div className={clsx(css.dropdown, className)} ref={dropdownRef}>
         <button
-          ref={dropdownRef}
           className={clsx(
             css.mainField,
             placeholder !== initialValue && css.chosen,
@@ -122,6 +120,8 @@ function Dropdown({
           onClick={toggleDropdown}
           onKeyDown={handleKeyDown}
           type="button"
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
         >
           <span>
             {symbol && placeholder !== initialValue
@@ -136,10 +136,12 @@ function Dropdown({
           />
         </button>
         {isOpen && (
-          <ul className={css.list}>
+          <ul className={css.list} role="listbox">
             {list.map((value, index) => (
-              <li className={css.listItem} key={index}>
+              <li className={css.listItem} key={value}>
                 <button
+                  role="option"
+                  aria-selected={placeholder === value}
                   className={clsx(
                     css.option,
                     placeholder === value && css.chosen,
