@@ -33,7 +33,7 @@ async function HeroSection({ className }: HeroSectionProps) {
         <div className={css.mediaBox}>
           <Image
             className={css.girlImage}
-            src="/girl.png"
+            src="/girl.webp"
             alt="Animated girl smiles"
             width={339}
             height={339}
@@ -41,7 +41,7 @@ async function HeroSection({ className }: HeroSectionProps) {
           />
           <Image
             className={css.computerImage}
-            src="/mac.png"
+            src="/mac.webp"
             alt="Animated computer"
             width={360}
             height={176}

@@ -15,7 +15,7 @@ function ReviewItem({ review, className }: ReviewItemProps) {
       <div className={css.header}>
         <div className={css.avatarFrame}>
           <Image
-            src="/avatar_stock.png"
+            src="/avatar_stock.webp"
             alt="Avatar image"
             width={44}
             height={44}

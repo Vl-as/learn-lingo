@@ -15,3 +15,9 @@ export interface Teacher {
   conditions: string[];
   experience: string;
 }
+
+export interface TeachersResponse {
+  teachers: Teacher[];
+  nextPage: number | undefined;
+  hasMore: boolean;
+}
