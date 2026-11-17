@@ -64,3 +64,87 @@
   min-height: 48px;
   min-width: 100px;
 }
+
+@media (max-width: 1024px) {
+  .headerInner {
+    padding: 0 32px;
+  }
+
+  .navbar {
+    position: static;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    top: 16px;
+  }
+
+  .headerInner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'logo auth'
+      'nav nav';
+    row-gap: 8px;
+    padding: 0;
+  }
+
+  .logo {
+    grid-area: logo;
+    font-size: 18px;
+  }
+
+  .navbar {
+    grid-area: nav;
+    justify-self: center;
+  }
+
+  .authButtons {
+    grid-area: auth;
+    gap: 4px;
+  }
+
+  .logIn.logIn,
+  .registration.registration,
+  .logOut.logOut {
+    min-height: 42px;
+  }
+
+  .registration.registration {
+    min-width: 132px;
+  }
+
+  .placeholder {
+    min-width: 42px;
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    top: 12px;
+  }
+
+  .authButtons {
+    gap: 0;
+  }
+
+  .logIn.logIn {
+    padding: 0 8px;
+    font-size: 14px;
+  }
+
+  .registration.registration {
+    min-width: 112px;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+
+  .logOut.logOut {
+    min-width: 84px;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+}

@@ -45,3 +45,23 @@
     transform: rotate(0.5turn);
   }
 }
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .text {
+    margin-bottom: 28px;
+  }
+
+  .inputField:last-of-type {
+    margin-bottom: 28px;
+  }
+}
+
+@media (max-width: 380px) {
+  .title {
+    font-size: 28px;
+  }
+}

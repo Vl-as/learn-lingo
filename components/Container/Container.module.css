@@ -2,5 +2,20 @@
   margin: 0 auto;
   padding: 0 50px;
   width: 100%;
+  min-width: 0;
   max-width: 1412px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 }

@@ -146,6 +146,9 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
         isFetchingNextPage={isFetchingNextPage}
         chosenLevel={filters.level}
         isError={isError}
+        onReset={clearFilters}
+        buttonText="Show all teachers"
+        text="It looks like there are no teachers matching your criteria right now."
       />
     </>
   );

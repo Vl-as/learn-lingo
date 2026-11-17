@@ -37,6 +37,7 @@ async function HeroSection({ className }: HeroSectionProps) {
             alt="Animated girl smiles"
             width={339}
             height={339}
+            loading="eager"
           />
           <Image
             className={css.computerImage}
@@ -44,6 +45,7 @@ async function HeroSection({ className }: HeroSectionProps) {
             alt="Animated computer"
             width={360}
             height={176}
+            loading="eager"
           />
         </div>
       </Container>

@@ -36,4 +36,11 @@
 
 .comment {
   font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .header {
+    margin-bottom: 12px;
+  }
 }

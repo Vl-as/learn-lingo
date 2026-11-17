@@ -1,6 +1,8 @@
 .list {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .item {
@@ -8,6 +10,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
@@ -42,4 +45,20 @@
 
 .price {
   color: #38cd3e;
+}
+
+@media (max-width: 600px) {
+  .list {
+    align-items: flex-start;
+    row-gap: 8px;
+  }
+
+  .item {
+    font-size: 14px;
+    padding-right: 10px;
+  }
+
+  .item:not(:first-child) {
+    margin-left: 10px;
+  }
 }

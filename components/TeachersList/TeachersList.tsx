@@ -9,6 +9,7 @@ import { getFavorites } from '@/services/favorites';
 import { useContext } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 import TeacherCardSkeleton from './TeacherCardSkeleton/TeacherCardSkeleton';
+import NotFoundCard from './NotFoundCard/NotFoundCard';
 
 interface TeachersListProps {
   teachers: Teacher[];
@@ -18,6 +19,9 @@ interface TeachersListProps {
   chosenLevel: string;
   isLoading: boolean;
   isError: boolean;
+  onReset: () => void;
+  buttonText: string;
+  text: string;
 }
 
 function TeachersList({
@@ -28,6 +32,9 @@ function TeachersList({
   chosenLevel,
   isLoading,
   isError,
+  onReset,
+  buttonText,
+  text,
 }: TeachersListProps) {
   const { user } = useContext(AuthContext);
 
@@ -44,18 +51,22 @@ function TeachersList({
   return (
     <>
       <ul className={css.list}>
-        {isLoading
-          ? Array.from({ length: 4 }).map((_, i) => (
-              <TeacherCardSkeleton key={i} />
-            ))
-          : teachers.map(teacher => (
-              <TeacherCard
-                key={teacher.id}
-                teacher={teacher}
-                chosenLevel={chosenLevel}
-                isFavorite={favorites?.includes(teacher.id)}
-              />
-            ))}
+        {isLoading ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <TeacherCardSkeleton key={i} />
+          ))
+        ) : teachers.length === 0 ? (
+          <NotFoundCard buttonText={buttonText} text={text} onReset={onReset} />
+        ) : (
+          teachers.map(teacher => (
+            <TeacherCard
+              key={teacher.id}
+              teacher={teacher}
+              chosenLevel={chosenLevel}
+              isFavorite={favorites?.includes(teacher.id)}
+            />
+          ))
+        )}
       </ul>
       {hasNextPage && (
         <Button

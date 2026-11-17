@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header/Header';
-import TanstackProvider from '@/providers/TanstackPropider/TanstackPropider';
+import TanstackProvider from '@/providers/TanstackProvider/TanstackProvider';
 import AuthProvider from '@/providers/AuthProvider/AuthProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import { Flip, ToastContainer } from 'react-toastify';

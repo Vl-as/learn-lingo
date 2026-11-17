@@ -39,6 +39,24 @@
   font-weight: 500;
 }
 
+@media (max-width: 768px) {
+  .list {
+    justify-content: center;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .list {
+    gap: 18px;
+  }
+
+  .link {
+    padding: 6px 0;
+    font-size: 14px;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
     color: #6b9f87;

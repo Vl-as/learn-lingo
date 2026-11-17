@@ -6,9 +6,19 @@ import { useAuth } from '@/hooks/useAuth';
 import { getFavoriteTeachers } from '@/services/teachers';
 import TeachersList from '@/components/TeachersList/TeachersList';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 function FavoritesClient() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/');
+    }
+  });
+
   const {
     data,
     isLoading,
@@ -37,6 +47,9 @@ function FavoritesClient() {
           chosenLevel=""
           isError={isError}
           isLoading={isLoading}
+          onReset={() => router.replace('/teachers')}
+          buttonText="Find teachers"
+          text="You haven't added any teachers to your favorites yet. Explore our list and find your perfect teacher!"
         />
       </Container>
     </main>

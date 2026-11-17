@@ -1,0 +1,53 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-radius: 24px;
+  padding: 40px 24px;
+  background-color: #fff;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 260px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.description {
+  font-size: 16px;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 360px;
+}
+
+.buttonWrapper {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.girl {
+  position: absolute;
+  bottom: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.link {
+  position: relative;
+  z-index: 2;
+  min-width: 250px;
+}

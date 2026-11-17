@@ -7,3 +7,20 @@
 .hero {
   margin-bottom: 24px;
 }
+
+@media (max-width: 768px) {
+  .page {
+    padding-top: 96px;
+  }
+
+  .hero {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding-top: 88px;
+    padding-bottom: 24px;
+  }
+}

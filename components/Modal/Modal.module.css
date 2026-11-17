@@ -50,3 +50,47 @@
     stroke: #8a8a89;
   }
 }
+
+@media (max-width: 768px) {
+  .overlay {
+    padding: 32px 24px;
+  }
+
+  .modal {
+    max-width: 100%;
+    max-height: calc(100vh - 64px);
+    padding: 56px 0 40px 40px;
+  }
+
+  .modalInner {
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay {
+    padding: 12px;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 52px 0 24px 24px;
+    border-radius: 22px;
+  }
+
+  .modalInner {
+    padding-right: 24px;
+  }
+
+  .closeButton {
+    top: 12px;
+    right: 12px;
+  }
+
+  .iconCross {
+    width: 28px;
+    height: 28px;
+  }
+}

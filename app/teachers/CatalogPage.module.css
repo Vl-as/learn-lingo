@@ -8,3 +8,37 @@
 .container {
   padding: 0 114px;
 }
+
+@media (max-width: 1024px) {
+  .page {
+    padding-top: 104px;
+  }
+
+  .page .container {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding-top: 112px;
+  }
+
+  .page .container {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding-top: 126px;
+    padding-bottom: 24px;
+  }
+
+  .page .container {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}

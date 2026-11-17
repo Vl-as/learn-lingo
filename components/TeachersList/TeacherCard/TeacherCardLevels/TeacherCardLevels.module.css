@@ -23,3 +23,15 @@
   border-color: #9fbaae;
   background-color: #9fbaae;
 }
+
+@media (max-width: 600px) {
+  .list {
+    gap: 6px;
+  }
+
+  .level {
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}

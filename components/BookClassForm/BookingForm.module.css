@@ -135,3 +135,39 @@
   text-align: center;
   color: #9fbaae;
 }
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .teacherInfo {
+    margin-bottom: 28px;
+  }
+
+  .question {
+    font-size: 20px;
+  }
+
+  .radioButtons {
+    margin-bottom: 28px;
+  }
+
+  .inputField:last-of-type {
+    margin-bottom: 28px;
+  }
+
+  .animation {
+    width: min(200px, 100%);
+  }
+}
+
+@media (max-width: 380px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .label {
+    font-size: 14px;
+  }
+}

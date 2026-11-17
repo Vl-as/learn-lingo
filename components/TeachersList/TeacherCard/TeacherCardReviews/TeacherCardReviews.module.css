@@ -4,3 +4,9 @@
   align-items: flex-start;
   gap: 32px;
 }
+
+@media (max-width: 600px) {
+  .list {
+    gap: 24px;
+  }
+}
