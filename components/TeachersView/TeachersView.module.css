@@ -34,10 +34,12 @@
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(18, 20, 23, 0.05);
+  color: #121417;
   transition:
     background-color 0.3s ease-in-out,
     border-color 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out;
+    box-shadow 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
 .iconCross {
@@ -54,6 +56,7 @@
 .clearFilters:focus-visible {
   outline: 2px solid #6b9f87;
   outline-offset: 2px;
+  color: #9fbaae;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -62,9 +65,8 @@
   }
 
   .clearFilters:hover {
-    border-color: #cbded3;
-    background-color: #f5f8f6;
     box-shadow: 0 0 15px rgba(18, 20, 23, 0.12);
+    color: #9fbaae;
   }
 }
 
@@ -109,9 +111,7 @@
     gap: 8px;
     margin-top: 8px;
     border-radius: 12px;
-    background-color: #f5f8f6;
     font-weight: 500;
-    box-shadow: none;
   }
 
   .clearFilters::after {
@@ -132,7 +132,6 @@
     min-width: 0;
     flex: none;
   }
-
 }
 
 @media (max-width: 380px) {
