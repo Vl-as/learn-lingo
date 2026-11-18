@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Container from '../Container/Container';
 import css from './HeroSection.module.css';
 import clsx from 'clsx';
 import LinkButton from '../LinkButton/LinkButton';
+import GirlAnimation from '../GirlAnimation/GirlAnimation';
 
 interface HeroSectionProps {
   className?: string;
@@ -30,24 +30,7 @@ function HeroSection({ className }: HeroSectionProps) {
             Get started
           </LinkButton>
         </div>
-        <div className={css.mediaBox}>
-          <Image
-            className={css.girlImage}
-            src="/girl.webp"
-            alt="Animated girl smiles"
-            width={339}
-            height={339}
-            priority
-          />
-          <Image
-            className={css.computerImage}
-            src="/mac.webp"
-            alt=""
-            width={360}
-            height={176}
-            priority
-          />
-        </div>
+        <GirlAnimation />
       </Container>
     </section>
   );

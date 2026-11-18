@@ -14,6 +14,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://learn-lingo-one-delta.vercel.app'),
   title: 'Learn Lingo',
   description:
     'Learn foreign languages with professional tutors. Browse teachers, read reviews, and book personalized lessons with Learn Lingo.',

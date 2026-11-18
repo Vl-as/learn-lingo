@@ -25,6 +25,26 @@
   color: #121417;
 }
 
+.imageWrapper {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #233931 0%, #111d18 100%);
+  box-shadow: 0 2px 8px rgba(18, 29, 24, 0.15);
+
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo:focus-visible .imageWrapper {
+  transform: scale(1.08) rotate(-3deg);
+  box-shadow: 0 4px 12px rgba(18, 29, 24, 0.25);
+}
+
 .navbar {
   position: absolute;
   top: 50%;
@@ -146,5 +166,12 @@
     min-width: 84px;
     padding: 0 8px;
     font-size: 14px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .logo:hover .imageWrapper {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 4px 12px rgba(18, 29, 24, 0.25);
   }
 }

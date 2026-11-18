@@ -14,6 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 import { logoutUser } from '@/services/auth';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
 function Header() {
   const [modal, setModal] = useState<'login' | 'register' | null>(null);
@@ -34,7 +35,9 @@ function Header() {
       <Container>
         <div className={css.headerInner}>
           <Link className={css.logo} href="/">
-            <Icon name="ukraine" width={28} height={28} />
+            <div className={css.imageWrapper}>
+              <Image src="/logo.png" alt="Logo" width={28} height={28} />
+            </div>
             LearnLingo
           </Link>
           <NavBar className={css.navbar} />
