@@ -50,7 +50,7 @@ export default function GirlAnimation() {
 
     timeoutId = setTimeout(triggerBlink, 3000);
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [isWinking]);
 
   const handleCharacterClick = () => {
     if (isWinking) return;
