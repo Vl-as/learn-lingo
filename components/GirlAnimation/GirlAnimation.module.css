@@ -11,6 +11,9 @@
   align-items: flex-end;
   user-select: none;
   cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .characterWrapper {

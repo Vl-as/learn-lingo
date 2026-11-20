@@ -5,62 +5,106 @@ import css from './GirlAnimation.module.css';
 import Image from 'next/image';
 import clsx from 'clsx';
 
+const BLINK_DURATION = 160;
+const WINK_DURATION = 450;
+
 export default function GirlAnimation() {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const winkTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [isBlinking, setIsBlinking] = useState(false);
   const [isWinking, setIsWinking] = useState(false);
 
   useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    const canTrack = window.matchMedia(
+      '(hover: hover) and (pointer: fine)'
+    ).matches;
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (!canTrack || reduceMotion) return;
+
+    let frame = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!wrapperRef.current) return;
+      cancelAnimationFrame(frame);
 
-      const rect = wrapperRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+      frame = requestAnimationFrame(() => {
+        const rect = wrapper.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-      const deltaX = e.clientX - centerX;
-      const deltaY = e.clientY - centerY;
-      const angle = Math.atan2(deltaY, deltaX);
-      const distance = Math.min(Math.hypot(deltaX, deltaY) / 35, 7);
+        const deltaX = e.clientX - centerX;
+        const deltaY = e.clientY - centerY;
+        const angle = Math.atan2(deltaY, deltaX);
+        const distance = Math.min(Math.hypot(deltaX, deltaY) / 35, 7);
 
-      wrapperRef.current.style.setProperty(
-        '--px',
-        `${Math.cos(angle) * distance}px`
-      );
-      wrapperRef.current.style.setProperty(
-        '--py',
-        `${Math.sin(angle) * distance}px`
-      );
+        wrapper.style.setProperty('--px', `${Math.cos(angle) * distance}px`);
+        wrapper.style.setProperty('--py', `${Math.sin(angle) * distance}px`);
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    if (isWinking) return;
 
-    const triggerBlink = () => {
-      if (isWinking) return;
-      setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 160);
+    let blinkTimer: ReturnType<typeof setTimeout>;
+    let openTimer: ReturnType<typeof setTimeout>;
 
-      const nextBlink = Math.random() * 3000 + 2500;
-      timeoutId = setTimeout(triggerBlink, nextBlink);
+    const scheduleBlink = (delay: number) => {
+      blinkTimer = setTimeout(() => {
+        setIsBlinking(true);
+        openTimer = setTimeout(() => setIsBlinking(false), BLINK_DURATION);
+        scheduleBlink(Math.random() * 3000 + 2500);
+      }, delay);
     };
 
-    timeoutId = setTimeout(triggerBlink, 3000);
-    return () => clearTimeout(timeoutId);
+    scheduleBlink(3000);
+
+    return () => {
+      clearTimeout(blinkTimer);
+      clearTimeout(openTimer);
+    };
   }, [isWinking]);
+
+  useEffect(() => {
+    return () => clearTimeout(winkTimerRef.current);
+  }, []);
 
   const handleCharacterClick = () => {
     if (isWinking) return;
+
+    setIsBlinking(false);
     setIsWinking(true);
-    setTimeout(() => setIsWinking(false), 450);
+    winkTimerRef.current = setTimeout(() => setIsWinking(false), WINK_DURATION);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCharacterClick();
+    }
   };
 
   return (
-    <div className={css.card} onClick={handleCharacterClick} title="Click me!">
+    <div
+      className={css.card}
+      onClick={handleCharacterClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label="Make the tutor wink"
+    >
       <div ref={wrapperRef} className={css.characterWrapper}>
         <div className={clsx(css.headGroup, isWinking && css.headBounce)}>
           <div className={css.eyesContainer}>
