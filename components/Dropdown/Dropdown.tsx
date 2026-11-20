@@ -136,25 +136,27 @@ function Dropdown({
           />
         </button>
         {isOpen && (
-          <ul className={css.list} role="listbox">
-            {list.map((value, index) => (
-              <li className={css.listItem} key={value}>
-                <button
-                  role="option"
-                  aria-selected={placeholder === value}
-                  className={clsx(
-                    css.option,
-                    placeholder === value && css.chosen,
-                    highlightedIndex === index && css.focus
-                  )}
-                  onClick={() => handleClick(value, index)}
-                  type="button"
-                >
-                  {value}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div className={css.listWrapper}>
+            <ul className={css.list} role="listbox">
+              {list.map((value, index) => (
+                <li className={css.listItem} key={value}>
+                  <button
+                    role="option"
+                    aria-selected={placeholder === value}
+                    className={clsx(
+                      css.option,
+                      placeholder === value && css.chosen,
+                      highlightedIndex === index && css.focus
+                    )}
+                    onClick={() => handleClick(value, index)}
+                    type="button"
+                  >
+                    {value}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </div>

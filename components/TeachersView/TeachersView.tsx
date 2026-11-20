@@ -25,9 +25,11 @@ const levels: string[] = [
   'A2 Elementary',
   'B1 Intermediate',
   'B2 Upper-Intermediate',
+  'C1 Advanced',
+  'C2 Proficient',
 ];
 
-const prices: string[] = ['10', '20', '30', '40'];
+const prices: string[] = ['10', '20', '30', '40', '50'];
 
 interface TeachersViewProps {
   selectedFilters: Filters;

@@ -70,9 +70,10 @@ export default function GirlAnimation() {
                 <div className={css.glare} />
               </div>
               <div
-                className={`${css.eyelid} ${
-                  isBlinking || isWinking ? css.eyelidClosed : ''
-                }`}
+                className={clsx(
+                  css.eyelid,
+                  isBlinking || (isWinking && css.eyelidClosed)
+                )}
               />
             </div>
 
@@ -82,9 +83,7 @@ export default function GirlAnimation() {
                 <div className={css.glare} />
               </div>
               <div
-                className={`${css.eyelid} ${
-                  isBlinking ? css.eyelidClosed : ''
-                }`}
+                className={clsx(css.eyelid, isBlinking && css.eyelidClosed)}
               />
             </div>
           </div>
