@@ -1,0 +1,37 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /teachers/{teacherId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /users/{userId}/favorites/{teacherId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if request.resource.data.keys().hasOnly(
+          ['teacherId', 'goal', 'name', 'email', 'phone', 'userId', 'status', 'createdAt'])
+        && request.resource.data.teacherId is string
+        && request.resource.data.goal is string
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 50
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 100
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() <= 20
+        && request.resource.data.status == 'pending'
+        && request.resource.data.createdAt == request.time
+        && (request.resource.data.userId == null
+            || request.resource.data.userId == request.auth.uid);
+      allow read, update, delete: if false;
+    }
+  }
+}
