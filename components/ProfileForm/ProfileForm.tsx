@@ -19,7 +19,7 @@ type ProfileFormValues = {
   name: string;
 };
 
-const MAX_FILE_SIZE_BYTES = 500 * 1024;
+const MAX_FILE_SIZE_BYTES = 500 * 1024 * 1024;
 
 const profileSchema: Yup.ObjectSchema<ProfileFormValues> = Yup.object({
   name: Yup.string()
@@ -130,7 +130,7 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
     }
 
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      setFileError('Image size must be 500 KB or less');
+      setFileError(`Image size must be ${MAX_FILE_SIZE_MB} MB or less`);
       e.target.value = '';
       return;
     }
