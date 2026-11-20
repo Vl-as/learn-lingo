@@ -118,12 +118,12 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
       </div>
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <p className={css.question}>
-          What is your main reason for learning English?
+          What is your main reason for learning a language?
         </p>
         <div className={css.radioButtons}>
           <ul className={css.list}>
             {goals.map((goal, index) => (
-              <li key={index}>
+              <li key={goal}>
                 <label className={css.label}>
                   <input
                     className={css.radio}
@@ -162,7 +162,7 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
         <Input
           className={css.inputField}
           placeholder="Phone number"
-          type="phone"
+          type="tel"
           defaultValue={user?.phoneNumber ?? ''}
           {...register('phone')}
           error={errors.phone?.message}

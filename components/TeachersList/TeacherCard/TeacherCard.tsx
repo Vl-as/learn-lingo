@@ -159,7 +159,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
           </p>
           <p className={css.text}>
             <span className={css.textLabel}>Conditions:</span>{' '}
-            {teacher.conditions}
+            {teacher.conditions.join(' ')}
           </p>
         </div>
         <button

@@ -44,7 +44,7 @@ function Header() {
         <div className={css.headerInner}>
           <Link className={css.logo} href="/">
             <div className={css.imageWrapper}>
-              <Image src="/logo.png" alt="Logo" width={28} height={28} />
+              <Image src="/logo.webp" alt="Logo" width={28} height={28} />
             </div>
             LearnLingo
           </Link>

@@ -15,9 +15,9 @@ function FavoritesClient() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/');
+      router.replace('/');
     }
-  });
+  }, [loading, user, router]);
 
   const {
     data,
@@ -29,12 +29,14 @@ function FavoritesClient() {
   } = useInfiniteQuery({
     queryKey: ['favoriteTeachers', user?.uid],
     queryFn: ({ pageParam = 0 }) => getFavoriteTeachers(user!.uid, pageParam),
+    enabled: !!user,
     initialPageParam: 0,
     placeholderData: keepPreviousData,
     getNextPageParam: lastPage => lastPage.nextCursor,
   });
 
   const teachers = data?.pages.flatMap(page => page.teachers) ?? [];
+
   return (
     <main className={css.page}>
       <Container className={css.container}>
@@ -46,7 +48,7 @@ function FavoritesClient() {
           isFetchingNextPage={isFetchingNextPage}
           chosenLevel=""
           isError={isError}
-          isLoading={isLoading}
+          isLoading={loading || isLoading}
           onReset={() => router.replace('/teachers')}
           buttonText="Find teachers"
           text="You haven't added any teachers to your favorites yet. Explore our list and find your perfect teacher!"
