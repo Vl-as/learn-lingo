@@ -130,7 +130,7 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
     }
 
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      setFileError(`Image size must be ${MAX_FILE_SIZE_MB} MB or less`);
+      setFileError(`Image size must be ${MAX_FILE_SIZE_BYTES} MB or less`);
       e.target.value = '';
       return;
     }
