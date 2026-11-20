@@ -6,10 +6,9 @@ import Button from '../Button/Button';
 import { Teacher } from '@/types/teacher';
 import { useQuery } from '@tanstack/react-query';
 import { getFavorites } from '@/services/favorites';
-import { useContext } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
 import TeacherCardSkeleton from './TeacherCardSkeleton/TeacherCardSkeleton';
 import NotFoundCard from './NotFoundCard/NotFoundCard';
+import { useAuth } from '@/hooks/useAuth';
 
 interface TeachersListProps {
   teachers: Teacher[];
@@ -36,7 +35,7 @@ function TeachersList({
   buttonText,
   text,
 }: TeachersListProps) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const { data: favorites = [] } = useQuery({
     queryKey: ['favorites', user?.uid],
@@ -45,7 +44,7 @@ function TeachersList({
   });
 
   if (isError) {
-    <p>Something went wrong</p>;
+    return <p>Something went wrong</p>;
   }
 
   return (
@@ -53,7 +52,7 @@ function TeachersList({
       <ul className={css.list}>
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => (
-            <TeacherCardSkeleton key={i} />
+            <TeacherCardSkeleton key={`skeleton-${i}`} />
           ))
         ) : teachers.length === 0 ? (
           <NotFoundCard buttonText={buttonText} text={text} onReset={onReset} />

@@ -13,10 +13,11 @@ function TeacherCardLevels({
 }: TeacherCardLevelsProps) {
   return (
     <ul className={clsx(css.list, className)}>
-      {levels.map((level, index) => (
+      {levels.map(level => (
         <li
           className={clsx(css.level, chosenLevel === level && css.chosenLevel)}
-          key={index}
+          aria-current={chosenLevel === level ? 'true' : undefined}
+          key={level}
         >
           #{level}
         </li>

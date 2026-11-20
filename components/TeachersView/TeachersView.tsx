@@ -132,6 +132,8 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
             className={css.clearFilters}
             type="button"
             onClick={clearFilters}
+            aria-label="Clear filters"
+            title="Clear filters"
           >
             <Icon
               className={css.iconCross}

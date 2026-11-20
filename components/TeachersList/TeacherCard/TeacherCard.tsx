@@ -45,32 +45,43 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
     },
 
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['favorites'] });
-      await queryClient.removeQueries({ queryKey: ['favoriteTeachers'] });
+      const favoritesKey = ['favorites', user?.uid];
+      await queryClient.cancelQueries({ queryKey: favoritesKey });
 
       const previousFavorites =
-        queryClient.getQueryData<{ id: string }[]>(['favorites']) ?? [];
+        queryClient.getQueryData<string[]>(favoritesKey) ?? [];
 
-      queryClient.setQueryData<{ id: string }[]>(['favorites'], old => {
-        old ??= [];
-
-        const exists = old.some(f => f.id === teacher.id);
-
-        return exists
-          ? old.filter(f => f.id !== teacher.id)
-          : [...old, { id: teacher.id }];
+      queryClient.setQueryData<string[]>(favoritesKey, old => {
+        const current = old ?? [];
+        return current.includes(teacher.id)
+          ? current.filter(id => id !== teacher.id)
+          : [...current, teacher.id];
       });
 
-      return { previousFavorites };
+      return { previousFavorites, favoritesKey };
     },
 
     onError: (_error, _variables, context) => {
-      queryClient.setQueryData(['favorites'], context?.previousFavorites);
+      if (context?.favoritesKey) {
+        queryClient.setQueryData(
+          context.favoritesKey,
+          context.previousFavorites
+        );
+      }
+
+      toast.error(
+        isFavorite
+          ? 'Failed to remove teacher from favorites. Please try again.'
+          : 'Failed to save teacher to favorites. Please try again.'
+      );
     },
 
-    onSettled: () => {
+    onSettled: (_data, _error, _variables, context) => {
       queryClient.invalidateQueries({
-        queryKey: ['favorites'],
+        queryKey: context?.favoritesKey ?? ['favorites', user?.uid],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['favoriteTeachers'],
       });
     },
   });
@@ -111,6 +122,12 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
             type="button"
             onClick={handleClick}
             disabled={isPending}
+            aria-label={
+              isFavorite
+                ? `Remove ${fullName} from favorites`
+                : `Add ${fullName} to favorites`
+            }
+            aria-pressed={Boolean(isFavorite)}
           >
             {isFavorite ? (
               <Icon
@@ -148,6 +165,8 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
         <button
           onClick={() => setIsOpen(prev => !prev)}
           className={css.additionalInfoButton}
+          type="button"
+          aria-expanded={isOpen}
         >
           {isOpen ? 'Show less' : 'Read more'}
         </button>

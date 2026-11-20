@@ -28,13 +28,17 @@ function TeacherCardMeta({
       </li>
       <li className={css.item}>Lessons done: {lessons_done}</li>
       <li className={css.item}>
-        <Icon className={css.iconStar} name="star" width={16} height={16} />{' '}
+        <Icon
+          aria-hidden="true"
+          className={css.iconStar}
+          name="star"
+          width={16}
+          height={16}
+        />{' '}
         {rating}
       </li>
       <li className={css.item}>
-        <span>
-          Price / 1 hour: <span className={css.price}>{price}$</span>
-        </span>
+        Price / 1 hour: <span className={css.price}>{price}$</span>
       </li>
     </ul>
   );

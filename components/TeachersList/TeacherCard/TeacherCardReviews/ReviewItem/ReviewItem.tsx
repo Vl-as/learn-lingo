@@ -16,7 +16,7 @@ function ReviewItem({ review, className }: ReviewItemProps) {
         <div className={css.avatarFrame}>
           <Image
             src="/avatar_stock.webp"
-            alt="Avatar image"
+            alt={`${review.reviewer_name}'s avatar`}
             width={44}
             height={44}
           />
