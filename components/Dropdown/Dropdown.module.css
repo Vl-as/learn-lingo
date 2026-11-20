@@ -66,6 +66,7 @@
 }
 
 .listWrapper {
+  padding: 14px 0;
   overflow: hidden;
   position: absolute;
   left: 0;
@@ -80,7 +81,7 @@
 .list {
   max-height: 140px;
   overflow-y: auto;
-  padding: 14px 18px;
+  padding: 0 18px;
   display: flex;
   flex-direction: column;
   gap: 8px;

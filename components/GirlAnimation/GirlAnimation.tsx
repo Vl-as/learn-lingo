@@ -72,7 +72,7 @@ export default function GirlAnimation() {
               <div
                 className={clsx(
                   css.eyelid,
-                  isBlinking || (isWinking && css.eyelidClosed)
+                  (isBlinking || isWinking) && css.eyelidClosed
                 )}
               />
             </div>

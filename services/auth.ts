@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -20,12 +21,47 @@ type LoginData = {
 export async function registerUser({ name, email, password }: RegisterData) {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
 
+  await updateProfile(user, { displayName: name });
+
   await setDoc(doc(db, 'users', user.uid), {
     name,
     email,
   });
 
   return user;
+}
+
+export interface UpdateProfileData {
+  name: string;
+  photoURL?: string | null;
+}
+
+export async function updateUserProfile({ name, photoURL }: UpdateProfileData) {
+  const currentUser = auth.currentUser;
+  if (!currentUser) {
+    throw new Error('User is not authenticated');
+  }
+
+  const trimmedName = name.trim();
+  const nextPhotoURL = photoURL?.trim() || null;
+
+  await updateProfile(currentUser, {
+    displayName: trimmedName,
+    photoURL: nextPhotoURL,
+  });
+
+  await setDoc(
+    doc(db, 'users', currentUser.uid),
+    {
+      name: trimmedName,
+      photoURL: nextPhotoURL,
+    },
+    { merge: true }
+  );
+
+  await currentUser.reload();
+
+  return auth.currentUser;
 }
 
 export async function loginUser({ email, password }: LoginData) {

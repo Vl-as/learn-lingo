@@ -2,7 +2,10 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [new URL('https://ftp.goit.study/**')],
+    remotePatterns: [
+      new URL('https://ftp.goit.study/**'),
+      new URL('https://res.cloudinary.com/**'),
+    ],
   },
   experimental: {
     agentFeedback: true,

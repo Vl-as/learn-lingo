@@ -15,9 +15,12 @@ import { logoutUser } from '@/services/auth';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
+import ProfileForm from '../ProfileForm/ProfileForm';
 
 function Header() {
-  const [modal, setModal] = useState<'login' | 'register' | null>(null);
+  const [modal, setModal] = useState<'login' | 'register' | 'profile' | null>(
+    null
+  );
   const { user, loading } = useAuth();
 
   const { mutate, isPending } = useMutation({
@@ -29,6 +32,11 @@ function Header() {
       toast.error('Logout failed');
     },
   });
+
+  const handleProfileSuccess = () => {
+    setModal(null);
+    toast.success('Profile updated');
+  };
 
   return (
     <header className={css.header}>
@@ -45,11 +53,50 @@ function Header() {
             {loading ? (
               <li className={css.placeholder} />
             ) : user ? (
-              <li>
-                <Button disabled={isPending} onClick={() => mutate()}>
-                  {isPending ? 'Logging out...' : 'Log out'}
-                </Button>
-              </li>
+              <>
+                <li>
+                  <button
+                    aria-label="Edit profile"
+                    className={css.userButton}
+                    type="button"
+                    title={user.displayName || user.email || undefined}
+                    onClick={() => setModal('profile')}
+                  >
+                    <Image
+                      className={css.avatar}
+                      src={user.photoURL ?? '/avatar_stock.webp'}
+                      width={36}
+                      height={36}
+                      alt={
+                        user.displayName
+                          ? `${user.displayName} avatar`
+                          : 'User avatar'
+                      }
+                    />
+                    {(user.displayName || user.email) && (
+                      <span className={css.userName}>
+                        {user.displayName || user.email}
+                      </span>
+                    )}
+                  </button>
+                </li>
+                <li>
+                  <Button
+                    className={css.logOut}
+                    disabled={isPending}
+                    onClick={() => mutate()}
+                  >
+                    {isPending ? (
+                      <>
+                        <span>Logging out</span>
+                        <span className={css.loader}></span>
+                      </>
+                    ) : (
+                      'Log out'
+                    )}
+                  </Button>
+                </li>
+              </>
             ) : (
               <>
                 <li>
@@ -84,6 +131,15 @@ function Header() {
       {modal === 'register' && (
         <Modal onClose={() => setModal(null)}>
           <RegistrationForm onSuccess={() => setModal(null)} />
+        </Modal>
+      )}
+      {modal === 'profile' && user && (
+        <Modal onClose={() => setModal(null)}>
+          <ProfileForm
+            key={`${user.uid}-${user.displayName ?? ''}-${user.photoURL ?? ''}`}
+            user={user}
+            onSuccess={handleProfileSuccess}
+          />
         </Modal>
       )}
     </header>

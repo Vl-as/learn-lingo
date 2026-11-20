@@ -85,9 +85,67 @@
   min-width: 100px;
 }
 
+.userButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 12px 4px 4px;
+  background-color: transparent;
+  border: 1px solid rgba(17, 29, 24, 0.14);
+  border-radius: 999px;
+  cursor: pointer;
+  max-width: 120px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.userButton:active {
+  transform: scale(0.97);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #e6ece8;
+}
+
+.userName {
+  max-width: 140px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #111d18;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loader {
+  width: 18px;
+  aspect-ratio: 1;
+  --_c: no-repeat radial-gradient(farthest-side, #121417 92%, #0000);
+  background:
+    var(--_c) top,
+    var(--_c) left,
+    var(--_c) right,
+    var(--_c) bottom;
+  background-size: 6px 6px;
+  animation: l7 1s infinite;
+}
+@keyframes l7 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}
+
 @media (max-width: 1024px) {
   .headerInner {
-    padding: 0 32px;
+    padding: 0;
   }
 
   .navbar {
@@ -108,7 +166,6 @@
       'logo auth'
       'nav nav';
     row-gap: 8px;
-    padding: 0;
   }
 
   .logo {
@@ -123,7 +180,6 @@
 
   .authButtons {
     grid-area: auth;
-    gap: 4px;
   }
 
   .logIn.logIn,
@@ -140,15 +196,16 @@
     min-width: 42px;
     min-height: 42px;
   }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 @media (max-width: 480px) {
   .header {
     top: 12px;
-  }
-
-  .authButtons {
-    gap: 0;
   }
 
   .logIn.logIn {
@@ -167,11 +224,28 @@
     padding: 0 8px;
     font-size: 14px;
   }
+
+  .userButton {
+    padding: 4px;
+  }
+
+  .userButton:hover {
+    background-color: transparent;
+  }
+
+  .userName {
+    display: none;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
   .logo:hover .imageWrapper {
     transform: scale(1.08) rotate(-3deg);
     box-shadow: 0 4px 12px rgba(18, 29, 24, 0.25);
+  }
+
+  .userButton:hover {
+    background-color: #d4e1d7;
+    border-color: rgba(17, 29, 24, 0.24);
   }
 }
