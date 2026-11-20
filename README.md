@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌍 Learn Lingo
 
-## Getting Started
+A responsive online language tutor booking web application built with **Next.js**, **React**, and **TypeScript**.
 
-First, run the development server:
+Learn Lingo allows users to browse language tutors, filter teachers by criteria such as proficiency level, inspect detailed profiles and student reviews, manage a personal favorites list, and book trial lessons through a clean, accessible interface.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Features
+
+- 👩‍🏫 Browse language tutors with detailed profiles
+- 🔍 Filter teachers by criteria and proficiency level (`aria-current` on active level)
+- ❤️ Add or remove favorite teachers with optimistic UI updates and instant rollback on error
+- 📖 Expand tutor cards to view teaching experience and student reviews
+- 📅 Book trial lessons with form validation
+- 🔐 User authentication and profile management (display name & avatar upload)
+- 🔔 Toast notifications for user feedback and error states
+- ♿ Accessible UI controls (`aria-label`, `aria-pressed`, `aria-expanded`, semantic roles)
+- 📱 Fully responsive design (desktop, tablet, mobile)
+- ⚡ Fast navigation with Next.js App Router
+- 🌐 SEO optimization with Metadata API and Open Graph
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+<p>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="40"/>
+</p>
+
+**React • Next.js • TypeScript • CSS Modules**
+
+### Libraries & Services
+
+- TanStack Query — server state management, caching, and optimistic mutations
+- Firebase / Firestore — authentication and data persistence
+- Cloudinary — avatar image hosting
+- React Hook Form & Yup — form handling and validation
+- React Toastify — feedback notifications
+- `clsx` — conditional CSS class composition
+
+---
+
+## 🚀 Next.js Features
+
+- ✅ App Router
+- ✅ Server Components
+- ✅ Client Components
+- ✅ Metadata API & Open Graph
+- ✅ Error Handling (`error.tsx`)
+- ✅ Image Optimization (`next/image`)
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+├── app/                      # Next.js App Router pages, layouts, and error boundaries
+├── components/               # Reusable UI components, modals, forms, and cards
+├── hooks/                    # Custom hooks (e.g., useAuth)
+├── services/                 # API, Firebase, and Cloudinary integration
+├── types/                    # TypeScript types and interfaces
+└── utils/                    # Helper functions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone [https://github.com/Vl-as/learn-lingo.git](https://github.com/Vl-as/learn-lingo.git)
 
-## Learn More
+cd learn-lingo
 
-To learn more about Next.js, take a look at the following resources:
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open:
 
-## Deploy on Vercel
+```text
+http://localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 What I Learned
+
+During this project, I improved my skills in:
+
+- Building applications with the Next.js App Router
+- Managing server state and optimistic updates with TanStack Query
+- Integrating authentication and database operations with Firebase / Firestore
+- Handling avatar uploads and image previews cleanly
+- Building accessible components with proper ARIA attributes and keyboard/screen-reader support
+- Form validation and clean TypeScript typing
+- Responsive UI styling with CSS Modules and `clsx`
+
+---
+
+## 🔮 Future Improvements
+
+- Real-time calendar slot selection for trial lessons
+- Multi-criteria sorting (price, rating, lessons completed)
+- Messaging or chat between students and tutors
+- Multi-language UI support
+- Dark mode
+
+---
+
+## 👨‍💻 Author
+
+**Volodymyr Asieiev**
+
+- GitHub: https://github.com/Vl-as
+- LinkedIn: https://linkedin.com/in/volodymyr-asieiev
+- Telegram: https://t.me/vasvv
