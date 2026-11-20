@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import styles from './GirlAnimation.module.css';
+import css from './GirlAnimation.module.css';
 import Image from 'next/image';
+import clsx from 'clsx';
 
 export default function GirlAnimation() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -59,59 +60,53 @@ export default function GirlAnimation() {
   };
 
   return (
-    <div
-      className={styles.card}
-      onClick={handleCharacterClick}
-      title="Click me!"
-    >
-      <div
-        ref={wrapperRef}
-        className={`${styles.characterWrapper} ${isWinking ? styles.headBounce : ''}`}
-      >
-        <div className={styles.eyesContainer}>
-          <div className={styles.eyeSocket}>
-            <div className={styles.iris}>
-              <div className={styles.pupil} />
-              <div className={styles.glare} />
+    <div className={css.card} onClick={handleCharacterClick} title="Click me!">
+      <div ref={wrapperRef} className={css.characterWrapper}>
+        <div className={clsx(css.headGroup, isWinking && css.headBounce)}>
+          <div className={css.eyesContainer}>
+            <div className={css.eyeSocket}>
+              <div className={css.iris}>
+                <div className={css.pupil} />
+                <div className={css.glare} />
+              </div>
+              <div
+                className={`${css.eyelid} ${
+                  isBlinking || isWinking ? css.eyelidClosed : ''
+                }`}
+              />
             </div>
-            <div
-              className={`${styles.eyelid} ${
-                isBlinking || isWinking ? styles.eyelidClosed : ''
-              }`}
-            />
+
+            <div className={css.eyeSocket}>
+              <div className={css.iris}>
+                <div className={css.pupil} />
+                <div className={css.glare} />
+              </div>
+              <div
+                className={`${css.eyelid} ${
+                  isBlinking ? css.eyelidClosed : ''
+                }`}
+              />
+            </div>
           </div>
 
-          <div className={styles.eyeSocket}>
-            <div className={styles.iris}>
-              <div className={styles.pupil} />
-              <div className={styles.glare} />
-            </div>
-            <div
-              className={`${styles.eyelid} ${
-                isBlinking ? styles.eyelidClosed : ''
-              }`}
-            />
-          </div>
+          <Image
+            width={300}
+            height={253}
+            src="/girl-transparent.webp"
+            alt="Tutor Head"
+            className={css.head}
+            priority
+          />
         </div>
-
         <Image
-          width={300}
-          height={253}
-          src="/girl-transparent.webp"
-          alt="Tutor Head"
-          className={styles.head}
+          width={339}
+          height={339}
+          src="/mac.webp"
+          alt="Laptop"
+          className={css.laptop}
           priority
         />
       </div>
-
-      <Image
-        width={339}
-        height={339}
-        src="/mac.webp"
-        alt="Laptop"
-        className={styles.laptop}
-        priority
-      />
     </div>
   );
 }

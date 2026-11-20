@@ -17,6 +17,7 @@ function NotFoundPage() {
               alt="Page not found illustration"
               width={300}
               height={253}
+              priority
             />
             <LinkButton href="/" className={css.link}>
               Home Page
