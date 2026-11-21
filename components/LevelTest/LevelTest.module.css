@@ -184,11 +184,6 @@
     background-color 0.3s ease-in-out;
 }
 
-.languageButton:focus-visible {
-  outline: 2px solid #6b9f87;
-  outline-offset: 2px;
-}
-
 @media (hover: hover) and (pointer: fine) {
   .languageButton:hover {
     border-color: #9fbaae;
@@ -199,6 +194,7 @@
 .languageName {
   font-weight: 500;
   font-size: 18px;
+  color: #121417;
 }
 
 .languageNative {
