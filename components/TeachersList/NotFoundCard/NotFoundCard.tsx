@@ -22,6 +22,7 @@ function NotFoundCard({ onReset, text, buttonText }: NotFoundCardProps) {
           alt="Teachers not found"
           width={300}
           height={253}
+          priority
         />
         <Button onClick={onReset} className={css.link}>
           {buttonText}
