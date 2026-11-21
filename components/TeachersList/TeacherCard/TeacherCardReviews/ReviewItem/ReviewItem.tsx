@@ -1,7 +1,6 @@
 import { Review } from '@/types/review';
 import css from './ReviewItem.module.css';
 import clsx from 'clsx';
-import Image from 'next/image';
 import Icon from '@/components/Icon/Icon';
 
 interface ReviewItemProps {
@@ -13,14 +12,12 @@ function ReviewItem({ review, className }: ReviewItemProps) {
   return (
     <li className={clsx(css.review, className)}>
       <div className={css.header}>
-        <div className={css.avatarFrame}>
-          <Image
-            src="/avatar_stock.webp"
-            alt={`${review.reviewer_name}'s avatar`}
-            width={44}
-            height={44}
-          />
-        </div>
+        <Icon
+          className={css.avatarIcon}
+          name="user-circle"
+          width={44}
+          height={44}
+        />
         <div>
           <p className={css.name}>{review.reviewer_name}</p>
           <p className={css.rating}>

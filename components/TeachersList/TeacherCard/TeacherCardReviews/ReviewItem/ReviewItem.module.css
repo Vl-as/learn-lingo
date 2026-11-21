@@ -5,12 +5,14 @@
   gap: 12px;
 }
 
-.avatarFrame {
+.avatarIcon {
   flex-shrink: 0;
   width: 44px;
   height: 44px;
   overflow: hidden;
   border-radius: 50%;
+
+  color: var(--color-primary);
 }
 
 .name {

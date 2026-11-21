@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import css from './Header.module.css';
 import Icon from '../Icon/Icon';
 import NavBar from './NavBar/NavBar';
@@ -17,6 +16,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import AccentPicker from '../AccentPicker/AccentPicker';
+import Logo from '../Logo/Logo';
 
 function Header() {
   const [modal, setModal] = useState<'login' | 'register' | 'profile' | null>(
@@ -43,12 +43,7 @@ function Header() {
     <header className={css.header}>
       <Container>
         <div className={css.headerInner}>
-          <Link className={css.logo} href="/">
-            <div className={css.imageWrapper}>
-              <Image src="/logo.webp" alt="Logo" width={28} height={28} />
-            </div>
-            LearnLingo
-          </Link>
+          <Logo className={css.logo} />
           <NavBar className={css.navbar} />
           <ul className={css.authButtons}>
             <li>

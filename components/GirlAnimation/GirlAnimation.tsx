@@ -4,15 +4,25 @@ import { useEffect, useRef, useState } from 'react';
 import css from './GirlAnimation.module.css';
 import Image from 'next/image';
 import clsx from 'clsx';
+import { useAccent } from '@/hooks/useAccent';
 
 const BLINK_DURATION = 160;
 const WINK_DURATION = 450;
+
+const laptops = {
+  sage: '/mac-sage.webp',
+  sky: '/mac-sky.webp',
+  peach: '/mac-peach.webp',
+  lavender: '/mac-lavender.webp',
+  rose: '/mac-rose.webp',
+} as const;
 
 export default function GirlAnimation() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const winkTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [isBlinking, setIsBlinking] = useState(false);
   const [isWinking, setIsWinking] = useState(false);
+  const accent = useAccent();
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -144,7 +154,7 @@ export default function GirlAnimation() {
         <Image
           width={339}
           height={339}
-          src="/mac.webp"
+          src={laptops[accent]}
           alt="Laptop"
           className={css.laptop}
           priority
