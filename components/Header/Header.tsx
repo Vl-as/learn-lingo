@@ -78,7 +78,9 @@ function Header() {
             type="button"
             className={css.menuToggle}
             ref={menuToggleRef}
-            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-label={
+              isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
+            }
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setIsMenuOpen(open => !open)}
@@ -92,10 +94,7 @@ function Header() {
           <div
             id="mobile-navigation"
             ref={menuRef}
-            className={clsx(
-              css.mobileMenu,
-              isMenuOpen && css.mobileMenuOpen
-            )}
+            className={clsx(css.mobileMenu, isMenuOpen && css.mobileMenuOpen)}
           >
             <NavBar
               className={css.navbar}
@@ -122,17 +121,27 @@ function Header() {
                           setModal('profile');
                         }}
                       >
-                        <Image
-                          className={css.avatar}
-                          src={user.photoURL ?? '/avatar_stock.webp'}
-                          width={36}
-                          height={36}
-                          alt={
-                            user.displayName
-                              ? `${user.displayName} avatar`
-                              : 'User avatar'
-                          }
-                        />
+                        {user.photoURL ? (
+                          <Image
+                            className={css.avatar}
+                            src={user.photoURL}
+                            width={36}
+                            height={36}
+                            alt={
+                              user.displayName
+                                ? `${user.displayName} avatar`
+                                : 'User avatar'
+                            }
+                          />
+                        ) : (
+                          <div className={css.letterAvatar}>
+                            {(
+                              user.displayName?.[0] ??
+                              user.email?.[0] ??
+                              ''
+                            ).toUpperCase()}
+                          </div>
+                        )}
                         {(user.displayName || user.email) && (
                           <span className={css.userName}>
                             {user.displayName || user.email}

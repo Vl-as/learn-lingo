@@ -80,7 +80,7 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
   const isAvatarChanged = Boolean(selectedFile);
   const hasChanges = isNameChanged || isAvatarChanged;
 
-  const previewSrc = localPreview || user.photoURL || '/avatar_stock.webp';
+  const previewSrc = localPreview || user.photoURL;
   const isBlobPreview = Boolean(localPreview);
 
   const { mutate, isPending } = useMutation({
@@ -190,14 +190,24 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
               aria-label="Choose profile avatar"
               className={css.avatarButton}
             >
-              <Image
-                src={previewSrc}
-                alt="Avatar preview"
-                width={72}
-                height={72}
-                unoptimized={isBlobPreview}
-                className={css.avatarPreview}
-              />
+              {previewSrc ? (
+                <Image
+                  src={previewSrc}
+                  alt="Avatar preview"
+                  width={72}
+                  height={72}
+                  unoptimized={isBlobPreview}
+                  className={css.avatarPreview}
+                />
+              ) : (
+                <div className={css.letterAvatar}>
+                  {(
+                    user.displayName?.[0] ??
+                    user.email?.[0] ??
+                    ''
+                  ).toUpperCase()}
+                </div>
+              )}
             </button>
             <div className={css.avatarActions}>
               <button
