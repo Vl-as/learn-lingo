@@ -3,27 +3,57 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: none;
+
   border-radius: 12px;
   padding: 0 12px;
   min-height: 60px;
   width: fit-content;
 
-  background-color: #9fbaae;
+  background: #9fbaae;
+  color: #121417;
+  text-decoration: none;
+
   font-weight: 700;
   font-size: 18px;
   line-height: 1.55556;
-  color: #121417;
 
-  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+
+  transition:
+    background-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out,
+    transform 0.2s ease-in-out;
 }
 
 .link:focus-visible {
-  background-color: #cbded3;
+  background: #cbded3;
+  outline: 2px solid #6b9f87;
+  outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
-    background-color: #cbded3;
+    background: #cbded3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(18, 20, 23, 0.14);
+  }
+}
+
+.link:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(18, 20, 23, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: background-color 0.3s ease;
+  }
+
+  .link:hover,
+  .link:active {
+    transform: none;
+    box-shadow: none;
   }
 }
