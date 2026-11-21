@@ -13,7 +13,7 @@
 .text {
   margin-bottom: 32px;
   line-height: 1.375;
-  color: rgba(18, 20, 23, 0.8);
+  color: var(--color-text-80);
 }
 
 .avatarBlock {
@@ -29,7 +29,7 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1px solid rgba(18, 20, 23, 0.14);
+  border: 1px solid var(--color-text-14);
 }
 
 .avatarActions {
@@ -66,8 +66,8 @@
   justify-content: center;
   padding: 10px 18px;
   border-radius: 30px;
-  border: 1px solid rgba(18, 20, 23, 0.2);
-  color: #121417;
+  border: 1px solid var(--color-text-20);
+  color: var(--color-text);
   background-color: transparent;
   font-size: 14px;
   font-weight: 500;
@@ -79,8 +79,8 @@
 }
 
 .uploadLabel:focus-visible {
-  border-color: #9fbaae;
-  background-color: #cbded3;
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
 }
 
 .uploadLabel:active {
@@ -100,9 +100,9 @@
   flex-shrink: 0;
   padding: 12px 18px;
   border-radius: 30px;
-  border: 1px solid rgba(18, 20, 23, 0.14);
+  border: 1px solid var(--color-text-14);
   background-color: transparent;
-  color: #121417;
+  color: var(--color-text);
   font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
@@ -115,8 +115,8 @@
 }
 
 .resetButton:focus-visible {
-  border-color: #9fbaae;
-  background-color: #cbded3;
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
 }
 
 .resetButton:active {
@@ -141,13 +141,13 @@
   margin-top: 8px;
   margin-bottom: 12px;
   font-size: 13px;
-  color: #d32f2f;
+  color: var(--color-error-red);
 }
 
 .loader {
   width: 18px;
   aspect-ratio: 1;
-  --_c: no-repeat radial-gradient(farthest-side, #121417 92%, #0000);
+  --_c: no-repeat radial-gradient(farthest-side, var(--color-text) 92%, var(--color-transparent));
   background:
     var(--_c) top,
     var(--_c) left,
@@ -165,12 +165,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .uploadLabel:hover {
-    border-color: #9fbaae;
-    background-color: #cbded3;
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
   }
   .resetButton:hover {
-    border-color: #9fbaae;
-    background-color: #cbded3;
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
   }
 }
 

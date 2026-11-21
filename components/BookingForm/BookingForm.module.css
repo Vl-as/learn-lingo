@@ -13,7 +13,7 @@
 .text {
   margin-bottom: 20px;
   line-height: 1.375;
-  color: rgba(18, 20, 23, 0.8);
+  color: var(--color-text-80);
 }
 
 .teacherInfo {
@@ -40,12 +40,12 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33333;
-  color: #8a8a89;
+  color: var(--color-muted);
 }
 
 .teacherName {
   font-weight: 500;
-  color: #121417;
+  color: var(--color-text);
 }
 
 .question {
@@ -53,7 +53,7 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 1.33333;
-  color: #121417;
+  color: var(--color-text);
 }
 
 .label {
@@ -65,13 +65,13 @@
   font-size: 16px;
   line-height: 1.375;
   text-align: center;
-  color: #121417;
+  color: var(--color-text);
 }
 
 .radio {
   width: 24px;
   height: 24px;
-  accent-color: #37965d;
+  accent-color: var(--color-success);
 
   cursor: pointer;
 }
@@ -105,13 +105,13 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 1.28571;
-  color: #e0a39a;
+  color: var(--color-error);
 }
 
 .loader {
   width: 18px;
   aspect-ratio: 1;
-  --_c: no-repeat radial-gradient(farthest-side, #121417 92%, #0000);
+  --_c: no-repeat radial-gradient(farthest-side, var(--color-text) 92%, var(--color-transparent));
   background:
     var(--_c) top,
     var(--_c) left,
@@ -133,7 +133,7 @@
 
 .success {
   text-align: center;
-  color: #9fbaae;
+  color: var(--color-primary);
 }
 
 @media (max-width: 600px) {

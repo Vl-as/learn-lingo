@@ -2,7 +2,7 @@
   padding: 40px 0;
   width: 100%;
   min-width: 0;
-  background-color: #f8f8f8;
+  background-color: var(--color-page-background);
   background-image: url('/statsSection.svg');
   background-size: 100% 100%;
   background-position: center;
@@ -37,13 +37,13 @@
   font-size: 14px;
   line-height: 1.28571;
   letter-spacing: -0.02em;
-  color: rgba(18, 20, 23, 0.7);
+  color: var(--color-text-70);
 }
 
 @media (max-width: 1440px) {
   .statsInner {
     background-image: none;
-    border: 1px dashed #9fbaae;
+    border: 1px dashed var(--color-primary);
   }
 }
 

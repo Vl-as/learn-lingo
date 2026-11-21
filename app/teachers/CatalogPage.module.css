@@ -2,7 +2,7 @@
   padding: 88px 0 32px;
   flex: 1;
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: var(--color-page-background);
 }
 
 .container {

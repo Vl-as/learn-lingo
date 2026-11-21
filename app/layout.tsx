@@ -68,8 +68,8 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
               theme="colored"
               transition={Flip}
               toastStyle={{
-                background: '#9fbaae',
-                color: '#fff',
+                background: 'var(--color-primary)',
+                color: 'var(--color-white)',
                 borderRadius: '12px',
               }}
             />

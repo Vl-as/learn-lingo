@@ -16,7 +16,7 @@
 .name {
   margin-bottom: 2px;
   font-weight: 500;
-  color: #8a8a89;
+  color: var(--color-muted);
 }
 
 .rating {
@@ -30,7 +30,7 @@
 }
 
 .iconStar {
-  color: #ffc531;
+  color: var(--color-rating);
 }
 
 .comment {

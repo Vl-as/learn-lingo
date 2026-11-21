@@ -6,7 +6,7 @@
   width: 100%;
   border-radius: 24px;
   padding: 40px 24px;
-  background-color: #fff;
+  background-color: var(--color-white);
 }
 
 .content {
@@ -19,13 +19,13 @@
 .title {
   font-size: 28px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--color-not-found-text);
   margin: 0;
 }
 
 .description {
   font-size: 16px;
-  color: #666666;
+  color: var(--color-not-found-muted);
   line-height: 1.5;
   margin: 0;
   max-width: 360px;

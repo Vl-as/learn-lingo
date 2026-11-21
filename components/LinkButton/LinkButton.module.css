@@ -9,8 +9,8 @@
   min-height: 60px;
   width: fit-content;
 
-  background: #9fbaae;
-  color: #121417;
+  background: var(--color-primary);
+  color: var(--color-text);
   text-decoration: none;
 
   font-weight: 700;
@@ -28,22 +28,22 @@
 }
 
 .link:focus-visible {
-  background: #cbded3;
-  outline: 2px solid #6b9f87;
+  background: var(--color-primary-light);
+  outline: 2px solid var(--color-primary-dark);
   outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
-    background: #cbded3;
+    background: var(--color-primary-light);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(18, 20, 23, 0.14);
+    box-shadow: 0 8px 20px var(--color-text-14);
   }
 }
 
 .link:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px rgba(18, 20, 23, 0.08);
+  box-shadow: 0 2px 8px var(--color-text-08);
 }
 
 @media (prefers-reduced-motion: reduce) {

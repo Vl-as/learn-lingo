@@ -6,7 +6,7 @@
   min-width: 0;
   border-radius: 24px;
   padding: 24px;
-  background-color: #fff;
+  background-color: var(--color-white);
 }
 
 .content {
@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #9fbaae;
+  border: 3px solid var(--color-primary);
   border-radius: 100px;
   width: 120px;
   aspect-ratio: 1 / 1;
@@ -42,14 +42,14 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
-  color: #8a8a89;
+  color: var(--color-muted);
 }
 
 .name {
   font-weight: 500;
   font-size: 24px;
   line-height: 1;
-  color: #121417;
+  color: var(--color-text);
   overflow-wrap: anywhere;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .textLabel {
-  color: #8a8a89;
+  color: var(--color-muted);
 }
 
 .languages {
@@ -91,13 +91,13 @@
   line-height: 1.5;
   text-decoration: underline;
   text-decoration-skip-ink: none;
-  color: #121417;
+  color: var(--color-text);
 
   transition: color 0.3s ease-in-out;
 }
 
 .additionalInfoButton:focus-visible {
-  color: #9fbaae;
+  color: var(--color-primary);
 }
 
 .extraInformation {
@@ -127,39 +127,39 @@
 }
 
 .buttonFavorite:active {
-  box-shadow: 0px 1px 10px rgba(18, 20, 23, 0.1);
+  box-shadow: 0px 1px 10px var(--color-text-10);
 }
 
 .iconHeart {
   fill: transparent;
-  stroke: #121417;
+  stroke: var(--color-text);
   transition: stroke 0.3s ease-in-out;
 }
 
 .iconHeartFull {
-  fill: #e0a39a;
+  fill: var(--color-error);
   transition: fill 0.3s ease-in-out;
 }
 
 .buttonFavorite:focus-visible .iconHeartFull {
-  fill: #f2c0bd;
+  fill: var(--color-favorite);
 }
 
 .buttonFavorite:focus-visible .iconHeart {
-  stroke: #8a8a89;
+  stroke: var(--color-muted);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .additionalInfoButton:hover {
-    color: #9fbaae;
+    color: var(--color-primary);
   }
 
   .buttonFavorite:hover .iconHeart {
-    stroke: #8a8a89;
+    stroke: var(--color-muted);
   }
 
   .buttonFavorite:hover .iconHeartFull {
-    fill: #f2c0bd;
+    fill: var(--color-favorite);
   }
 }
 

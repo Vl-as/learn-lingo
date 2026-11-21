@@ -3,7 +3,7 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--color-overlay);
 
   display: flex;
   align-items: center;
@@ -14,7 +14,7 @@
   position: relative;
   padding: 64px 0 64px 64px;
   border-radius: 30px;
-  background-color: #fff;
+  background-color: var(--color-white);
   max-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
   max-height: 100%;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #9fbaae transparent;
+  scrollbar-color: var(--color-primary) transparent;
 }
 .closeButton {
   position: absolute;
@@ -38,16 +38,16 @@
 
 .iconCross {
   fill: transparent;
-  stroke: #121417;
+  stroke: var(--color-text);
 }
 
 .closeButton:focus-visible .iconCross {
-  stroke: #8a8a89;
+  stroke: var(--color-muted);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .closeButton:hover .iconCross {
-    stroke: #8a8a89;
+    stroke: var(--color-muted);
   }
 }
 

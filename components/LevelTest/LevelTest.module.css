@@ -3,7 +3,7 @@
   padding: 40px 48px;
   max-width: 640px;
   border-radius: 30px;
-  background-color: #fff;
+  background-color: var(--color-white);
 }
 
 .card:focus {
@@ -14,7 +14,7 @@
   margin-bottom: 20px;
   height: 8px;
   border-radius: 4px;
-  background-color: #f0f0f0;
+  background-color: var(--color-input-background);
   overflow: hidden;
 }
 
@@ -22,14 +22,14 @@
   display: block;
   height: 100%;
   border-radius: 4px;
-  background-color: #9fbaae;
+  background-color: var(--color-primary);
   transition: width 0.3s ease-in-out;
 }
 
 .counter {
   margin-bottom: 24px;
   font-size: 14px;
-  color: rgba(18, 20, 23, 0.5);
+  color: var(--color-text-50);
 }
 
 .fieldset {
@@ -62,7 +62,7 @@
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  border: 1px solid rgba(18, 20, 23, 0.1);
+  border: 1px solid var(--color-text-10);
   border-radius: 12px;
   font-size: 16px;
   line-height: 1.5;
@@ -73,8 +73,8 @@
 }
 
 .optionSelected {
-  border-color: #9fbaae;
-  background-color: rgba(203, 222, 211, 0.45);
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light-45);
   font-weight: 500;
 }
 
@@ -85,13 +85,13 @@
 }
 
 .option:has(.radio:focus-visible) {
-  outline: 2px solid #6b9f87;
+  outline: 2px solid var(--color-primary-dark);
   outline-offset: 2px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .option:hover {
-    border-color: #9fbaae;
+    border-color: var(--color-primary);
   }
 }
 
@@ -103,7 +103,7 @@
 .label {
   margin-bottom: 8px;
   font-size: 14px;
-  color: rgba(18, 20, 23, 0.5);
+  color: var(--color-text-50);
 }
 
 .levelName {
@@ -117,7 +117,7 @@
 .score {
   margin-bottom: 20px;
   font-size: 16px;
-  color: #6b9f87;
+  color: var(--color-primary-dark);
   font-weight: 500;
 }
 
@@ -130,7 +130,7 @@
 .note {
   margin-bottom: 32px;
   font-size: 14px;
-  color: rgba(18, 20, 23, 0.5);
+  color: var(--color-text-50);
 }
 
 .actions {
@@ -144,8 +144,8 @@
 }
 
 .actions .secondary {
-  border: 1px solid rgba(18, 20, 23, 0.15);
-  background-color: #fff;
+  border: 1px solid var(--color-text-15);
+  background-color: var(--color-white);
 }
 
 .chooseTitle {
@@ -159,7 +159,7 @@
 .chooseText {
   margin-bottom: 24px;
   font-size: 16px;
-  color: rgba(18, 20, 23, 0.6);
+  color: var(--color-text-60);
 }
 
 .languages {
@@ -175,9 +175,9 @@
   gap: 4px;
   padding: 16px 20px;
   width: 100%;
-  border: 1px solid rgba(18, 20, 23, 0.1);
+  border: 1px solid var(--color-text-10);
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--color-white);
   text-align: left;
   transition:
     border-color 0.3s ease-in-out,
@@ -186,20 +186,20 @@
 
 @media (hover: hover) and (pointer: fine) {
   .languageButton:hover {
-    border-color: #9fbaae;
-    background-color: rgba(203, 222, 211, 0.45);
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light-45);
   }
 }
 
 .languageName {
   font-weight: 500;
   font-size: 18px;
-  color: #121417;
+  color: var(--color-text);
 }
 
 .languageNative {
   font-size: 14px;
-  color: rgba(18, 20, 23, 0.5);
+  color: var(--color-text-50);
 }
 
 @media (max-width: 480px) {

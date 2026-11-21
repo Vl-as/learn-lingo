@@ -9,11 +9,11 @@
   min-height: 60px;
   width: fit-content;
 
-  background-color: #9fbaae;
+  background-color: var(--color-primary);
   font-weight: 700;
   font-size: 18px;
   line-height: 1.55556;
-  color: #121417;
+  color: var(--color-text);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 
@@ -24,8 +24,8 @@
 }
 
 .button:not(:disabled):focus-visible {
-  background-color: #cbded3;
-  outline: 2px solid #6b9f87;
+  background-color: var(--color-primary-light);
+  outline: 2px solid var(--color-primary-dark);
   outline-offset: 3px;
 }
 
@@ -36,9 +36,9 @@
 
 @media (hover: hover) and (pointer: fine) {
   .button:not(:disabled):hover {
-    background-color: #cbded3;
+    background-color: var(--color-primary-light);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(18, 20, 23, 0.14);
+    box-shadow: 0 8px 20px var(--color-text-14);
   }
 }
 

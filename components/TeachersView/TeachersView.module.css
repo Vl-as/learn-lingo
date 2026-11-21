@@ -30,11 +30,11 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(18, 20, 23, 0.1);
+  border: 1px solid var(--color-text-10);
   border-radius: 50%;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(18, 20, 23, 0.05);
-  color: #121417;
+  background-color: var(--color-white);
+  box-shadow: 0 0 10px var(--color-text-05);
+  color: var(--color-text);
   transition:
     background-color 0.3s ease-in-out,
     border-color 0.3s ease-in-out,
@@ -44,29 +44,29 @@
 
 .iconCross {
   fill: transparent;
-  stroke: #121417;
+  stroke: var(--color-text);
 
   transition: stroke 0.3s ease-in-out;
 }
 
 .clearFilters:focus-visible .iconCross {
-  stroke: #9fbaae;
+  stroke: var(--color-primary);
 }
 
 .clearFilters:focus-visible {
-  outline: 2px solid #6b9f87;
+  outline: 2px solid var(--color-primary-dark);
   outline-offset: 2px;
-  color: #9fbaae;
+  color: var(--color-primary);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .clearFilters:hover .iconCross {
-    stroke: #9fbaae;
+    stroke: var(--color-primary);
   }
 
   .clearFilters:hover {
-    box-shadow: 0 0 15px rgba(18, 20, 23, 0.12);
-    color: #9fbaae;
+    box-shadow: 0 0 15px var(--color-text-12);
+    color: var(--color-primary);
   }
 }
 

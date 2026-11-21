@@ -2,7 +2,7 @@
   padding: 88px 0 48px;
   flex: 1;
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: var(--color-page-background);
 }
 
 .intro {
@@ -22,7 +22,7 @@
 .accent {
   padding: 0 8px;
   border-radius: 8px;
-  background-color: #cbded3;
+  background-color: var(--color-primary-light);
   font-weight: 400;
   font-style: italic;
 }

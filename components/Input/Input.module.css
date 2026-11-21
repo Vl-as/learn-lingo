@@ -8,14 +8,14 @@
   width: 100%;
   min-height: 54px;
 
-  border: 1px solid rgba(18, 20, 23, 0.1);
+  border: 1px solid var(--color-text-10);
   border-radius: 12px;
   padding: 0 18px;
 
   font-weight: 400;
   font-size: 16px;
   line-height: 1.375;
-  color: #121417;
+  color: var(--color-text);
 
   outline: none;
 
@@ -23,23 +23,23 @@
 }
 
 .errorInput {
-  border-color: #e0a39a;
-  color: #e0a39a;
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 .input:not(.errorInput):focus-visible {
-  border-color: #9fbaae;
+  border-color: var(--color-primary);
 }
 
 .error {
   font-weight: 500;
   font-size: 14px;
   line-height: 1.28571;
-  color: #e0a39a;
+  color: var(--color-error);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .input:not(.errorInput):hover {
-    border-color: #9fbaae;
+    border-color: var(--color-primary);
   }
 }
