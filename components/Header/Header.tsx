@@ -51,7 +51,10 @@ function Header() {
           <NavBar className={css.navbar} />
           <ul className={css.authButtons}>
             {loading ? (
-              <li className={css.placeholder} />
+             <>
+                <li className={css.placeholder} />
+                <li className={css.placeholder} />
+             </>
             ) : user ? (
               <>
                 <li>

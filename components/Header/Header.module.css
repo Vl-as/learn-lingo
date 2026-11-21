@@ -32,7 +32,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--color-header-darkest) 0%, var(--color-header-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-header-darkest) 0%,
+    var(--color-header-dark) 100%
+  );
   box-shadow: 0 2px 8px var(--color-header-shadow-15);
 
   transition:
@@ -61,6 +65,29 @@
 .logIn.logIn {
   background-color: transparent;
   min-height: 48px;
+}
+
+.placeholder {
+  width: 100px;
+  min-height: 48px;
+  background-color: var(--color-header-dark-14);
+  border-radius: 24px;
+
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
 }
 
 .logInIcon.logInIcon {
@@ -128,7 +155,12 @@
 .loader {
   width: 18px;
   aspect-ratio: 1;
-  --_c: no-repeat radial-gradient(farthest-side, var(--color-text) 92%, var(--color-transparent));
+  --_c: no-repeat
+    radial-gradient(
+      farthest-side,
+      var(--color-text) 92%,
+      var(--color-transparent)
+    );
   background:
     var(--_c) top,
     var(--_c) left,
