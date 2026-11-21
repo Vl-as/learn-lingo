@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '../Icon/Icon';
 import { Filters } from '@/types/filters';
+import Link from 'next/link';
 
 const languages: string[] = [
   'French',
@@ -143,6 +144,20 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
             />
           </button>
         )}
+        <Link href="/level-test" className={css.levelHint}>
+          <span className={css.levelHintText}>Not sure about your level?</span>
+          <span className={css.levelHintAction}>
+            Take the level test
+            <span className={css.levelHintArrow} aria-hidden="true">
+              <Icon
+                className={css.iconArrow}
+                name="forward"
+                width={16}
+                height={16}
+              />
+            </span>
+          </span>
+        </Link>
       </div>
       <TeachersList
         isLoading={isPending}

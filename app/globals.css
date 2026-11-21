@@ -13,6 +13,7 @@
   --color-success: #37965d;
   --color-error: #e0a39a;
   --color-error-red: #d32f2f;
+  --color-level-error: #e74a4a;
   --color-rating: #ffc531;
   --color-online: #38cd3e;
   --color-favorite: #f2c0bd;
@@ -40,6 +41,7 @@
   --color-text-15: rgba(18, 20, 23, 0.15);
   --color-text-20: rgba(18, 20, 23, 0.2);
   --color-text-50: rgba(18, 20, 23, 0.5);
+  --color-text-55: rgba(18, 20, 23, 0.55);
   --color-text-60: rgba(18, 20, 23, 0.6);
   --color-text-70: rgba(18, 20, 23, 0.7);
   --color-text-80: rgba(18, 20, 23, 0.8);

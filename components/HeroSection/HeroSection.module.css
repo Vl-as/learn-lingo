@@ -65,7 +65,7 @@
 .actions .secondary {
   min-width: 267px;
   border: 1px solid var(--color-text-20);
-  background-color: transparent;
+  background-color: var(--color-transparent);
 }
 
 .actions .secondary:focus-visible {

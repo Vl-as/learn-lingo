@@ -86,12 +86,12 @@
   flex-direction: column;
   gap: 8px;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) transparent;
+  scrollbar-color: var(--color-primary) var(--color-transparent);
 }
 
 .option {
   border: none;
-  background-color: transparent;
+  background-color: var(--color-transparent);
 
   font-weight: 500;
   font-size: 18px;

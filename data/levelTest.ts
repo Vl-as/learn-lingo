@@ -295,3 +295,12 @@ export function getLevel(score: number): Level {
 
   return levels[index];
 }
+
+export function combineLevels(grammar: Level, writingName: string): Level {
+  const grammarIndex = levels.indexOf(grammar);
+  const writingIndex = levels.findIndex(level => level.name === writingName);
+
+  if (writingIndex === -1) return grammar;
+
+  return levels[Math.floor((grammarIndex + writingIndex) / 2)];
+}

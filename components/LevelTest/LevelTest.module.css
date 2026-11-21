@@ -140,6 +140,7 @@
 }
 
 .actions > * {
+  flex: 1;
   min-width: 220px;
 }
 
@@ -200,6 +201,124 @@
 .languageNative {
   font-size: 14px;
   color: var(--color-text-50);
+}
+
+.writingLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--color-text-50);
+}
+
+.textarea {
+  display: block;
+  padding: 16px 20px;
+  width: 100%;
+  min-height: 160px;
+  border: 1px solid var(--color-text-10);
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.textarea:focus-visible {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 2px;
+  border-color: var(--color-primary);
+}
+
+.charCount {
+  margin-top: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--color-text-50);
+}
+
+.authNote {
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background-color: var(--color-primary-light-45);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.errorText {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--color-level-error);
+}
+
+.feedback {
+  margin-bottom: 24px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: var(--color-page-background);
+}
+
+.feedbackTitle {
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.feedbackText {
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.mistakes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mistake {
+  padding-left: 12px;
+  border-left: 3px solid var(--color-primary);
+}
+
+.wrong {
+  text-decoration: line-through;
+  color: var(--color-text-55);
+}
+
+.right {
+  font-weight: 500;
+}
+
+.explanation {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-60);
+}
+
+.loader {
+  width: 18px;
+  aspect-ratio: 1;
+  --_c: no-repeat
+    radial-gradient(
+      farthest-side,
+      var(--color-text) 92%,
+      var(--color-transparent)
+    );
+  background:
+    var(--_c) top,
+    var(--_c) left,
+    var(--_c) right,
+    var(--_c) bottom;
+  background-size: 6px 6px;
+  animation: l7 1s infinite;
+}
+@keyframes l7 {
+  to {
+    transform: rotate(0.5turn);
+  }
 }
 
 @media (max-width: 480px) {

@@ -84,7 +84,7 @@
 .additionalInfoButton {
   margin-bottom: 32px;
   border: none;
-  background-color: transparent;
+  background-color: var(--color-transparent);
 
   font-weight: 500;
   font-size: 16px;
@@ -123,7 +123,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
+  background-color: var(--color-transparent);
 }
 
 .buttonFavorite:active {
@@ -131,7 +131,7 @@
 }
 
 .iconHeart {
-  fill: transparent;
+  fill: var(--color-transparent);
   stroke: var(--color-text);
   transition: stroke 0.3s ease-in-out;
 }

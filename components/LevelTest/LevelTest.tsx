@@ -4,31 +4,37 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import Button from '../Button/Button';
 import LinkButton from '../LinkButton/LinkButton';
+import WritingStep from './WritingStep';
 import {
+  combineLevels,
   getLevel,
   nativeNames,
   questionsByLanguage,
   testLanguages,
   type TestLanguage,
 } from '@/data/levelTest';
+import type { Assessment } from '@/types/assessment';
 import css from './LevelTest.module.css';
 
 function LevelTest() {
   const [language, setLanguage] = useState<TestLanguage | null>(null);
   const [answers, setAnswers] = useState<number[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
+  const [writingDone, setWritingDone] = useState(false);
+  const [assessment, setAssessment] = useState<Assessment | null>(null);
   const questionRef = useRef<HTMLFieldSetElement>(null);
   const resultRef = useRef<HTMLElement>(null);
 
   const questions = language ? questionsByLanguage[language] : [];
   const step = answers.length;
   const isFinished = language !== null && step === questions.length;
+  const showWriting = isFinished && !writingDone;
 
   useEffect(() => {
-    if (!language) return;
+    if (!language || showWriting) return;
 
     (isFinished ? resultRef : questionRef).current?.focus();
-  }, [language, step, isFinished]);
+  }, [language, step, isFinished, showWriting]);
 
   const handleNext = () => {
     if (selected === null) return;
@@ -37,10 +43,17 @@ function LevelTest() {
     setSelected(null);
   };
 
+  const handleWritingDone = (result: Assessment | null) => {
+    setAssessment(result);
+    setWritingDone(true);
+  };
+
   const handleReset = () => {
     setLanguage(null);
     setAnswers([]);
     setSelected(null);
+    setWritingDone(false);
+    setAssessment(null);
   };
 
   if (!language) {
@@ -68,11 +81,18 @@ function LevelTest() {
     );
   }
 
+  if (showWriting) {
+    return <WritingStep language={language} onDone={handleWritingDone} />;
+  }
+
   if (isFinished) {
     const score = answers.filter(
       (answer, index) => answer === questions[index].correct
     ).length;
-    const level = getLevel(score);
+    const grammarLevel = getLevel(score);
+    const level = assessment
+      ? combineLevels(grammarLevel, assessment.level)
+      : grammarLevel;
     const params = new URLSearchParams({
       language,
       level: level.name,
@@ -83,12 +103,43 @@ function LevelTest() {
         <p className={css.label}>Your approximate {language} level</p>
         <h2 className={css.levelName}>{level.name}</h2>
         <p className={css.score}>
-          {score} of {questions.length} correct answers
+          {assessment
+            ? `Grammar test: ${grammarLevel.name} · Writing (AI): ${assessment.level}`
+            : `${score} of ${questions.length} correct answers`}
         </p>
         <p className={css.description}>{level.description}</p>
+
+        {assessment && (
+          <div className={css.feedback}>
+            <h3 className={css.feedbackTitle}>AI feedback on your writing</h3>
+            <p className={css.feedbackText}>{assessment.summary}</p>
+            {assessment.mistakes.length > 0 && (
+              <ul className={css.mistakes}>
+                {assessment.mistakes.map((mistake, index) => (
+                  <li
+                    key={`${index}-${mistake.original}`}
+                    className={css.mistake}
+                  >
+                    <p>
+                      <span className={css.wrong}>{mistake.original}</span>
+                      {' → '}
+                      <span className={css.right}>{mistake.correction}</span>
+                    </p>
+                    <p className={css.explanation}>{mistake.explanation}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className={css.feedbackText}>
+              <strong>Tip:</strong> {assessment.tip}
+            </p>
+          </div>
+        )}
+
         <p className={css.note}>
-          This is a short grammar and vocabulary check, so the result is
-          approximate.
+          {assessment
+            ? 'The writing part is an AI estimate, so the result is approximate.'
+            : 'This is a short grammar and vocabulary check, so the result is approximate.'}
         </p>
         <div className={css.actions}>
           <LinkButton href={`/teachers?${params.toString()}`}>
@@ -156,7 +207,7 @@ function LevelTest() {
         onClick={handleNext}
         disabled={selected === null}
       >
-        {step === questions.length - 1 ? 'Show result' : 'Next'}
+        {step === questions.length - 1 ? 'Continue' : 'Next'}
       </Button>
     </section>
   );

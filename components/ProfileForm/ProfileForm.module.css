@@ -42,7 +42,7 @@
 .avatarButton {
   padding: 0;
   border: none;
-  background: transparent;
+  background: var(--color-transparent);
   border-radius: 50%;
   cursor: pointer;
   flex-shrink: 0;
@@ -68,7 +68,7 @@
   border-radius: 30px;
   border: 1px solid var(--color-text-20);
   color: var(--color-text);
-  background-color: transparent;
+  background-color: var(--color-transparent);
   font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
@@ -101,7 +101,7 @@
   padding: 12px 18px;
   border-radius: 30px;
   border: 1px solid var(--color-text-14);
-  background-color: transparent;
+  background-color: var(--color-transparent);
   color: var(--color-text);
   font-size: 14px;
   font-weight: 500;

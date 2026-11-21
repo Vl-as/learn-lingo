@@ -25,7 +25,7 @@
   max-height: 100%;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) transparent;
+  scrollbar-color: var(--color-primary) var(--color-transparent);
 }
 .closeButton {
   position: absolute;
@@ -33,11 +33,11 @@
   right: 20px;
 
   border: none;
-  background-color: transparent;
+  background-color: var(--color-transparent);
 }
 
 .iconCross {
-  fill: transparent;
+  fill: var(--color-transparent);
   stroke: var(--color-text);
 }
 
