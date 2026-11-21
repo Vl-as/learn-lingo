@@ -27,6 +27,15 @@ function StatsSection({ className }: StatsSectionProps) {
     <section className={clsx(css.stats, className)}>
       <Container>
         <div className={css.statsInner}>
+          <svg className={css.border} aria-hidden="true" focusable="false">
+            <rect
+              className={css.borderLine}
+              x="0.5"
+              y="0.5"
+              width="calc(100% - 1px)"
+              height="calc(100% - 1px)"
+            />
+          </svg>
           <ul className={css.list}>
             {stats.map(({ amount, suffix, label }) => (
               <li className={css.statItem} key={label}>
