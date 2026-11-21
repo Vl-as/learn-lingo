@@ -7,7 +7,11 @@ import { accents } from '@/data/accents';
 import { applyAccent, useAccent } from '@/hooks/useAccent';
 import css from './AccentPicker.module.css';
 
-function AccentPicker() {
+interface AccentPickerProps {
+  onOpen?: () => void;
+}
+
+function AccentPicker({ onOpen }: AccentPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const accent = useAccent();
@@ -17,7 +21,10 @@ function AccentPicker() {
       <button
         type="button"
         className={css.trigger}
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+          onOpen?.();
+        }}
         aria-label="Change accent color"
         title="Change accent color"
       >

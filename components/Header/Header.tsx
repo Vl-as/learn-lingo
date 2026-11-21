@@ -5,7 +5,7 @@ import Icon from '../Icon/Icon';
 import NavBar from './NavBar/NavBar';
 import Container from '../Container/Container';
 import Button from '../Button/Button';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import Modal from '../Modal/Modal';
@@ -25,6 +25,8 @@ function Header() {
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading } = useAuth();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -32,9 +34,24 @@ function Header() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setIsMenuOpen(false);
     };
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!(event.target instanceof Node)) return;
+      if (
+        menuRef.current?.contains(event.target) ||
+        menuToggleRef.current?.contains(event.target)
+      ) {
+        return;
+      }
+
+      setIsMenuOpen(false);
+    };
 
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('pointerdown', handlePointerDown);
+    };
   }, [isMenuOpen]);
 
   const { mutate, isPending } = useMutation({
@@ -60,6 +77,7 @@ function Header() {
           <button
             type="button"
             className={css.menuToggle}
+            ref={menuToggleRef}
             aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
@@ -73,6 +91,7 @@ function Header() {
           </button>
           <div
             id="mobile-navigation"
+            ref={menuRef}
             className={clsx(
               css.mobileMenu,
               isMenuOpen && css.mobileMenuOpen
@@ -83,7 +102,7 @@ function Header() {
               onNavigate={() => setIsMenuOpen(false)}
             />
             <div className={css.headerActions}>
-              <AccentPicker />
+              <AccentPicker onOpen={() => setIsMenuOpen(false)} />
               <ul className={css.authButtons}>
                 {loading ? (
                   <>
