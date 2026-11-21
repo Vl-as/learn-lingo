@@ -16,6 +16,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import ProfileForm from '../ProfileForm/ProfileForm';
+import AccentPicker from '../AccentPicker/AccentPicker';
 
 function Header() {
   const [modal, setModal] = useState<'login' | 'register' | 'profile' | null>(
@@ -50,11 +51,14 @@ function Header() {
           </Link>
           <NavBar className={css.navbar} />
           <ul className={css.authButtons}>
+            <li>
+              <AccentPicker />
+            </li>
             {loading ? (
-             <>
+              <>
                 <li className={css.placeholder} />
                 <li className={css.placeholder} />
-             </>
+              </>
             ) : user ? (
               <>
                 <li>

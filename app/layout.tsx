@@ -47,7 +47,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={roboto.variable}>
+    <html lang="en" className={roboto.variable} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var a=localStorage.getItem('learn-lingo-accent');if(a){document.documentElement.dataset.accent=a}}catch(e){}`,
+          }}
+        />
+      </head>
       <body>
         <TanstackProvider>
           <AuthProvider>
