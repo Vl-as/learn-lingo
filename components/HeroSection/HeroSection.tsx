@@ -26,9 +26,14 @@ function HeroSection({ className }: HeroSectionProps) {
             Elevate your language proficiency to new heights by connecting with
             highly qualified and experienced tutors.
           </p>
-          <LinkButton href="/teachers" className={css.button}>
-            Get started
-          </LinkButton>
+          <div className={css.actions}>
+            <LinkButton href="/teachers" className={css.button}>
+              Get started
+            </LinkButton>
+            <LinkButton href="/level-test" className={css.secondary}>
+              Take a level test
+            </LinkButton>
+          </div>
         </div>
         <GirlAnimation />
       </Container>

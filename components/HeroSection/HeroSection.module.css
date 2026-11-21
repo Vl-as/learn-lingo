@@ -57,6 +57,29 @@
   min-width: 267px;
 }
 
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actions .secondary {
+  min-width: 267px;
+  border: 1px solid rgba(18, 20, 23, 0.2);
+  background-color: transparent;
+}
+
+.actions .secondary:focus-visible {
+  border-color: #cbded3;
+  background-color: #cbded3;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .actions .secondary:hover {
+    border-color: #cbded3;
+    background-color: #cbded3;
+  }
+}
+
 .mediaBox {
   position: relative;
   flex-shrink: 0;
@@ -111,6 +134,11 @@
     width: min(82%, 360px);
     height: auto;
   }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 768px) {
@@ -145,6 +173,16 @@
   .computerImage {
     width: min(70%, 360px);
   }
+
+  .actions {
+    flex-direction: row;
+  }
+
+  .actions .button,
+  .actions .secondary {
+    flex: 1;
+    min-width: auto;
+  }
 }
 
 @media (max-width: 480px) {
@@ -163,7 +201,13 @@
     font-size: 15px;
   }
 
-  .button {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions .secondary,
+  .actions .button {
     width: 100%;
     min-width: 0;
   }

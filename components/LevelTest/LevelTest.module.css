@@ -1,0 +1,229 @@
+.card {
+  margin: 0 auto;
+  padding: 40px 48px;
+  max-width: 640px;
+  border-radius: 30px;
+  background-color: #fff;
+}
+
+.card:focus {
+  outline: none;
+}
+
+.progress {
+  margin-bottom: 20px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  overflow: hidden;
+}
+
+.progressBar {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background-color: #9fbaae;
+  transition: width 0.3s ease-in-out;
+}
+
+.counter {
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: rgba(18, 20, 23, 0.5);
+}
+
+.fieldset {
+  margin-bottom: 32px;
+  min-width: 0;
+}
+
+.fieldset:focus {
+  outline: none;
+}
+
+.question {
+  display: block;
+  margin-bottom: 24px;
+  width: 100%;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.33333;
+  letter-spacing: -0.02em;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+.optionSelected {
+  border-color: #9fbaae;
+  background-color: rgba(203, 222, 211, 0.45);
+  font-weight: 500;
+}
+
+.radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.option:has(.radio:focus-visible) {
+  outline: 2px solid #6b9f87;
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .option:hover {
+    border-color: #9fbaae;
+  }
+}
+
+.next {
+  margin-left: auto;
+  min-width: 160px;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: rgba(18, 20, 23, 0.5);
+}
+
+.levelName {
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.score {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #6b9f87;
+  font-weight: 500;
+}
+
+.description {
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.note {
+  margin-bottom: 32px;
+  font-size: 14px;
+  color: rgba(18, 20, 23, 0.5);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.actions > * {
+  min-width: 220px;
+}
+
+.actions .secondary {
+  border: 1px solid rgba(18, 20, 23, 0.15);
+  background-color: #fff;
+}
+
+.chooseTitle {
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.33333;
+  letter-spacing: -0.02em;
+}
+
+.chooseText {
+  margin-bottom: 24px;
+  font-size: 16px;
+  color: rgba(18, 20, 23, 0.6);
+}
+
+.languages {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.languageButton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px 20px;
+  width: 100%;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+  border-radius: 12px;
+  background-color: #fff;
+  text-align: left;
+  transition:
+    border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+.languageButton:focus-visible {
+  outline: 2px solid #6b9f87;
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .languageButton:hover {
+    border-color: #9fbaae;
+    background-color: rgba(203, 222, 211, 0.45);
+  }
+}
+
+.languageName {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.languageNative {
+  font-size: 14px;
+  color: rgba(18, 20, 23, 0.5);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 24px 20px;
+  }
+
+  .question {
+    font-size: 20px;
+  }
+
+  .levelName {
+    font-size: 32px;
+  }
+
+  .actions > * {
+    width: 100%;
+  }
+
+  .languages {
+    grid-template-columns: 1fr;
+  }
+}
