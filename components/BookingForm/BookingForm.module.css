@@ -71,7 +71,7 @@
 .radio {
   width: 24px;
   height: 24px;
-  accent-color: var(--color-success);
+  accent-color: var(--color-primary-dark);
 
   cursor: pointer;
 }
@@ -89,8 +89,9 @@
   gap: 16px;
 }
 
-.button {
+.button.button {
   width: 100%;
+  box-shadow: none;
 }
 
 .inputField:not(:last-of-type) {
@@ -111,7 +112,12 @@
 .loader {
   width: 18px;
   aspect-ratio: 1;
-  --_c: no-repeat radial-gradient(farthest-side, var(--color-text) 92%, var(--color-transparent));
+  --_c: no-repeat
+    radial-gradient(
+      farthest-side,
+      var(--color-text) 92%,
+      var(--color-transparent)
+    );
   background:
     var(--_c) top,
     var(--_c) left,
@@ -169,5 +175,11 @@
 
   .label {
     font-size: 14px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button.button:hover {
+    box-shadow: none;
   }
 }

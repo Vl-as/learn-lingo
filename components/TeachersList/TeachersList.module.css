@@ -7,8 +7,9 @@
 
 .loadMore.loadMore {
   margin: 0 auto;
-  min-height: 60px;
-  min-width: 183px;
+  min-height: 66px;
+  min-width: 208px;
+  border-radius: 20px;
 }
 
 .loaderComponent {
@@ -16,7 +17,7 @@
 }
 
 .loader {
-  width: 18px;
+  width: 24px;
   aspect-ratio: 1;
   --_c: no-repeat radial-gradient(farthest-side, var(--color-text) 92%, var(--color-transparent));
   background:
@@ -24,7 +25,7 @@
     var(--_c) left,
     var(--_c) right,
     var(--_c) bottom;
-  background-size: 6px 6px;
+  background-size: 8px 8px;
   animation: l7 1s infinite;
 }
 @keyframes l7 {
@@ -40,7 +41,7 @@
   }
 
   .loadMore.loadMore {
-    min-height: 54px;
-    min-width: 160px;
+    min-height: 58px;
+    min-width: 180px;
   }
 }

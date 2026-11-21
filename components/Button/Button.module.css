@@ -2,54 +2,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  border: none;
-  border-radius: 12px;
-  padding: 0 8px;
-  min-height: 60px;
+  gap: 10px;
+  border: 1px solid var(--color-white-60);
+  border-radius: 16px;
+  padding: 0 24px;
+  min-height: 62px;
   width: fit-content;
 
-  background-color: var(--color-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light),
+    var(--color-primary)
+  );
   font-weight: 700;
   font-size: 18px;
   line-height: 1.55556;
   color: var(--color-text);
   cursor: pointer;
   -webkit-tap-highlight-color: var(--color-transparent);
+  box-shadow:
+    0 6px 16px var(--color-primary-dark-28),
+    inset 0 1px 0 var(--color-white-60);
 
   transition:
-    background-color 0.3s ease-in-out,
+    background 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out,
     transform 0.2s ease-in-out;
 }
 
 .button:not(:disabled):focus-visible {
-  background-color: var(--color-primary-light);
+  background: var(--color-primary-light);
   outline: 2px solid var(--color-primary-dark);
   outline-offset: 3px;
 }
 
 .button:disabled {
   cursor: not-allowed;
-  opacity: 0.8;
+  opacity: 0.72;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .button:not(:disabled):hover {
-    background-color: var(--color-primary-light);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px var(--color-text-14);
+    background: linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-primary-light)
+    );
+    transform: translateY(-3px);
+    box-shadow:
+      0 12px 24px var(--color-primary-dark-35),
+      inset 0 1px 0 var(--color-white-70);
   }
 }
 
 .button:not(:disabled):active {
-  transform: scale(0.98);
-  box-shadow: none;
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 3px 8px var(--color-primary-dark-28);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .button {
-    transition: background-color 0.3s ease-in-out;
+    transition: background 0.3s ease-in-out;
   }
 
   .button:not(:disabled):hover,

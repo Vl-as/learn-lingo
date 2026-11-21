@@ -136,6 +136,15 @@
   width: 100%;
 }
 
+.button.button {
+  box-shadow: none;
+}
+
+.container .button.button:hover,
+.container .button.button:active {
+  box-shadow: none;
+}
+
 .error {
   display: block;
   margin-top: 8px;

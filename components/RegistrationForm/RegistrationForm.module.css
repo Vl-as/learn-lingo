@@ -24,14 +24,25 @@
   margin-bottom: 40px;
 }
 
-.button {
+.button.button {
   width: 100%;
+  box-shadow: none;
+}
+
+.container .button.button:hover,
+.container .button.button:active {
+  box-shadow: none;
 }
 
 .loader {
   width: 18px;
   aspect-ratio: 1;
-  --_c: no-repeat radial-gradient(farthest-side, var(--color-text) 92%, var(--color-transparent));
+  --_c: no-repeat
+    radial-gradient(
+      farthest-side,
+      var(--color-text) 92%,
+      var(--color-transparent)
+    );
   background:
     var(--_c) top,
     var(--_c) left,
