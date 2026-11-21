@@ -6,6 +6,7 @@ import TanstackProvider from '@/providers/TanstackProvider/TanstackProvider';
 import AuthProvider from '@/providers/AuthProvider/AuthProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import { Flip, ToastContainer } from 'react-toastify';
+import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           <AuthProvider>
             <Header />
             {children}
+            <ScrollToTop />
             <ToastContainer
               position="top-center"
               autoClose={3000}
