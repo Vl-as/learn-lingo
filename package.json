@@ -35,5 +35,12 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
     "typescript": "^5"
+  },
+  "overrides": {
+    "firebase-admin": {
+      "jwks-rsa": {
+        "jose": "4.15.9"
+      }
+    }
   }
 }
