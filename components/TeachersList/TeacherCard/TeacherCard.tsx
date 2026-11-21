@@ -11,7 +11,11 @@ import { useState } from 'react';
 import Icon from '@/components/Icon/Icon';
 import Modal from '@/components/Modal/Modal';
 import BookClassForm from '@/components/BookingForm/BookingForm';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { addFavorite, removeFavorite } from '@/services/favorites';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
@@ -21,6 +25,11 @@ interface TeacherCardProps {
   chosenLevel: string;
   isFavorite?: boolean;
 }
+
+type FavoriteTeachersPage = {
+  teachers: Teacher[];
+  nextCursor: number | null;
+};
 
 function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,9 +56,14 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
     onMutate: async () => {
       const favoritesKey = ['favorites', user?.uid];
       await queryClient.cancelQueries({ queryKey: favoritesKey });
+      await queryClient.cancelQueries({ queryKey: ['favoriteTeachers'] });
 
       const previousFavorites =
         queryClient.getQueryData<string[]>(favoritesKey) ?? [];
+
+      const previousFavoriteTeachers = queryClient.getQueriesData<
+        InfiniteData<FavoriteTeachersPage>
+      >({ queryKey: ['favoriteTeachers'] });
 
       queryClient.setQueryData<string[]>(favoritesKey, old => {
         const current = old ?? [];
@@ -58,7 +72,21 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
           : [...current, teacher.id];
       });
 
-      return { previousFavorites, favoritesKey };
+      if (isFavorite) {
+        queryClient.setQueriesData<InfiniteData<FavoriteTeachersPage>>(
+          { queryKey: ['favoriteTeachers'] },
+          old =>
+            old && {
+              ...old,
+              pages: old.pages.map(page => ({
+                ...page,
+                teachers: page.teachers.filter(item => item.id !== teacher.id),
+              })),
+            }
+        );
+      }
+
+      return { previousFavorites, favoritesKey, previousFavoriteTeachers };
     },
 
     onError: (_error, _variables, context) => {
@@ -68,6 +96,10 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
           context.previousFavorites
         );
       }
+
+      context?.previousFavoriteTeachers.forEach(([key, data]) => {
+        queryClient.setQueryData(key, data);
+      });
 
       toast.error(
         isFavorite

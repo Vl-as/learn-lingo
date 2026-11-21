@@ -1,6 +1,6 @@
 import FavoritesClient from './FavoritesClient';
 
-async function FavoritesPage() {
+function FavoritesPage() {
   return <FavoritesClient />;
 }
 

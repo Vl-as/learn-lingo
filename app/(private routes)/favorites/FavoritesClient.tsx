@@ -48,7 +48,7 @@ function FavoritesClient() {
           isFetchingNextPage={isFetchingNextPage}
           chosenLevel=""
           isError={isError}
-          isLoading={loading || isLoading}
+          isLoading={loading || !user || isLoading}
           onReset={() => router.replace('/teachers')}
           buttonText="Find teachers"
           text="You haven't added any teachers to your favorites yet. Explore our list and find your perfect teacher!"
