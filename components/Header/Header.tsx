@@ -5,7 +5,8 @@ import Icon from '../Icon/Icon';
 import NavBar from './NavBar/NavBar';
 import Container from '../Container/Container';
 import Button from '../Button/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import Modal from '../Modal/Modal';
 import LogInForm from '../LogInForm/LogInForm';
@@ -22,7 +23,19 @@ function Header() {
   const [modal, setModal] = useState<'login' | 'register' | 'profile' | null>(
     null
   );
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsMenuOpen(false);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMenuOpen]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: logoutUser,
@@ -44,85 +57,122 @@ function Header() {
       <Container>
         <div className={css.headerInner}>
           <Logo className={css.logo} />
-          <NavBar className={css.navbar} />
-          <ul className={css.authButtons}>
-            <li>
-              <AccentPicker />
-            </li>
-            {loading ? (
-              <>
-                <li className={css.placeholder} />
-                <li className={css.placeholder} />
-              </>
-            ) : user ? (
-              <>
-                <li>
-                  <button
-                    aria-label="Edit profile"
-                    className={css.userButton}
-                    type="button"
-                    title={user.displayName || user.email || undefined}
-                    onClick={() => setModal('profile')}
-                  >
-                    <Image
-                      className={css.avatar}
-                      src={user.photoURL ?? '/avatar_stock.webp'}
-                      width={36}
-                      height={36}
-                      alt={
-                        user.displayName
-                          ? `${user.displayName} avatar`
-                          : 'User avatar'
-                      }
-                    />
-                    {(user.displayName || user.email) && (
-                      <span className={css.userName}>
-                        {user.displayName || user.email}
-                      </span>
-                    )}
-                  </button>
-                </li>
-                <li>
-                  <Button
-                    className={css.logOut}
-                    disabled={isPending}
-                    onClick={() => mutate()}
-                  >
-                    {isPending ? (
-                      <>
-                        <span>Logging out</span>
-                        <span className={css.loader}></span>
-                      </>
-                    ) : (
-                      'Log out'
-                    )}
-                  </Button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Button
-                    aria-label="Open login form"
-                    className={css.logIn}
-                    onClick={() => setModal('login')}
-                  >
-                    <Icon className={css.logInIcon} name="log-in" />
-                    Log in
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    aria-label="Open register form"
-                    className={css.registration}
-                    onClick={() => setModal('register')}
-                  >
-                    Registration
-                  </Button>
-                </li>
-              </>
+          <button
+            type="button"
+            className={css.menuToggle}
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setIsMenuOpen(open => !open)}
+          >
+            <span className={css.menuIcon} aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+          <div
+            id="mobile-navigation"
+            className={clsx(
+              css.mobileMenu,
+              isMenuOpen && css.mobileMenuOpen
             )}
-          </ul>
+          >
+            <NavBar
+              className={css.navbar}
+              onNavigate={() => setIsMenuOpen(false)}
+            />
+            <div className={css.headerActions}>
+              <AccentPicker />
+              <ul className={css.authButtons}>
+                {loading ? (
+                  <>
+                    <li className={css.placeholder} />
+                    <li className={css.placeholder} />
+                  </>
+                ) : user ? (
+                  <>
+                    <li>
+                      <button
+                        aria-label="Edit profile"
+                        className={css.userButton}
+                        type="button"
+                        title={user.displayName || user.email || undefined}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setModal('profile');
+                        }}
+                      >
+                        <Image
+                          className={css.avatar}
+                          src={user.photoURL ?? '/avatar_stock.webp'}
+                          width={36}
+                          height={36}
+                          alt={
+                            user.displayName
+                              ? `${user.displayName} avatar`
+                              : 'User avatar'
+                          }
+                        />
+                        {(user.displayName || user.email) && (
+                          <span className={css.userName}>
+                            {user.displayName || user.email}
+                          </span>
+                        )}
+                      </button>
+                    </li>
+                    <li>
+                      <Button
+                        className={css.logOut}
+                        disabled={isPending}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          mutate();
+                        }}
+                      >
+                        {isPending ? (
+                          <>
+                            <span>Logging out</span>
+                            <span className={css.loader}></span>
+                          </>
+                        ) : (
+                          'Log out'
+                        )}
+                      </Button>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      <Button
+                        aria-label="Open login form"
+                        className={css.logIn}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setModal('login');
+                        }}
+                      >
+                        <Icon className={css.logInIcon} name="log-in" />
+                        Log in
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        aria-label="Open register form"
+                        className={css.registration}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setModal('register');
+                        }}
+                      >
+                        Registration
+                      </Button>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
       </Container>
       {modal === 'login' && (

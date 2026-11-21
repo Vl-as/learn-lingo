@@ -15,9 +15,10 @@ const links = [
 
 interface NavBarProps {
   className?: string;
+  onNavigate?: () => void;
 }
 
-function NavBar({ className }: NavBarProps) {
+function NavBar({ className, onNavigate }: NavBarProps) {
   const path = usePathname();
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -50,6 +51,7 @@ function NavBar({ className }: NavBarProps) {
               <Link
                 className={clsx(css.link, href === path && css.currentPage)}
                 href={href}
+                onClick={onNavigate}
                 onMouseEnter={isFavorites ? prefetchFavorites : undefined}
                 onFocus={isFavorites ? prefetchFavorites : undefined}
                 onTouchStart={isFavorites ? prefetchFavorites : undefined}
