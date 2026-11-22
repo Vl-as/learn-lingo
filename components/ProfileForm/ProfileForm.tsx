@@ -17,6 +17,8 @@ import Image from 'next/image';
 import { getFirebaseAuthErrorKey } from '@/lib/firebaseAuthError';
 import { useT, translateMessage } from '@/i18n/useT';
 import type { TranslationKey } from '@/i18n/types';
+import { DEMO_EMAIL } from '@/data/demo';
+import Icon from '../Icon/Icon';
 
 type ProfileFormValues = {
   name: string;
@@ -35,9 +37,10 @@ const profileSchema: Yup.ObjectSchema<ProfileFormValues> = Yup.object({
 interface ProfileFormProps {
   user: User;
   onSuccess: () => void;
+  onChangePassword: () => void;
 }
 
-function ProfileForm({ user, onSuccess }: ProfileFormProps) {
+function ProfileForm({ user, onSuccess, onChangePassword }: ProfileFormProps) {
   const { refreshUser } = useAuth();
   const { t } = useT();
   const [fileError, setFileError] = useState<TranslationKey | null>(null);
@@ -228,9 +231,7 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
             </div>
           </div>
           {fileError && (
-            <span className={css.error}>
-              {t(fileError, { size: 5 })}
-            </span>
+            <span className={css.error}>{t(fileError, { size: 5 })}</span>
           )}
 
           <Input
@@ -272,6 +273,23 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
           {rootError && <span className={css.error}>{rootError}</span>}
         </fieldset>
       </form>
+      {user.email !== DEMO_EMAIL && (
+        <button
+          type="button"
+          className={css.changePassword}
+          onClick={onChangePassword}
+        >
+          <Icon
+            name="unlocked"
+            width={16}
+            height={16}
+            className={css.changePasswordIcon}
+          />
+          <span className={css.changePasswordLabel}>
+            {t('profile.changePassword')}
+          </span>
+        </button>
+      )}
     </div>
   );
 }

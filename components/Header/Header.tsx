@@ -20,10 +20,11 @@ import AccentPicker from '../AccentPicker/AccentPicker';
 import Logo from '../Logo/Logo';
 import { useT } from '@/i18n/useT';
 import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
+import ChangePasswordForm from '../ChangePasswordForm/ChangePasswordForm';
 
 function Header() {
   const [modal, setModal] = useState<
-    'login' | 'register' | 'profile' | 'reset' | null
+    'login' | 'register' | 'profile' | 'reset' | 'changePassword' | null
   >(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading } = useAuth();
@@ -70,6 +71,11 @@ function Header() {
   const handleProfileSuccess = () => {
     setModal(null);
     toast.success(t('toast.profileUpdated'));
+  };
+
+  const handlePasswordSuccess = () => {
+    setModal(null);
+    toast.success(t('toast.passwordChanged'));
   };
 
   return (
@@ -229,9 +235,17 @@ function Header() {
       {modal === 'profile' && user && (
         <Modal onClose={() => setModal(null)}>
           <ProfileForm
-            key={`${user.uid}-${user.displayName ?? ''}-${user.photoURL ?? ''}`}
             user={user}
             onSuccess={handleProfileSuccess}
+            onChangePassword={() => setModal('changePassword')}
+          />
+        </Modal>
+      )}
+      {modal === 'changePassword' && (
+        <Modal onClose={() => setModal(null)}>
+          <ChangePasswordForm
+            onBack={() => setModal('profile')}
+            onSuccess={handlePasswordSuccess}
           />
         </Modal>
       )}

@@ -212,6 +212,58 @@
   }
 }
 
+.changePassword {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px auto 0;
+  padding: 8px 14px;
+  border: 1px solid var(--color-transparent);
+  border-radius: 30px;
+  background: var(--color-transparent);
+  color: var(--color-text-60);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.changePasswordIcon {
+  flex-shrink: 0;
+  color: var(--color-primary-dark);
+}
+
+.changePasswordLabel {
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.changePassword:focus-visible {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 3px;
+}
+
+.changePassword:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .changePassword:hover {
+    border-color: var(--color-text-14);
+    background-color: var(--color-primary-light-45);
+    color: var(--color-text);
+  }
+}
+
 @media (max-width: 600px) {
   .title {
     font-size: 32px;

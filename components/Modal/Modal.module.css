@@ -15,7 +15,7 @@
   padding: 64px 0 64px 64px;
   border-radius: 30px;
   background-color: var(--color-surface);
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
 }

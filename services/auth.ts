@@ -1,9 +1,12 @@
 import { auth, db } from '@/lib/firebase';
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
   updateProfile,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -85,4 +88,26 @@ export async function requestPasswordReset({
   auth.languageCode = locale;
 
   await sendPasswordResetEmail(auth, email);
+}
+
+export async function changeUserPassword({
+  currentPassword,
+  newPassword,
+}: {
+  currentPassword: string;
+  newPassword: string;
+}) {
+  const currentUser = auth.currentUser;
+
+  if (!currentUser || !currentUser.email) {
+    throw new Error('User is not authenticated');
+  }
+
+  const credential = EmailAuthProvider.credential(
+    currentUser.email,
+    currentPassword
+  );
+
+  await reauthenticateWithCredential(currentUser, credential);
+  await updatePassword(currentUser, newPassword);
 }
