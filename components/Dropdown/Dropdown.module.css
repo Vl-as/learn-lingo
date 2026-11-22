@@ -51,7 +51,7 @@
   box-shadow: 0px 1px 10px var(--color-text-10);
 }
 
-.icon {
+.icon.icon {
   position: absolute;
   top: 50%;
   right: 13px;
