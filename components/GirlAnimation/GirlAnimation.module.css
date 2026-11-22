@@ -117,9 +117,29 @@
   left: 50%;
   transform: translateX(-50%);
   width: 108%;
-  height: auto;
+  aspect-ratio: 391 / 176;
   z-index: 3;
   pointer-events: none;
+  background-image: url('/mac-sage.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+:global(html[data-accent='sky']) .laptop {
+  background-image: url('/mac-sky.webp');
+}
+
+:global(html[data-accent='peach']) .laptop {
+  background-image: url('/mac-peach.webp');
+}
+
+:global(html[data-accent='lavender']) .laptop {
+  background-image: url('/mac-lavender.webp');
+}
+
+:global(html[data-accent='rose']) .laptop {
+  background-image: url('/mac-rose.webp');
 }
 
 .eyelid {
