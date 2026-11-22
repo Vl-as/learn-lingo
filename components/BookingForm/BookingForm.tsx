@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import css from './BookingForm.module.css';
 import * as Yup from 'yup';
@@ -14,6 +15,8 @@ import successAnimation from '@/assets/animations/success.json';
 import clsx from 'clsx';
 import { useAuth } from '@/hooks/useAuth';
 import { useT, translateMessage } from '@/i18n/useT';
+import { useAccent } from '@/hooks/useAccent';
+import { accentColors } from '@/data/accents';
 import type { TranslationKey } from '@/i18n/types';
 
 const goals = [
@@ -57,6 +60,52 @@ const bookingSchema = Yup.object({
     .required('validation.phoneRequired'),
 });
 
+const successCircleColors = [
+  [0.2627, 0.8235, 0.5882],
+  [0, 0.8549, 0.5608],
+] as const;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function recolorSuccessCircle(
+  animation: typeof successAnimation,
+  accentColor: number[]
+): typeof successAnimation {
+  const updatedAnimation = structuredClone(animation);
+
+  const recolor = (value: unknown): void => {
+    if (Array.isArray(value)) {
+      if (
+        value.length === 3 &&
+        value.every(part => typeof part === 'number') &&
+        successCircleColors.some(color =>
+          color.every((channel, index) => channel === value[index])
+        )
+      ) {
+        value.splice(0, value.length, ...accentColor);
+        return;
+      }
+
+      value.forEach(recolor);
+      return;
+    }
+
+    if (isRecord(value)) {
+      Object.values(value).forEach(recolor);
+    }
+  };
+
+  updatedAnimation.layers.forEach(layer => {
+    if (layer.nm === 'checkmark/success Outlines') {
+      recolor(layer.shapes);
+    }
+  });
+
+  return updatedAnimation;
+}
+
 interface BookingFormProps {
   avatar: string;
   fullName: string;
@@ -66,6 +115,15 @@ interface BookingFormProps {
 function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
   const { user } = useAuth();
   const { t } = useT();
+  const accent = useAccent();
+  const accentSuccessAnimation = useMemo(
+    () =>
+      recolorSuccessCircle(
+        successAnimation,
+        accentColors[accent].map(channel => channel / 255)
+      ),
+    [accent]
+  );
   const {
     register,
     handleSubmit,
@@ -97,7 +155,7 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
       <>
         <Lottie
           className={css.animation}
-          animationData={successAnimation}
+          animationData={accentSuccessAnimation}
           loop={false}
         />
         <h2 className={clsx(css.title, css.success)}>
