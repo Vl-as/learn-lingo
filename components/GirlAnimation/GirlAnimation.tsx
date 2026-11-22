@@ -158,6 +158,7 @@ export default function GirlAnimation() {
           alt="Laptop"
           className={css.laptop}
           priority
+          unoptimized
         />
       </div>
     </div>

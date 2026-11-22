@@ -3,7 +3,7 @@
   padding: 40px 48px;
   max-width: 640px;
   border-radius: 30px;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
 }
 
 .card:focus {
@@ -146,7 +146,7 @@
 
 .actions .secondary {
   border: 1px solid var(--color-text-15);
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
 }
 
 .chooseTitle {
@@ -178,7 +178,7 @@
   width: 100%;
   border: 1px solid var(--color-text-10);
   border-radius: 12px;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   text-align: left;
   transition:
     border-color 0.3s ease-in-out,
@@ -217,10 +217,16 @@
   min-height: 160px;
   border: 1px solid var(--color-text-10);
   border-radius: 12px;
+  background-color: var(--color-input-background);
   font-size: 16px;
   line-height: 1.5;
   resize: vertical;
   transition: border-color 0.3s ease-in-out;
+}
+
+.textarea::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
 }
 
 .textarea:focus-visible {

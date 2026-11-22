@@ -31,7 +31,13 @@
   --color-primary-dark: #c26d86;
 }
 
-:root {
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --color-surface: var(--color-white);
+  --color-on-primary: #121417;
+  --color-primary-action: var(--color-primary-light);
+  --color-primary-action-hover: var(--color-primary);
   --color-text: #121417;
   --color-white: #ffffff;
   --color-muted: #8a8a89;
@@ -135,6 +141,73 @@
   --color-transparent: transparent;
 }
 
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-text: #eef2ef;
+  --color-on-primary: #eef2ef;
+  --color-muted: #8f9a94;
+  --color-surface: #1a201d;
+  --color-page-background: #0f1311;
+  --color-input-background: #232a26;
+  --color-skeleton: #262d29;
+  --color-success: #69d38d;
+  --color-error-red: #ff7773;
+  --color-level-error: #ff7773;
+  --color-not-found-text: #eef2ef;
+  --color-not-found-muted: #a8b2ad;
+
+  --color-primary-light: color-mix(
+    in srgb,
+    var(--color-primary) 14%,
+    var(--color-surface)
+  );
+  --color-primary-dark: color-mix(in srgb, var(--color-primary) 40%, white);
+  --color-primary-action: color-mix(
+    in srgb,
+    var(--color-primary) 38%,
+    var(--color-page-background)
+  );
+  --color-primary-action-hover: color-mix(
+    in srgb,
+    var(--color-primary) 48%,
+    var(--color-page-background)
+  );
+
+  --color-header-darkest: var(--color-primary-dark);
+  --color-header-dark: var(--color-text);
+  --color-header-light: color-mix(
+    in srgb,
+    var(--color-primary) 18%,
+    var(--color-surface)
+  );
+  --color-header-hover: color-mix(
+    in srgb,
+    var(--color-primary) 24%,
+    var(--color-surface)
+  );
+
+  --color-text-05: rgba(238, 242, 239, 0.05);
+  --color-text-06: rgba(238, 242, 239, 0.06);
+  --color-text-08: rgba(238, 242, 239, 0.08);
+  --color-text-10: rgba(238, 242, 239, 0.1);
+  --color-text-12: rgba(238, 242, 239, 0.12);
+  --color-text-14: rgba(238, 242, 239, 0.14);
+  --color-text-15: rgba(238, 242, 239, 0.15);
+  --color-text-20: rgba(238, 242, 239, 0.2);
+  --color-text-50: rgba(238, 242, 239, 0.5);
+  --color-text-55: rgba(238, 242, 239, 0.55);
+  --color-text-60: rgba(238, 242, 239, 0.6);
+  --color-text-70: rgba(238, 242, 239, 0.7);
+  --color-text-80: rgba(238, 242, 239, 0.8);
+
+  --color-primary-light-45: color-mix(
+    in srgb,
+    var(--color-primary) 22%,
+    transparent
+  );
+}
+
 html {
   height: 100%;
 }
@@ -151,6 +224,7 @@ body {
   flex-direction: column;
   font-family: var(--font-roboto);
   color: var(--color-text);
+  background-color: var(--color-page-background);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

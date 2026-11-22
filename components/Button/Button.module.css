@@ -11,13 +11,13 @@
 
   background: linear-gradient(
     135deg,
-    var(--color-primary-light),
-    var(--color-primary)
+    var(--color-primary-action),
+    var(--color-primary-action-hover)
   );
   font-weight: 700;
   font-size: 18px;
   line-height: 1.55556;
-  color: var(--color-text);
+  color: var(--color-on-primary);
   cursor: pointer;
   -webkit-tap-highlight-color: var(--color-transparent);
   box-shadow:
@@ -31,7 +31,7 @@
 }
 
 .button:not(:disabled):focus-visible {
-  background: var(--color-primary-light);
+  background: var(--color-primary-action);
   outline: 2px solid var(--color-primary-dark);
   outline-offset: 3px;
 }
@@ -45,8 +45,8 @@
   .button:not(:disabled):hover {
     background: linear-gradient(
       135deg,
-      var(--color-primary),
-      var(--color-primary-light)
+      var(--color-primary-action-hover),
+      var(--color-primary-action)
     );
     transform: translateY(-3px);
     box-shadow:

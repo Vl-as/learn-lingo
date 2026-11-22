@@ -87,10 +87,10 @@
   border-radius: 14px;
   background: linear-gradient(
     135deg,
-    var(--color-primary-light),
-    var(--color-primary)
+    var(--color-primary-action),
+    var(--color-primary-action-hover)
   );
-  color: var(--color-text);
+  color: var(--color-on-primary);
   min-height: 48px;
   font-size: 16px;
   box-shadow:
@@ -109,7 +109,7 @@
   padding: 0 18px;
   border: 1px solid var(--color-text-12);
   border-radius: 999px;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   font-size: 16px;
   box-shadow: 0 4px 14px var(--color-text-05);
 }
@@ -146,6 +146,11 @@
   transform: scale(0.97);
 }
 
+:global([data-theme='dark']) .userButton {
+  background-color: var(--color-primary-action);
+  border-color: var(--color-primary-dark);
+}
+
 .avatar {
   width: 36px;
   height: 36px;
@@ -166,10 +171,10 @@
   justify-content: center;
   background: linear-gradient(
     135deg,
-    var(--color-primary-light),
-    var(--color-primary)
+    var(--color-primary-action),
+    var(--color-primary-action-hover)
   );
-  color: var(--color-header-darkest);
+  color: var(--color-on-primary);
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
@@ -256,7 +261,7 @@
     padding: 16px;
     border: 1px solid var(--color-text-10);
     border-radius: 16px;
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
     box-shadow: 0 8px 24px var(--color-text-14);
   }
 
@@ -269,7 +274,7 @@
     padding: 0;
     border: 1px solid var(--color-text-10);
     border-radius: 50%;
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
     cursor: pointer;
     box-shadow: 0 4px 14px var(--color-text-08);
     transition:
@@ -369,10 +374,15 @@
 
 @media (hover: hover) and (pointer: fine) {
   .userButton:hover {
-    background-color: var(--color-white);
+    background-color: var(--color-surface);
     border-color: var(--color-header-dark-24);
     box-shadow: 0 8px 18px var(--color-header-shadow-15);
     transform: translateY(-1px);
+  }
+
+  :global([data-theme='dark']) .userButton:hover {
+    background-color: var(--color-primary-action-hover);
+    border-color: var(--color-primary-dark);
   }
 
   .logIn.logIn:hover,

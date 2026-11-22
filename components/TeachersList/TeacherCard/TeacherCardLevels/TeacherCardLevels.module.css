@@ -20,8 +20,9 @@
 }
 
 .level.chosenLevel {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary);
+  border-color: var(--color-primary-action);
+  background-color: var(--color-primary-action);
+  color: var(--color-on-primary);
 }
 
 @media (max-width: 600px) {

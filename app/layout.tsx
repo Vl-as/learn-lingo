@@ -51,7 +51,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var a=localStorage.getItem('learn-lingo-accent');if(a){document.documentElement.dataset.accent=a}}catch(e){}`,
+            __html: `try{var r=document.documentElement;var a=localStorage.getItem('learn-lingo-accent');if(a)r.dataset.accent=a;var t=localStorage.getItem('learn-lingo-theme');if(t==='light'||t==='dark')r.dataset.theme=t}catch(e){}`,
           }}
         />
       </head>
@@ -75,8 +75,8 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
               theme="colored"
               transition={Flip}
               toastStyle={{
-                background: 'var(--color-primary)',
-                color: 'var(--color-white)',
+                background: 'var(--color-primary-action)',
+                color: 'var(--color-on-primary)',
                 borderRadius: '12px',
               }}
             />

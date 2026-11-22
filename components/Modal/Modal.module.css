@@ -14,7 +14,7 @@
   position: relative;
   padding: 64px 0 64px 64px;
   border-radius: 30px;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   max-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;

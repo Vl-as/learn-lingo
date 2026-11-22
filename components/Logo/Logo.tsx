@@ -24,7 +24,13 @@ export default function Logo({ className }: LogoProps) {
   return (
     <Link className={clsx(css.logo, className)} href="/">
       <div className={css.imageWrapper}>
-        <Image src={logos[accent]} alt="Logo" width={28} height={28} />
+        <Image
+          src={logos[accent]}
+          alt="Logo"
+          width={32}
+          height={32}
+          unoptimized
+        />
       </div>
       LearnLingo
     </Link>

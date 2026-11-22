@@ -187,10 +187,10 @@
   justify-content: center;
   background: linear-gradient(
     135deg,
-    var(--color-primary-light),
-    var(--color-primary)
+    var(--color-primary-action),
+    var(--color-primary-action-hover)
   );
-  color: var(--color-primary-dark);
+  color: var(--color-on-primary);
   font-size: 32px;
   font-weight: 700;
   line-height: 1;

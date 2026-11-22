@@ -32,7 +32,7 @@
   height: 36px;
   border: 1px solid var(--color-text-10);
   border-radius: 50%;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   box-shadow: 0 0 10px var(--color-text-05);
   color: var(--color-text);
   transition:
