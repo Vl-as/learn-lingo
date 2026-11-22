@@ -20,6 +20,8 @@ import { addFavorite, removeFavorite } from '@/services/favorites';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import { useT } from '@/i18n/useT';
+import { localizeTeacher } from '@/i18n/localizeTeacher';
+import { formatLanguage } from '@/i18n/dataLabels';
 
 interface TeacherCardProps {
   teacher: Teacher;
@@ -36,9 +38,9 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
-  const { t } = useT();
-  const notify = () =>
-    toast.info(t('toast.signInToSave'));
+  const { t, locale } = useT();
+  const localized = localizeTeacher(teacher, locale);
+  const notify = () => toast.info(t('toast.signInToSave'));
 
   const fullName = `${teacher.name} ${teacher.surname}`;
 
@@ -182,16 +184,18 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
           <p className={css.text}>
             <span className={css.textLabel}>{t('teachers.speaks')}</span>{' '}
             <span className={css.languages}>
-              {teacher.languages.join(', ')}
+              {teacher.languages
+                .map(item => formatLanguage(item, locale))
+                .join(', ')}
             </span>
           </p>
           <p className={css.text}>
             <span className={css.textLabel}>{t('teachers.lessonInfo')}</span>{' '}
-            {teacher.lesson_info}
+            {localized.lesson_info}
           </p>
           <p className={css.text}>
             <span className={css.textLabel}>{t('teachers.conditions')}</span>{' '}
-            {teacher.conditions.join(' ')}
+            {localized.conditions.join(' ')}
           </p>
         </div>
         <button
@@ -204,8 +208,8 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
         </button>
         {isOpen && (
           <div className={css.extraInformation}>
-            <p className={css.description}>{teacher.experience}</p>
-            <TeacherCardReviews reviews={teacher.reviews} />
+            <p className={css.description}>{localized.experience}</p>
+            <TeacherCardReviews reviews={localized.reviews} />
           </div>
         )}
         <TeacherCardLevels levels={teacher.levels} chosenLevel={chosenLevel} />

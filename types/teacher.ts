@@ -14,10 +14,18 @@ export interface Teacher {
   lesson_info: string;
   conditions: string[];
   experience: string;
+  translations?: Partial<Record<'uk' | 'ru' | 'de', TeacherTranslation>>;
 }
 
 export interface TeachersResponse {
   teachers: Teacher[];
   nextPage: number | undefined;
   hasMore: boolean;
+}
+
+export interface TeacherTranslation {
+  lesson_info: string;
+  conditions: string[];
+  experience: string;
+  reviews: string[];
 }
