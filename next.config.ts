@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL('https://ftp.goit.study/**'),
       new URL('https://res.cloudinary.com/**'),
+      { protocol: 'https', hostname: '*.googleusercontent.com' },
     ],
   },
   experimental: {

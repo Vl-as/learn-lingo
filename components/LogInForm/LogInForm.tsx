@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '@/services/auth';
 import { getFirebaseAuthErrorKey } from '@/lib/firebaseAuthError';
 import { useT, translateMessage } from '@/i18n/useT';
+import GoogleButton from '../GoogleButton/GoogleButton';
 
 interface LoginFormValues {
   email: string;
@@ -111,6 +112,7 @@ function LogInForm({ onSuccess, onForgotPassword }: LogInFormProps) {
           </button>
         </fieldset>
       </form>
+      <GoogleButton onSuccess={onSuccess} />
     </div>
   );
 }

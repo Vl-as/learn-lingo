@@ -63,6 +63,17 @@ const de: Widen<typeof en> = {
     showPassword: 'Passwort anzeigen',
     hidePassword: 'Passwort verbergen',
   },
+  google: {
+    continue: 'Weiter mit Google',
+    or: 'oder',
+    signingIn: 'Anmeldung läuft',
+    popupBlocked:
+      'Das Anmeldefenster wurde vom Browser blockiert. Erlaube Pop-ups für diese Seite und versuche es erneut.',
+    accountExists:
+      'Mit dieser E-Mail-Adresse existiert bereits ein Konto. Melde dich mit E-Mail und Passwort an.',
+    failed:
+      'Die Anmeldung mit Google ist fehlgeschlagen. Bitte versuche es erneut.',
+  },
   resetPassword: {
     title: 'Passwort zurücksetzen',
     text: 'Gib die E-Mail-Adresse ein, mit der du dich registriert hast. Wir senden dir einen Link zum Festlegen eines neuen Passworts.',

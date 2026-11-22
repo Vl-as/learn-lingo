@@ -2,9 +2,12 @@ import { auth, db } from '@/lib/firebase';
 import {
   createUserWithEmailAndPassword,
   EmailAuthProvider,
+  getAdditionalUserInfo,
+  GoogleAuthProvider,
   reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updatePassword,
   updateProfile,
@@ -110,4 +113,22 @@ export async function changeUserPassword({
 
   await reauthenticateWithCredential(currentUser, credential);
   await updatePassword(currentUser, newPassword);
+}
+
+export async function loginWithGoogle() {
+  const provider = new GoogleAuthProvider();
+
+  provider.setCustomParameters({ prompt: 'select_account' });
+
+  const result = await signInWithPopup(auth, provider);
+
+  if (getAdditionalUserInfo(result)?.isNewUser) {
+    await setDoc(doc(db, 'users', result.user.uid), {
+      name: result.user.displayName ?? '',
+      email: result.user.email ?? '',
+      photoURL: result.user.photoURL ?? null,
+    });
+  }
+
+  return result.user;
 }

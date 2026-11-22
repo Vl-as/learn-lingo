@@ -181,6 +181,10 @@ function ProfileForm({ user, onSuccess, onChangePassword }: ProfileFormProps) {
 
   const rootError = translateMessage(errors.root?.message, t);
 
+  const hasPassword = user.providerData.some(
+    provider => provider.providerId === 'password'
+  );
+
   return (
     <div className={css.container}>
       <h2 className={css.title}>{t('auth.profileTitle')}</h2>
@@ -273,7 +277,7 @@ function ProfileForm({ user, onSuccess, onChangePassword }: ProfileFormProps) {
           {rootError && <span className={css.error}>{rootError}</span>}
         </fieldset>
       </form>
-      {user.email !== DEMO_EMAIL && (
+      {hasPassword && user.email !== DEMO_EMAIL && (
         <button
           type="button"
           className={css.changePassword}

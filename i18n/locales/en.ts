@@ -60,6 +60,16 @@ export const en = {
     showPassword: 'Show password',
     hidePassword: 'Hide password',
   },
+  google: {
+    continue: 'Continue with Google',
+    or: 'or',
+    signingIn: 'Signing in',
+    popupBlocked:
+      'The sign-in window was blocked by the browser. Allow pop-ups for this site and try again.',
+    accountExists:
+      'An account with this email already exists. Log in with your email and password.',
+    failed: 'Could not sign in with Google. Please try again.',
+  },
   resetPassword: {
     title: 'Reset password',
     text: 'Enter the email you used to sign up and we will send you a link to set a new password.',

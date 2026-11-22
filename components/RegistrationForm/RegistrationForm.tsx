@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import { registerUser } from '@/services/auth';
 import { getFirebaseAuthErrorKey } from '@/lib/firebaseAuthError';
 import { useT, translateMessage } from '@/i18n/useT';
+import GoogleButton from '../GoogleButton/GoogleButton';
 
 type RegistrationFormValues = {
   name: string;
@@ -124,6 +125,7 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           {rootError && <span className={css.error}>{rootError}</span>}
         </fieldset>
       </form>
+      <GoogleButton onSuccess={onSuccess} />
     </div>
   );
 }
