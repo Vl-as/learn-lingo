@@ -23,6 +23,7 @@
 - [About](#-about)
 - [Demo Account](#-demo-account)
 - [Features](#-features)
+- [Limitations](#-limitations)
 - [Tech Stack](#-tech-stack)
 - [Notes on the Assignment](#-notes-on-the-assignment)
 - [Key Decisions](#-key-decisions)
@@ -64,7 +65,17 @@ Want to try the app without registering? Log in with:
 - 📅 **Trial lesson booking** with validated forms
 - 🔐 **Authentication:** register, log in, log out, and update profile (display
   name and avatar upload via Cloudinary)
+- 🌐 **UI in English, Ukrainian, Russian, and German** (client-side, no new
+  dependencies)
 - 🔔 **Toast notifications** for feedback and error states
+
+---
+
+## ⚠️ Limitations
+
+- Page titles and metadata remain in English.
+- Tutor information from Firestore, including descriptions and reviews, is
+  displayed as stored and is not translated.
 
 ---
 
@@ -179,8 +190,6 @@ NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=
 - [ ] Server-side pagination for large tutor collections
 - [ ] Real-time calendar slot selection for trial lessons
 - [ ] Messaging between students and tutors
-- [ ] Multi-language UI
-- [ ] Dark mode
 - [ ] Automated tests and CI
 
 ---

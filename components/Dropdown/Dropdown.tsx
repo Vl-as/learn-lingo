@@ -156,6 +156,7 @@ function Dropdown({
                     )}
                     onClick={() => handleClick(value, index)}
                     type="button"
+                    title={renderLabel ? renderLabel(value) : value}
                   >
                     {renderLabel ? renderLabel(value) : value}
                   </button>
