@@ -7,11 +7,12 @@ import clsx from 'clsx';
 import { useQueryClient } from '@tanstack/react-query';
 import { getFavoriteTeachers } from '@/services/teachers';
 import { useAuth } from '@/hooks/useAuth';
+import { useT } from '@/i18n/useT';
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/teachers', label: 'Teachers' },
-];
+  { href: '/', label: 'navigation.home' },
+  { href: '/teachers', label: 'navigation.teachers' },
+] as const;
 
 interface NavBarProps {
   className?: string;
@@ -21,10 +22,11 @@ interface NavBarProps {
 function NavBar({ className, onNavigate }: NavBarProps) {
   const path = usePathname();
   const { user } = useAuth();
+  const { t } = useT();
   const queryClient = useQueryClient();
 
   const navLinks = user
-    ? [...links, { href: '/favorites', label: 'Favorites' }]
+    ? [...links, { href: '/favorites', label: 'navigation.favorites' as const }]
     : links;
 
   const prefetchFavorites = () => {
@@ -56,7 +58,7 @@ function NavBar({ className, onNavigate }: NavBarProps) {
                 onFocus={isFavorites ? prefetchFavorites : undefined}
                 onTouchStart={isFavorites ? prefetchFavorites : undefined}
               >
-                {label}
+                {t(label)}
               </Link>
             </li>
           );

@@ -10,13 +10,26 @@ import {
   getLevel,
   nativeNames,
   questionsByLanguage,
+  testLanguageTags,
   testLanguages,
   type TestLanguage,
 } from '@/data/levelTest';
 import type { Assessment } from '@/types/assessment';
 import css from './LevelTest.module.css';
+import { useT } from '@/i18n/useT';
+import type { TranslationKey } from '@/i18n/types';
+
+const levelDescriptionKeys: Record<string, TranslationKey> = {
+  'A1 Beginner': 'levelTest.levelDescriptions.A1 Beginner',
+  'A2 Elementary': 'levelTest.levelDescriptions.A2 Elementary',
+  'B1 Intermediate': 'levelTest.levelDescriptions.B1 Intermediate',
+  'B2 Upper-Intermediate': 'levelTest.levelDescriptions.B2 Upper-Intermediate',
+  'C1 Advanced': 'levelTest.levelDescriptions.C1 Advanced',
+  'C2 Proficient': 'levelTest.levelDescriptions.C2 Proficient',
+};
 
 function LevelTest() {
+  const { t } = useT();
   const [language, setLanguage] = useState<TestLanguage | null>(null);
   const [answers, setAnswers] = useState<number[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
@@ -59,9 +72,12 @@ function LevelTest() {
   if (!language) {
     return (
       <section className={css.card}>
-        <h2 className={css.chooseTitle}>Choose a language</h2>
+        <h2 className={css.chooseTitle}>{t('levelTest.chooseLanguage')}</h2>
         <p className={css.chooseText}>
-          Each test has 12 questions and takes about 3 minutes.
+          {t('levelTest.chooseDescription', {
+            count: 12,
+            minutes: 3,
+          })}
         </p>
         <ul className={css.languages}>
           {testLanguages.map(item => (
@@ -100,18 +116,26 @@ function LevelTest() {
 
     return (
       <section ref={resultRef} tabIndex={-1} className={css.card}>
-        <p className={css.label}>Your approximate {language} level</p>
+        <p className={css.label}>{t('levelTest.approximateLevel')}</p>
         <h2 className={css.levelName}>{level.name}</h2>
         <p className={css.score}>
           {assessment
-            ? `Grammar test: ${grammarLevel.name} · Writing (AI): ${assessment.level}`
-            : `${score} of ${questions.length} correct answers`}
+            ? t('levelTest.scoreWithWriting', {
+                grammar: grammarLevel.name,
+                writing: assessment.level,
+              })
+            : t('levelTest.correctAnswers', {
+                count: score,
+                total: questions.length,
+              })}
         </p>
-        <p className={css.description}>{level.description}</p>
+        <p className={css.description}>
+          {t(levelDescriptionKeys[level.name])}
+        </p>
 
         {assessment && (
           <div className={css.feedback}>
-            <h3 className={css.feedbackTitle}>AI feedback on your writing</h3>
+            <h3 className={css.feedbackTitle}>{t('levelTest.aiFeedback')}</h3>
             <p className={css.feedbackText}>{assessment.summary}</p>
             {assessment.mistakes.length > 0 && (
               <ul className={css.mistakes}>
@@ -131,22 +155,22 @@ function LevelTest() {
               </ul>
             )}
             <p className={css.feedbackText}>
-              <strong>Tip:</strong> {assessment.tip}
+              <strong>{t('levelTest.tip')}</strong> {assessment.tip}
             </p>
           </div>
         )}
 
         <p className={css.note}>
           {assessment
-            ? 'The writing part is an AI estimate, so the result is approximate.'
-            : 'This is a short grammar and vocabulary check, so the result is approximate.'}
+            ? t('levelTest.writingEstimateNote')
+            : t('levelTest.grammarEstimateNote')}
         </p>
         <div className={css.actions}>
           <LinkButton href={`/teachers?${params.toString()}`}>
-            Find {language} teachers
+            {t('levelTest.findTeachers')}
           </LinkButton>
           <Button className={css.secondary} onClick={handleReset}>
-            Take another test
+            {t('levelTest.anotherTest')}
           </Button>
         </div>
       </section>
@@ -160,7 +184,7 @@ function LevelTest() {
       <div
         className={css.progress}
         role="progressbar"
-        aria-label="Test progress"
+        aria-label={t('levelTest.progress')}
         aria-valuemin={0}
         aria-valuemax={questions.length}
         aria-valuenow={step}
@@ -171,7 +195,11 @@ function LevelTest() {
         />
       </div>
       <p className={css.counter}>
-        {language}: question {step + 1} of {questions.length}
+        {t('levelTest.questionCounter', {
+          language,
+          current: step + 1,
+          total: questions.length,
+        })}
       </p>
       <fieldset
         key={`${language}-${question.id}`}
@@ -179,11 +207,14 @@ function LevelTest() {
         tabIndex={-1}
         className={css.fieldset}
       >
-        <legend className={css.question}>{question.text}</legend>
+        <legend className={css.question} lang={testLanguageTags[language]}>
+          {question.text}
+        </legend>
         <ul className={css.options}>
           {question.options.map((option, index) => (
             <li key={option}>
               <label
+                lang={testLanguageTags[language]}
                 className={clsx(
                   css.option,
                   selected === index && css.optionSelected
@@ -207,7 +238,9 @@ function LevelTest() {
         onClick={handleNext}
         disabled={selected === null}
       >
-        {step === questions.length - 1 ? 'Continue' : 'Next'}
+        {step === questions.length - 1
+          ? t('levelTest.continue')
+          : t('levelTest.next')}
       </Button>
     </section>
   );

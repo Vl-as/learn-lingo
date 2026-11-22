@@ -1,6 +1,9 @@
+'use client';
+
 import Icon from '@/components/Icon/Icon';
 import css from './TeacherCardMeta.module.css';
 import clsx from 'clsx';
+import { useT } from '@/i18n/useT';
 
 interface TeacherCardMetaProps {
   className?: string;
@@ -15,6 +18,8 @@ function TeacherCardMeta({
   rating,
   price,
 }: TeacherCardMetaProps) {
+  const { t } = useT();
+
   return (
     <ul className={clsx(css.list, className)}>
       <li className={css.item}>
@@ -24,9 +29,11 @@ function TeacherCardMeta({
           width={16}
           height={16}
         />
-        Lessons online
+        {t('teachers.lessonsOnline')}
       </li>
-      <li className={css.item}>Lessons done: {lessons_done}</li>
+      <li className={css.item}>
+        {t('teachers.lessonsDone', { count: lessons_done })}
+      </li>
       <li className={css.item}>
         <Icon
           aria-hidden="true"
@@ -38,7 +45,8 @@ function TeacherCardMeta({
         {rating}
       </li>
       <li className={css.item}>
-        Price / 1 hour: <span className={css.price}>{price}$</span>
+        {t('teachers.pricePerHour')}{' '}
+        <span className={css.price}>{price}$</span>
       </li>
     </ul>
   );

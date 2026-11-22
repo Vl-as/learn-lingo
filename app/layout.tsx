@@ -7,6 +7,7 @@ import AuthProvider from '@/providers/AuthProvider/AuthProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import { Flip, ToastContainer } from 'react-toastify';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
+import { LOCALE_STORAGE_KEY } from '@/i18n/store';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -51,7 +52,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var r=document.documentElement;var a=localStorage.getItem('learn-lingo-accent');if(a)r.dataset.accent=a;var t=localStorage.getItem('learn-lingo-theme');if(t==='light'||t==='dark')r.dataset.theme=t}catch(e){}`,
+            __html: `(()=>{var r=document.documentElement;try{var a=localStorage.getItem('learn-lingo-accent');if(a)r.dataset.accent=a;var t=localStorage.getItem('learn-lingo-theme');if(t==='light'||t==='dark')r.dataset.theme=t}catch(e){}var l;try{l=localStorage.getItem('${LOCALE_STORAGE_KEY}')}catch(e){}if(l!=='en'&&l!=='uk'&&l!=='ru'&&l!=='de'){var n=(navigator.language||'').toLowerCase().split('-')[0];l=n==='uk'||n==='ru'||n==='de'?n:'en'}r.dataset.locale=l;r.lang=l})()`,
           }}
         />
       </head>

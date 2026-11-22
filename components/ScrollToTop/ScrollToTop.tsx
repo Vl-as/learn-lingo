@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Icon from '../Icon/Icon';
 import css from './ScrollToTop.module.css';
+import { useT } from '@/i18n/useT';
 
 const SHOW_AFTER = 400;
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useT();
 
   useEffect(() => {
     const handleScroll = () => setIsVisible(window.scrollY > SHOW_AFTER);
@@ -31,7 +33,7 @@ function ScrollToTop() {
       type="button"
       className={clsx(css.button, isVisible && css.visible)}
       onClick={handleClick}
-      aria-label="Scroll to top"
+      aria-label={t('common.scrollToTop')}
     >
       <Icon className={css.icon} name="arrow-down" width={24} height={24} />
     </button>

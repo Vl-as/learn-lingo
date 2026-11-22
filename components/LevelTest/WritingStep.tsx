@@ -4,9 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import Button from '../Button/Button';
 import { useAuth } from '@/hooks/useAuth';
 import { auth } from '@/lib/firebase';
-import type { TestLanguage } from '@/data/levelTest';
+import { testLanguageTags, type TestLanguage } from '@/data/levelTest';
 import type { Assessment } from '@/types/assessment';
 import css from './LevelTest.module.css';
+import { useT } from '@/i18n/useT';
+import type { TranslationKey } from '@/i18n/types';
+
+const testLanguageKeys: Record<TestLanguage, TranslationKey> = {
+  English: 'writing.testLanguages.English',
+  German: 'writing.testLanguages.German',
+  French: 'writing.testLanguages.French',
+};
 
 const MIN_LENGTH = 40;
 const MAX_LENGTH = 600;
@@ -18,9 +26,10 @@ interface WritingStepProps {
 
 function WritingStep({ language, onDone }: WritingStepProps) {
   const { user } = useAuth();
+  const { t, locale } = useT();
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<TranslationKey | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -38,7 +47,7 @@ function WritingStep({ language, onDone }: WritingStepProps) {
       const token = await auth.currentUser?.getIdToken();
 
       if (!token) {
-        setError('Please log in to get AI feedback.');
+        setError('writing.authRequired');
         return;
       }
 
@@ -48,26 +57,22 @@ function WritingStep({ language, onDone }: WritingStepProps) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ language, text }),
+        body: JSON.stringify({ language, text, locale }),
       });
 
       if (response.status === 429) {
-        setError(
-          "You have reached today's limit of AI checks. You can skip this step."
-        );
+        setError('writing.dailyLimit');
         return;
       }
 
       if (!response.ok) {
-        setError(
-          'AI feedback is unavailable right now. You can try again or skip this step.'
-        );
+        setError('writing.unavailable');
         return;
       }
 
       onDone((await response.json()) as Assessment);
     } catch {
-      setError('Something went wrong. You can try again or skip this step.');
+      setError('writing.requestFailed');
     } finally {
       setIsLoading(false);
     }
@@ -75,17 +80,18 @@ function WritingStep({ language, onDone }: WritingStepProps) {
 
   return (
     <section ref={sectionRef} tabIndex={-1} className={css.card}>
-      <p className={css.label}>Optional step</p>
-      <h2 className={css.chooseTitle}>Writing task with AI feedback</h2>
+      <p className={css.label}>{t('writing.optional')}</p>
+      <h2 className={css.chooseTitle}>{t('writing.title')}</h2>
       <p className={css.chooseText}>
-        Write 4-6 sentences in {language} about your last holiday or weekend. AI
-        will estimate your level and point out the main mistakes.
+        {t('writing.prompt', {
+          language: t(testLanguageKeys[language]),
+        })}
       </p>
 
       {user ? (
         <>
           <label className={css.writingLabel} htmlFor="writing-text">
-            Your text
+            {t('writing.yourText')}
           </label>
           <textarea
             id="writing-text"
@@ -95,27 +101,28 @@ function WritingStep({ language, onDone }: WritingStepProps) {
             maxLength={MAX_LENGTH}
             rows={6}
             disabled={isLoading}
+            lang={testLanguageTags[language]}
           />
           <p className={css.charCount}>
-            {length} / {MAX_LENGTH} characters (at least {MIN_LENGTH})
+            {t('writing.charCount', {
+              count: length,
+              max: MAX_LENGTH,
+              min: MIN_LENGTH,
+            })}
           </p>
         </>
       ) : (
-        <p className={css.authNote}>
-          Log in to get AI feedback on your writing. You can log in now and stay
-          on this step, or skip it.
-        </p>
+        <p className={css.authNote}>{t('writing.loginNote')}</p>
       )}
 
       {error && (
         <p className={css.errorText} role="alert">
-          {error}
+          {t(error)}
         </p>
       )}
 
       <p className={css.note}>
-        Your text is sent to Google&apos;s Gemini API to generate the feedback.
-        Please do not include personal data.
+        {t('writing.privacyNote')}
       </p>
 
       <div className={css.actions}>
@@ -123,10 +130,11 @@ function WritingStep({ language, onDone }: WritingStepProps) {
           <Button onClick={handleSubmit} disabled={!canSubmit}>
             {isLoading ? (
               <>
-                <span>Checking</span> <span className={css.loader}></span>
+                <span>{t('writing.checking')}</span>{' '}
+                <span className={css.loader}></span>
               </>
             ) : (
-              'Get AI feedback'
+              t('writing.getFeedback')
             )}
           </Button>
         )}
@@ -135,7 +143,7 @@ function WritingStep({ language, onDone }: WritingStepProps) {
           onClick={() => onDone(null)}
           disabled={isLoading}
         >
-          Skip
+          {t('writing.skip')}
         </Button>
       </div>
     </section>

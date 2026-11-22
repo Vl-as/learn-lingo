@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import Icon from '../Icon/Icon';
 import { Filters } from '@/types/filters';
 import Link from 'next/link';
+import { useT } from '@/i18n/useT';
+import type { TranslationKey } from '@/i18n/types';
 
 const languages: string[] = [
   'French',
@@ -32,6 +34,25 @@ const levels: string[] = [
 
 const prices: string[] = ['10', '20', '30', '40', '50'];
 
+const languageLabelKeys: Record<string, TranslationKey> = {
+  French: 'filters.languageNames.french',
+  English: 'filters.languageNames.english',
+  German: 'filters.languageNames.german',
+  Ukrainian: 'filters.languageNames.ukrainian',
+  Polish: 'filters.languageNames.polish',
+  Vietnamese: 'filters.languageNames.vietnamese',
+  'Mandarin Chinese': 'filters.languageNames.mandarinChinese',
+};
+
+const levelLabelKeys: Record<string, TranslationKey> = {
+  'A1 Beginner': 'filters.levels.a1',
+  'A2 Elementary': 'filters.levels.a2',
+  'B1 Intermediate': 'filters.levels.b1',
+  'B2 Upper-Intermediate': 'filters.levels.b2',
+  'C1 Advanced': 'filters.levels.c1',
+  'C2 Proficient': 'filters.levels.c2',
+};
+
 interface TeachersViewProps {
   selectedFilters: Filters;
 }
@@ -45,6 +66,7 @@ function areFiltersEqual(a: Filters, b: Filters) {
 }
 
 function TeachersView({ selectedFilters }: TeachersViewProps) {
+  const { t } = useT();
   const [filters, setFilters] = useState(selectedFilters);
   const [syncedFilters, setSyncedFilters] = useState(selectedFilters);
   const router = useRouter();
@@ -110,30 +132,36 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
           <li>
             <Dropdown
               list={languages}
-              initialValue={'Language'}
-              label="Languages"
+              initialValue={t('filters.languagePlaceholder')}
+              label={t('filters.languages')}
               className={css.languageFilter}
               onChange={changeFilters}
               name={'language'}
               filters={filters}
+              renderLabel={value =>
+                languageLabelKeys[value] ? t(languageLabelKeys[value]) : value
+              }
             />
           </li>
           <li>
             <Dropdown
               list={levels}
-              initialValue="Level"
-              label="Level of knowledge"
+              initialValue={t('filters.levelPlaceholder')}
+              label={t('filters.levelOfKnowledge')}
               className={css.levelFilter}
               onChange={changeFilters}
               name={'level'}
               filters={filters}
+              renderLabel={value =>
+                levelLabelKeys[value] ? t(levelLabelKeys[value]) : value
+              }
             />
           </li>
           <li>
             <Dropdown
               list={prices}
-              initialValue="Price"
-              label="Price"
+              initialValue={t('filters.pricePlaceholder')}
+              label={t('filters.price')}
               symbol="$"
               className={css.priceFilter}
               onChange={changeFilters}
@@ -147,8 +175,8 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
             className={css.clearFilters}
             type="button"
             onClick={clearFilters}
-            aria-label="Clear filters"
-            title="Clear filters"
+            aria-label={t('filters.clear')}
+            title={t('filters.clear')}
           >
             <Icon
               className={css.iconCross}
@@ -156,12 +184,15 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
               width={20}
               height={20}
             />
+            <span className={css.clearFiltersText}>{t('filters.clear')}</span>
           </button>
         )}
         <Link href="/level-test" className={css.levelHint}>
-          <span className={css.levelHintText}>Not sure about your level?</span>
+          <span className={css.levelHintText}>
+            {t('filters.unsureLevel')}
+          </span>
           <span className={css.levelHintAction}>
-            Take the level test
+            {t('filters.takeLevelTest')}
             <span className={css.levelHintArrow} aria-hidden="true">
               <Icon
                 className={css.iconArrow}
@@ -182,8 +213,8 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
         chosenLevel={filters.level}
         isError={isError}
         onReset={clearFilters}
-        buttonText="Show all teachers"
-        text="It looks like there are no teachers matching your criteria right now."
+        buttonText={t('teachers.showAllTeachers')}
+        text={t('teachers.noMatches')}
       />
     </>
   );

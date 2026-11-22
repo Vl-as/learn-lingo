@@ -4,19 +4,21 @@ import clsx from 'clsx';
 import CountUp from 'react-countup';
 import Container from '../Container/Container';
 import css from './StatsSection.module.css';
+import { useT } from '@/i18n/useT';
 
 const stats = [
-  { amount: 32000, suffix: ' +', label: 'Experienced tutors' },
-  { amount: 300000, suffix: ' +', label: '5-star tutor reviews' },
-  { amount: 120, suffix: ' +', label: 'Subjects taught' },
-  { amount: 200, suffix: ' +', label: 'Tutor nationalities' },
-];
+  { amount: 32000, suffix: ' +', label: 'stats.experiencedTutors' },
+  { amount: 300000, suffix: ' +', label: 'stats.tutorReviews' },
+  { amount: 120, suffix: ' +', label: 'stats.subjectsTaught' },
+  { amount: 200, suffix: ' +', label: 'stats.tutorNationalities' },
+] as const;
 
 interface StatsSectionProps {
   className?: string;
 }
 
 function StatsSection({ className }: StatsSectionProps) {
+  const { t } = useT();
   const getStartValue = (value: number) => {
     if (value < 500) return Math.max(0, value - 40);
     if (value < 5000) return Math.round(value * 0.9);
@@ -50,7 +52,7 @@ function StatsSection({ className }: StatsSectionProps) {
                     autoAnimate
                   />
                 </span>
-                <span className={css.label}>{label}</span>
+                <span className={css.label}>{t(label)}</span>
               </li>
             ))}
           </ul>

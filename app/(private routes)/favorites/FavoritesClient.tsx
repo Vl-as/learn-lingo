@@ -8,9 +8,11 @@ import TeachersList from '@/components/TeachersList/TeachersList';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useT } from '@/i18n/useT';
 
 function FavoritesClient() {
   const { user, loading } = useAuth();
+  const { t } = useT();
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +42,7 @@ function FavoritesClient() {
   return (
     <main className={css.page}>
       <Container className={css.container}>
-        <h1>Favorites</h1>
+        <h1>{t('favorites.title')}</h1>
         <TeachersList
           teachers={teachers}
           hasNextPage={hasNextPage}
@@ -50,8 +52,8 @@ function FavoritesClient() {
           isError={isError}
           isLoading={loading || !user || isLoading}
           onReset={() => router.replace('/teachers')}
-          buttonText="Find teachers"
-          text="You haven't added any teachers to your favorites yet. Explore our list and find your perfect teacher!"
+          buttonText={t('favorites.findTeachers')}
+          text={t('favorites.empty')}
         />
       </Container>
     </main>

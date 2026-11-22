@@ -14,6 +14,9 @@ import { FirebaseError } from 'firebase/app';
 import { User } from 'firebase/auth';
 import { useAuth } from '@/hooks/useAuth';
 import Image from 'next/image';
+import { getFirebaseAuthErrorKey } from '@/lib/firebaseAuthError';
+import { useT, translateMessage } from '@/i18n/useT';
+import type { TranslationKey } from '@/i18n/types';
 
 type ProfileFormValues = {
   name: string;
@@ -24,9 +27,9 @@ const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 const profileSchema: Yup.ObjectSchema<ProfileFormValues> = Yup.object({
   name: Yup.string()
     .trim()
-    .min(2, 'Name must be at least 2 characters')
-    .max(50, 'Name must be at most 50 characters')
-    .required('Name is required'),
+    .min(2, 'validation.nameMin')
+    .max(50, 'validation.nameMax')
+    .required('validation.nameRequired'),
 });
 
 interface ProfileFormProps {
@@ -36,7 +39,8 @@ interface ProfileFormProps {
 
 function ProfileForm({ user, onSuccess }: ProfileFormProps) {
   const { refreshUser } = useAuth();
-  const [fileError, setFileError] = useState<string | null>(null);
+  const { t } = useT();
+  const [fileError, setFileError] = useState<TranslationKey | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -90,17 +94,12 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
       onSuccess();
     },
     onError: (error: unknown) => {
-      if (error instanceof FirebaseError) {
-        setError('root', {
-          type: 'manual',
-          message: error.message || 'Failed to update profile.',
-        });
-        return;
-      }
-
       setError('root', {
         type: 'manual',
-        message: 'Something went wrong. Please try again.',
+        message:
+          error instanceof FirebaseError
+            ? getFirebaseAuthErrorKey(error)
+            : 'auth.profileUpdateFailed',
       });
     },
   });
@@ -124,13 +123,13 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      setFileError('Please select an image file');
+      setFileError('validation.imageFile');
       e.target.value = '';
       return;
     }
 
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      setFileError(`Image size must be 5 MB or less`);
+      setFileError('validation.imageSize');
       e.target.value = '';
       return;
     }
@@ -170,30 +169,32 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
     } catch {
       setError('root', {
         type: 'manual',
-        message: 'Failed to upload avatar. Please try again.',
+        message: 'auth.avatarUploadFailed',
       });
     } finally {
       setIsUploading(false);
     }
   };
 
+  const rootError = translateMessage(errors.root?.message, t);
+
   return (
     <div className={css.container}>
-      <h2 className={css.title}>Edit Profile</h2>
-      <p className={css.text}>Update your display name and profile avatar.</p>
+      <h2 className={css.title}>{t('auth.profileTitle')}</h2>
+      <p className={css.text}>{t('auth.profileIntro')}</p>
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={isSubmitting}>
           <div className={css.avatarBlock}>
             <button
               type="button"
               onClick={handleOpenFilePicker}
-              aria-label="Choose profile avatar"
+              aria-label={t('auth.chooseProfileAvatar')}
               className={css.avatarButton}
             >
               {previewSrc ? (
                 <Image
                   src={previewSrc}
-                  alt="Avatar preview"
+                  alt={t('auth.avatarPreview')}
                   width={72}
                   height={72}
                   unoptimized={isBlobPreview}
@@ -215,7 +216,7 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
                 onClick={handleOpenFilePicker}
                 className={css.uploadLabel}
               >
-                <span>Choose file</span>
+                <span>{t('auth.chooseFile')}</span>
               </button>
               <input
                 ref={fileInputRef}
@@ -226,11 +227,15 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
               />
             </div>
           </div>
-          {fileError && <span className={css.error}>{fileError}</span>}
+          {fileError && (
+            <span className={css.error}>
+              {t(fileError, { size: 5 })}
+            </span>
+          )}
 
           <Input
             autoComplete="name"
-            placeholder="Name"
+            placeholder={t('auth.namePlaceholder')}
             type="text"
             {...register('name')}
             error={errors.name?.message}
@@ -244,7 +249,7 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
                 onClick={handleResetChanges}
                 className={css.resetButton}
               >
-                Reset
+                {t('auth.reset')}
               </button>
             )}
             <Button
@@ -254,17 +259,17 @@ function ProfileForm({ user, onSuccess }: ProfileFormProps) {
             >
               {isSubmitting ? (
                 <>
-                  <span>{isUploading ? 'Uploading' : 'Saving'}</span>{' '}
+                  <span>
+                    {isUploading ? t('auth.uploading') : t('auth.saving')}
+                  </span>{' '}
                   <span className={css.loader}></span>
                 </>
               ) : (
-                'Save changes'
+                t('auth.saveChanges')
               )}
             </Button>
           </div>
-          {errors.root && (
-            <span className={css.error}>{errors.root.message}</span>
-          )}
+          {rootError && <span className={css.error}>{rootError}</span>}
         </fieldset>
       </form>
     </div>

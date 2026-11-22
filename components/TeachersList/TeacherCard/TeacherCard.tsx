@@ -19,6 +19,7 @@ import {
 import { addFavorite, removeFavorite } from '@/services/favorites';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useT } from '@/i18n/useT';
 
 interface TeacherCardProps {
   teacher: Teacher;
@@ -35,10 +36,9 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
+  const { t } = useT();
   const notify = () =>
-    toast.info(
-      'Sign in or create an account to save teachers to your favorites.'
-    );
+    toast.info(t('toast.signInToSave'));
 
   const fullName = `${teacher.name} ${teacher.surname}`;
 
@@ -103,8 +103,8 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
 
       toast.error(
         isFavorite
-          ? 'Failed to remove teacher from favorites. Please try again.'
-          : 'Failed to save teacher to favorites. Please try again.'
+          ? t('toast.removeFavoriteFailed')
+          : t('toast.saveFavoriteFailed')
       );
     },
 
@@ -140,7 +140,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
       <div className={css.content}>
         <div className={css.header}>
           <div>
-            <p className={css.category}>Languages</p>
+            <p className={css.category}>{t('teachers.languages')}</p>
             <h3 className={css.name}>{fullName}</h3>
           </div>
           <TeacherCardMeta
@@ -156,8 +156,8 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
             disabled={isPending}
             aria-label={
               isFavorite
-                ? `Remove ${fullName} from favorites`
-                : `Add ${fullName} to favorites`
+                ? t('teachers.removeFavorite', { name: fullName })
+                : t('teachers.addFavorite', { name: fullName })
             }
             aria-pressed={Boolean(isFavorite)}
           >
@@ -180,17 +180,17 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
         </div>
         <div className={css.details}>
           <p className={css.text}>
-            <span className={css.textLabel}>Speaks:</span>{' '}
+            <span className={css.textLabel}>{t('teachers.speaks')}</span>{' '}
             <span className={css.languages}>
               {teacher.languages.join(', ')}
             </span>
           </p>
           <p className={css.text}>
-            <span className={css.textLabel}>Lesson Info:</span>{' '}
+            <span className={css.textLabel}>{t('teachers.lessonInfo')}</span>{' '}
             {teacher.lesson_info}
           </p>
           <p className={css.text}>
-            <span className={css.textLabel}>Conditions:</span>{' '}
+            <span className={css.textLabel}>{t('teachers.conditions')}</span>{' '}
             {teacher.conditions.join(' ')}
           </p>
         </div>
@@ -200,7 +200,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
           type="button"
           aria-expanded={isOpen}
         >
-          {isOpen ? 'Show less' : 'Read more'}
+          {isOpen ? t('teachers.showLess') : t('teachers.readMore')}
         </button>
         {isOpen && (
           <div className={css.extraInformation}>
@@ -214,7 +214,7 @@ function TeacherCard({ teacher, chosenLevel, isFavorite }: TeacherCardProps) {
             onClick={() => setIsModalOpen(true)}
             className={css.bookButton}
           >
-            Book trial lesson
+            {t('teachers.bookTrialLesson')}
           </Button>
         )}
       </div>

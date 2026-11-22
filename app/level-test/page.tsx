@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Container from '@/components/Container/Container';
 import LevelTest from '@/components/LevelTest/LevelTest';
 import css from './LevelTestPage.module.css';
+import T from '@/i18n/T';
 
 export const metadata: Metadata = {
   title: 'Language Level Test | Learn Lingo',
@@ -15,11 +16,13 @@ export default function LevelTestPage() {
       <Container>
         <div className={css.intro}>
           <h1 className={css.title}>
-            Find your <span className={css.accent}>language level</span>
+            <T k="levelTest.pageTitleLead" />{' '}
+            <span className={css.accent}>
+              <T k="levelTest.pageTitleAccent" />
+            </span>
           </h1>
           <p className={css.text}>
-            Pick English, German or French, answer 12 quick questions, and we
-            will suggest tutors that match your level.
+            <T k="levelTest.pageIntro" />
           </p>
         </div>
         <LevelTest />

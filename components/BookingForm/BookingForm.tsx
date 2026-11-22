@@ -13,6 +13,8 @@ import Lottie from 'lottie-react';
 import successAnimation from '@/assets/animations/success.json';
 import clsx from 'clsx';
 import { useAuth } from '@/hooks/useAuth';
+import { useT, translateMessage } from '@/i18n/useT';
+import type { TranslationKey } from '@/i18n/types';
 
 const goals = [
   'Career and business',
@@ -20,7 +22,17 @@ const goals = [
   'Living abroad',
   'Exams and coursework',
   'Culture, travel or hobby',
-];
+] as const;
+
+type BookingGoal = (typeof goals)[number];
+
+const goalTranslationKeys: Record<BookingGoal, TranslationKey> = {
+  'Career and business': 'booking.goals.career',
+  'Lesson for kids': 'booking.goals.kids',
+  'Living abroad': 'booking.goals.abroad',
+  'Exams and coursework': 'booking.goals.exams',
+  'Culture, travel or hobby': 'booking.goals.culture',
+};
 
 interface BookingFormValues {
   goal: string;
@@ -30,19 +42,19 @@ interface BookingFormValues {
 }
 
 const bookingSchema = Yup.object({
-  goal: Yup.string().required('Please select your learning goal.'),
+  goal: Yup.string().required('validation.goalRequired'),
   name: Yup.string()
     .trim()
-    .min(2, 'Name must contain at least 2 characters.')
-    .max(50, 'Name must contain at most 50 characters.')
-    .required('Full name is required.'),
+    .min(2, 'validation.nameMin')
+    .max(50, 'validation.nameMax')
+    .required('validation.fullNameRequired'),
   email: Yup.string()
-    .email('Please enter a valid email address.')
-    .required('Email is required.'),
+    .email('validation.emailInvalid')
+    .required('validation.emailRequired'),
   phone: Yup.string()
     .trim()
-    .matches(/^\+?[0-9\s()-]{7,20}$/, 'Please enter a valid phone number.')
-    .required('Phone number is required.'),
+    .matches(/^\+?[0-9\s()-]{7,20}$/, 'validation.phoneInvalid')
+    .required('validation.phoneRequired'),
 });
 
 interface BookingFormProps {
@@ -53,12 +65,13 @@ interface BookingFormProps {
 
 function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
   const { user } = useAuth();
+  const { t } = useT();
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
+  } = useForm<BookingFormValues>({
     resolver: yupResolver(bookingSchema),
   });
 
@@ -67,7 +80,7 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
     onError: () => {
       setError('root', {
         type: 'manual',
-        message: 'Something went wrong. Try again later',
+        message: 'booking.requestFailed',
       });
     },
   });
@@ -75,6 +88,9 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
   const onSubmit = (data: BookingFormValues) => {
     mutate({ ...data, teacherId });
   };
+
+  const goalError = translateMessage(errors.goal?.message, t);
+  const rootError = translateMessage(errors.root?.message, t);
 
   if (isSuccess) {
     return (
@@ -84,10 +100,11 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
           animationData={successAnimation}
           loop={false}
         />
-        <h2 className={clsx(css.title, css.success)}>Request sent!</h2>
+        <h2 className={clsx(css.title, css.success)}>
+          {t('booking.successTitle')}
+        </h2>
         <p className={css.text}>
-          {fullName} will contact you soon using the email address or phone
-          number you provided.
+          {t('booking.successText', { name: fullName })}
         </p>
       </>
     );
@@ -95,30 +112,27 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
 
   return (
     <div className={css.container}>
-      <h2 className={css.title}>Book trial lesson</h2>
-      <p className={css.text}>
-        Our experienced tutor will assess your current language level, discuss
-        your learning goals, and tailor the lesson to your specific needs.
-      </p>
+      <h2 className={css.title}>{t('booking.title')}</h2>
+      <p className={css.text}>{t('booking.description')}</p>
       <div className={css.teacherInfo}>
         <div className={css.avatarFrame}>
           <Image
             className={css.avatar}
             src={avatar}
-            alt={`${fullName} avatar`}
+            alt={t('booking.teacherAvatarAlt', { name: fullName })}
             width={44}
             height={44}
             priority
           />
         </div>
         <div>
-          <p className={css.label}>Your teacher</p>
+          <p className={css.label}>{t('booking.teacherLabel')}</p>
           <p className={css.teacherName}>{fullName}</p>
         </div>
       </div>
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <p className={css.question}>
-          What is your main reason for learning a language?
+          {t('booking.goalQuestion')}
         </p>
         <div className={css.radioButtons}>
           <ul className={css.list}>
@@ -132,18 +146,16 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
                     value={goal}
                     {...register('goal')}
                   />
-                  {goal}
+                  {t(goalTranslationKeys[goal])}
                 </label>
               </li>
             ))}
           </ul>
-          {errors.goal && (
-            <span className={css.error}>{errors.goal?.message}</span>
-          )}
+          {goalError && <span className={css.error}>{goalError}</span>}
         </div>
         <Input
           className={css.inputField}
-          placeholder="Full Name"
+          placeholder={t('booking.fullNamePlaceholder')}
           type="text"
           defaultValue={user?.displayName ?? ''}
           {...register('name')}
@@ -152,7 +164,7 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
 
         <Input
           className={css.inputField}
-          placeholder="Email"
+          placeholder={t('auth.emailPlaceholder')}
           type="email"
           defaultValue={user?.email ?? ''}
           {...register('email')}
@@ -161,7 +173,7 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
 
         <Input
           className={css.inputField}
-          placeholder="Phone number"
+          placeholder={t('booking.phonePlaceholder')}
           type="tel"
           defaultValue={user?.phoneNumber ?? ''}
           {...register('phone')}
@@ -171,15 +183,14 @@ function BookingForm({ avatar, fullName, teacherId }: BookingFormProps) {
         <Button disabled={isPending} className={css.button} type="submit">
           {isPending ? (
             <>
-              <span>Booking</span> <span className={css.loader}></span>
+              <span>{t('booking.pending')}</span>{' '}
+              <span className={css.loader}></span>
             </>
           ) : (
-            'Book'
+            t('booking.submit')
           )}
         </Button>
-        {errors.root && (
-          <span className={css.error}>{errors.root?.message}</span>
-        )}
+        {rootError && <span className={css.error}>{rootError}</span>}
       </form>
     </div>
   );

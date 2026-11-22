@@ -1,3 +1,5 @@
+'use client';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import css from './LogInForm.module.css';
 import { useForm } from 'react-hook-form';
@@ -7,7 +9,8 @@ import Button from '../Button/Button';
 import PasswordField from '../PasswordField/PasswordField';
 import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '@/services/auth';
-import { FirebaseError } from 'firebase/app';
+import { getFirebaseAuthErrorKey } from '@/lib/firebaseAuthError';
+import { useT, translateMessage } from '@/i18n/useT';
 
 interface LoginFormValues {
   email: string;
@@ -16,10 +19,10 @@ interface LoginFormValues {
 
 const LogInFormSchema = Yup.object({
   email: Yup.string()
-    .email('Please enter a valid email address')
-    .required('Email is required'),
+    .email('validation.emailInvalid')
+    .required('validation.emailRequired'),
 
-  password: Yup.string().required('Password is required'),
+  password: Yup.string().required('validation.passwordRequired'),
 });
 
 interface LogInFormProps {
@@ -27,6 +30,7 @@ interface LogInFormProps {
 }
 
 function LogInForm({ onSuccess }: LogInFormProps) {
+  const { t } = useT();
   const {
     register,
     handleSubmit,
@@ -41,37 +45,23 @@ function LogInForm({ onSuccess }: LogInFormProps) {
     onSuccess: () => {
       onSuccess();
     },
-    onError: (error: FirebaseError) => {
-      switch (error.code) {
-        case 'auth/user-not-found':
-        case 'auth/wrong-password':
-        case 'auth/invalid-credential':
-          setError('root', {
-            type: 'manual',
-            message: 'Invalid email or password',
-          });
-          setError('email', {
-            type: 'manual',
-            message: ' ',
-          });
-          setError('password', {
-            type: 'manual',
-            message: ' ',
-          });
-          break;
+    onError: (error: unknown) => {
+      const errorKey = getFirebaseAuthErrorKey(error);
 
-        case 'auth/invalid-email':
-          setError('email', {
-            type: 'manual',
-            message: 'Please enter a valid email address',
-          });
-          break;
-
-        default:
-          setError('root', {
-            type: 'manual',
-            message: 'Failed to sign in',
-          });
+      if (errorKey === 'auth.invalidCredentials') {
+        setError('root', { type: 'manual', message: errorKey });
+        setError('email', { type: 'manual', message: ' ' });
+        setError('password', { type: 'manual', message: ' ' });
+      } else if (errorKey === 'validation.emailInvalid') {
+        setError('email', { type: 'manual', message: errorKey });
+      } else {
+        setError('root', {
+          type: 'manual',
+          message:
+            errorKey === 'auth.genericError'
+              ? 'auth.signInFailed'
+              : errorKey,
+        });
       }
     },
   });
@@ -79,18 +69,17 @@ function LogInForm({ onSuccess }: LogInFormProps) {
   const onSubmit = (data: LoginFormValues) => {
     mutate(data);
   };
+  const rootError = translateMessage(errors.root?.message, t);
+
   return (
     <div className={css.container}>
-      <h2 className={css.title}>Log In</h2>
-      <p className={css.text}>
-        Welcome back! Please enter your credentials to access your account and
-        continue your search for a teacher.
-      </p>
+      <h2 className={css.title}>{t('auth.loginTitle')}</h2>
+      <p className={css.text}>{t('auth.loginIntro')}</p>
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={isPending}>
           <Input
             autoComplete="email"
-            placeholder="Email"
+            placeholder={t('auth.emailPlaceholder')}
             type="email"
             {...register('email')}
             error={errors.email?.message}
@@ -98,7 +87,7 @@ function LogInForm({ onSuccess }: LogInFormProps) {
           />
           <PasswordField
             autoComplete="current-password"
-            placeholder="Password"
+            placeholder={t('auth.passwordPlaceholder')}
             {...register('password')}
             error={errors.password?.message}
             className={css.inputField}
@@ -106,15 +95,14 @@ function LogInForm({ onSuccess }: LogInFormProps) {
           <Button disabled={isPending} className={css.button} type="submit">
             {isPending ? (
               <>
-                <span>Logging in</span> <span className={css.loader}></span>
+                <span>{t('auth.loginPending')}</span>{' '}
+                <span className={css.loader}></span>
               </>
             ) : (
-              'Log In'
+              t('auth.loginSubmit')
             )}
           </Button>
-          {errors.root && (
-            <span className={css.error}>{errors.root.message}</span>
-          )}
+          {rootError && <span className={css.error}>{rootError}</span>}
         </fieldset>
       </form>
     </div>

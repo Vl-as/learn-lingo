@@ -9,7 +9,8 @@ import Button from '../Button/Button';
 import PasswordField from '../PasswordField/PasswordField';
 import { useMutation } from '@tanstack/react-query';
 import { registerUser } from '@/services/auth';
-import { FirebaseError } from 'firebase/app';
+import { getFirebaseAuthErrorKey } from '@/lib/firebaseAuthError';
+import { useT, translateMessage } from '@/i18n/useT';
 
 type RegistrationFormValues = {
   name: string;
@@ -19,18 +20,18 @@ type RegistrationFormValues = {
 
 const registrationSchema = Yup.object({
   name: Yup.string()
-    .min(2, 'Name must be at least 2 characters')
-    .max(50, 'Name must be at most 50 characters')
-    .required('Name is required'),
+    .min(2, 'validation.nameMin')
+    .max(50, 'validation.nameMax')
+    .required('validation.nameRequired'),
 
   email: Yup.string()
-    .email('Please enter a valid email address')
-    .required('Email is required'),
+    .email('validation.emailInvalid')
+    .required('validation.emailRequired'),
 
   password: Yup.string()
-    .min(8, 'Password must be at least 8 characters')
-    .max(50, 'Password must be at most 50 characters')
-    .required('Password is required'),
+    .min(8, 'validation.passwordMin')
+    .max(50, 'validation.passwordMax')
+    .required('validation.passwordRequired'),
 });
 
 interface RegistrationFormProps {
@@ -38,6 +39,7 @@ interface RegistrationFormProps {
 }
 
 function RegistrationForm({ onSuccess }: RegistrationFormProps) {
+  const { t } = useT();
   const {
     register,
     handleSubmit,
@@ -52,18 +54,25 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     onSuccess: () => {
       onSuccess();
     },
-    onError: (error: FirebaseError) => {
-      if (error.code === 'auth/email-already-in-use') {
+    onError: (error: unknown) => {
+      const errorKey = getFirebaseAuthErrorKey(error);
+
+      if (errorKey === 'auth.emailAlreadyInUse') {
         setError('email', {
           type: 'manual',
-          message: 'This email is already in use',
+          message: errorKey,
         });
+        return;
+      }
+
+      if (errorKey === 'auth.weakPassword') {
+        setError('password', { type: 'manual', message: errorKey });
         return;
       }
 
       setError('root', {
         type: 'manual',
-        message: 'Something went wrong. Please try again.',
+        message: errorKey,
       });
     },
   });
@@ -71,18 +80,17 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const onSubmit = (data: RegistrationFormValues) => {
     mutate(data);
   };
+  const rootError = translateMessage(errors.root?.message, t);
+
   return (
     <div className={css.container}>
-      <h2 className={css.title}>Registration</h2>
-      <p className={css.text}>
-        Thank you for your interest in our platform! In order to register, we
-        need some information. Please provide us with the following information
-      </p>
+      <h2 className={css.title}>{t('auth.registerTitle')}</h2>
+      <p className={css.text}>{t('auth.registerIntro')}</p>
       <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={isPending}>
           <Input
             autoComplete="name"
-            placeholder="Name"
+            placeholder={t('auth.namePlaceholder')}
             type="text"
             {...register('name')}
             error={errors.name?.message}
@@ -90,7 +98,7 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           />
           <Input
             autoComplete="email"
-            placeholder="Email"
+            placeholder={t('auth.emailPlaceholder')}
             type="email"
             {...register('email')}
             error={errors.email?.message}
@@ -98,7 +106,7 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           />
           <PasswordField
             autoComplete="new-password"
-            placeholder="Password"
+            placeholder={t('auth.passwordPlaceholder')}
             {...register('password')}
             error={errors.password?.message}
             className={css.inputField}
@@ -106,15 +114,14 @@ function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           <Button disabled={isPending} className={css.button} type="submit">
             {isPending ? (
               <>
-                <span>Signing up</span> <span className={css.loader}></span>
+                <span>{t('auth.registerPending')}</span>{' '}
+                <span className={css.loader}></span>
               </>
             ) : (
-              'Sign Up'
+              t('auth.registerSubmit')
             )}
           </Button>
-          {errors.root && (
-            <span className={css.error}>{errors.root.message}</span>
-          )}
+          {rootError && <span className={css.error}>{rootError}</span>}
         </fieldset>
       </form>
     </div>

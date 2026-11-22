@@ -42,6 +42,10 @@
     color 0.3s ease-in-out;
 }
 
+.clearFiltersText {
+  display: none;
+}
+
 .iconCross {
   fill: var(--color-transparent);
   stroke: var(--color-text);
@@ -180,8 +184,8 @@
     font-weight: 500;
   }
 
-  .clearFilters::after {
-    content: 'Clear filters';
+  .clearFiltersText {
+    display: inline;
   }
 }
 

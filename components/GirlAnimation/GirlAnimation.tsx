@@ -5,6 +5,7 @@ import css from './GirlAnimation.module.css';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useAccent } from '@/hooks/useAccent';
+import { useT } from '@/i18n/useT';
 
 const BLINK_DURATION = 160;
 const WINK_DURATION = 450;
@@ -23,6 +24,7 @@ export default function GirlAnimation() {
   const [isBlinking, setIsBlinking] = useState(false);
   const [isWinking, setIsWinking] = useState(false);
   const accent = useAccent();
+  const { t } = useT();
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -113,7 +115,7 @@ export default function GirlAnimation() {
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
-      aria-label="Make the tutor wink"
+      aria-label={t('hero.makeTutorWink')}
     >
       <div ref={wrapperRef} className={css.characterWrapper}>
         <div className={clsx(css.headGroup, isWinking && css.headBounce)}>
@@ -146,7 +148,7 @@ export default function GirlAnimation() {
             width={300}
             height={253}
             src="/girl-transparent.webp"
-            alt="Tutor Head"
+            alt={t('hero.tutorHeadAlt')}
             className={css.head}
             priority
           />
@@ -155,7 +157,7 @@ export default function GirlAnimation() {
           width={339}
           height={339}
           src={laptops[accent]}
-          alt="Laptop"
+          alt={t('hero.laptopAlt')}
           className={css.laptop}
           priority
           unoptimized

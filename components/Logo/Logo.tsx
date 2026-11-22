@@ -26,7 +26,7 @@ export default function Logo({ className }: LogoProps) {
       <div className={css.imageWrapper}>
         <Image
           src={logos[accent]}
-          alt="Logo"
+          alt=""
           width={32}
           height={32}
           unoptimized

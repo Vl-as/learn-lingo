@@ -9,6 +9,7 @@ import { getFavorites } from '@/services/favorites';
 import TeacherCardSkeleton from './TeacherCardSkeleton/TeacherCardSkeleton';
 import NotFoundCard from './NotFoundCard/NotFoundCard';
 import { useAuth } from '@/hooks/useAuth';
+import { useT } from '@/i18n/useT';
 
 interface TeachersListProps {
   teachers: Teacher[];
@@ -36,6 +37,7 @@ function TeachersList({
   text,
 }: TeachersListProps) {
   const { user } = useAuth();
+  const { t } = useT();
 
   const { data: favorites = [] } = useQuery({
     queryKey: ['favorites', user?.uid],
@@ -44,7 +46,7 @@ function TeachersList({
   });
 
   if (isError) {
-    return <p>Something went wrong</p>;
+    return <p>{t('teachers.error')}</p>;
   }
 
   return (
@@ -75,11 +77,11 @@ function TeachersList({
         >
           {isFetchingNextPage ? (
             <>
-              <span>Loading</span>
+              <span>{t('teachers.loading')}</span>
               <span className={css.loader}></span>
             </>
           ) : (
-            'Load more'
+            t('teachers.loadMore')
           )}
         </Button>
       )}

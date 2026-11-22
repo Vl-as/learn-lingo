@@ -4,6 +4,7 @@ import { MouseEvent, ReactNode, useEffect } from 'react';
 import css from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import Icon from '../Icon/Icon';
+import { useT } from '@/i18n/useT';
 
 interface ModalProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface ModalProps {
 }
 
 function Modal({ children, onClose }: ModalProps) {
+  const { t } = useT();
   const backdropClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose();
   };
@@ -36,7 +38,7 @@ function Modal({ children, onClose }: ModalProps) {
         <button
           onClick={onClose}
           className={css.closeButton}
-          aria-label="Close modal"
+          aria-label={t('common.closeModal')}
         >
           <Icon className={css.iconCross} width={32} height={32} name="cross" />
         </button>

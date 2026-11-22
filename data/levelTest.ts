@@ -7,7 +7,6 @@ export interface Question {
 
 export interface Level {
   name: string;
-  description: string;
 }
 
 export const testLanguages = ['English', 'German', 'French'] as const;
@@ -18,6 +17,12 @@ export const nativeNames: Record<TestLanguage, string> = {
   English: 'English',
   German: 'Deutsch',
   French: 'Français',
+};
+
+export const testLanguageTags: Record<TestLanguage, string> = {
+  English: 'en',
+  German: 'de',
+  French: 'fr',
 };
 
 export const questionsByLanguage: Record<TestLanguage, Question[]> = {
@@ -256,36 +261,12 @@ export const questionsByLanguage: Record<TestLanguage, Question[]> = {
 };
 
 export const levels: Level[] = [
-  {
-    name: 'A1 Beginner',
-    description:
-      'You know basic words and simple phrases. A tutor can help you build a solid foundation from scratch.',
-  },
-  {
-    name: 'A2 Elementary',
-    description:
-      'You can handle everyday situations and simple conversations. Time to expand your vocabulary and grammar.',
-  },
-  {
-    name: 'B1 Intermediate',
-    description:
-      'You can talk about familiar topics and travel with confidence. Regular practice will help you speak more fluently.',
-  },
-  {
-    name: 'B2 Upper-Intermediate',
-    description:
-      'You can follow complex texts and communicate fairly spontaneously. A tutor can polish accuracy and natural expression.',
-  },
-  {
-    name: 'C1 Advanced',
-    description:
-      'You use the language flexibly for work and study. Fine-tune style, idioms and precision with an experienced tutor.',
-  },
-  {
-    name: 'C2 Proficient',
-    description:
-      'You are close to a native-like command. A tutor can help with nuance, specialised vocabulary and exam preparation.',
-  },
+  { name: 'A1 Beginner' },
+  { name: 'A2 Elementary' },
+  { name: 'B1 Intermediate' },
+  { name: 'B2 Upper-Intermediate' },
+  { name: 'C1 Advanced' },
+  { name: 'C2 Proficient' },
 ];
 
 const THRESHOLDS = [3, 5, 7, 9, 11];

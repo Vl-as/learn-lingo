@@ -13,6 +13,7 @@ interface DropdownProps {
   initialValue: string;
   className?: string;
   label: string;
+  renderLabel?: (value: string) => string;
   symbol?: string;
   onChange: (value: string, key: FilterKey) => void;
   name: FilterKey;
@@ -23,6 +24,7 @@ function Dropdown({
   list,
   initialValue,
   label,
+  renderLabel,
   className,
   symbol,
   onChange,
@@ -33,6 +35,10 @@ function Dropdown({
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
   const placeholder = filters[name] !== '' ? filters[name] : initialValue;
+  const displayedPlaceholder =
+    filters[name] !== '' && renderLabel
+      ? renderLabel(placeholder)
+      : placeholder;
 
   const toggleDropdown = () => {
     setIsOpen(prev => !prev);
@@ -125,8 +131,8 @@ function Dropdown({
         >
           <span>
             {symbol && placeholder !== initialValue
-              ? `${placeholder} ${symbol}`
-              : placeholder}
+              ? `${displayedPlaceholder} ${symbol}`
+              : displayedPlaceholder}
           </span>
           <Icon
             width={20}
@@ -151,7 +157,7 @@ function Dropdown({
                     onClick={() => handleClick(value, index)}
                     type="button"
                   >
-                    {value}
+                    {renderLabel ? renderLabel(value) : value}
                   </button>
                 </li>
               ))}

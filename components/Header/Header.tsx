@@ -18,6 +18,7 @@ import Image from 'next/image';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import AccentPicker from '../AccentPicker/AccentPicker';
 import Logo from '../Logo/Logo';
+import { useT } from '@/i18n/useT';
 
 function Header() {
   const [modal, setModal] = useState<'login' | 'register' | 'profile' | null>(
@@ -25,6 +26,7 @@ function Header() {
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading } = useAuth();
+  const { t } = useT();
   const menuRef = useRef<HTMLDivElement>(null);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
 
@@ -57,16 +59,16 @@ function Header() {
   const { mutate, isPending } = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
-      toast('Logged out successfully');
+      toast(t('toast.loggedOut'));
     },
     onError: () => {
-      toast.error('Logout failed');
+      toast.error(t('toast.logoutFailed'));
     },
   });
 
   const handleProfileSuccess = () => {
     setModal(null);
-    toast.success('Profile updated');
+    toast.success(t('toast.profileUpdated'));
   };
 
   return (
@@ -79,7 +81,7 @@ function Header() {
             className={css.menuToggle}
             ref={menuToggleRef}
             aria-label={
-              isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
+              isMenuOpen ? t('header.closeMenu') : t('header.openMenu')
             }
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
@@ -112,7 +114,7 @@ function Header() {
                   <>
                     <li>
                       <button
-                        aria-label="Edit profile"
+                        aria-label={t('header.editProfile')}
                         className={css.userButton}
                         type="button"
                         title={user.displayName || user.email || undefined}
@@ -129,8 +131,10 @@ function Header() {
                             height={36}
                             alt={
                               user.displayName
-                                ? `${user.displayName} avatar`
-                                : 'User avatar'
+                                ? t('header.avatarAlt', {
+                                    name: user.displayName,
+                                  })
+                                : t('header.userAvatarAlt')
                             }
                           />
                         ) : (
@@ -160,11 +164,11 @@ function Header() {
                       >
                         {isPending ? (
                           <>
-                            <span>Logging out</span>
+                            <span>{t('header.loggingOut')}</span>
                             <span className={css.loader}></span>
                           </>
                         ) : (
-                          'Log out'
+                          t('header.logOut')
                         )}
                       </Button>
                     </li>
@@ -173,7 +177,7 @@ function Header() {
                   <>
                     <li>
                       <Button
-                        aria-label="Open login form"
+                        aria-label={t('header.openLogin')}
                         className={css.logIn}
                         onClick={() => {
                           setIsMenuOpen(false);
@@ -181,19 +185,19 @@ function Header() {
                         }}
                       >
                         <Icon className={css.logInIcon} name="log-in" />
-                        Log in
+                        {t('header.logIn')}
                       </Button>
                     </li>
                     <li>
                       <Button
-                        aria-label="Open register form"
+                        aria-label={t('header.openRegistration')}
                         className={css.registration}
                         onClick={() => {
                           setIsMenuOpen(false);
                           setModal('register');
                         }}
                       >
-                        Registration
+                        {t('header.registration')}
                       </Button>
                     </li>
                   </>

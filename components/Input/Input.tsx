@@ -1,7 +1,10 @@
 'use client';
+'use client';
+
 import { InputHTMLAttributes, useId } from 'react';
 import css from './Input.module.css';
 import clsx from 'clsx';
+import { useT, translateMessage } from '@/i18n/useT';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -10,17 +13,20 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 function Input({ className, error, ...props }: InputProps) {
   const fieldId = useId();
+  const { t } = useT();
+  const displayedError = translateMessage(error, t);
+
   return (
     <div className={clsx(css.wrapper, className)}>
       <input
         aria-invalid={!!error}
-        aria-describedby={error ? fieldId : undefined}
+        aria-describedby={displayedError ? fieldId : undefined}
         className={clsx(css.input, error && css.errorInput)}
         {...props}
       />
-      {error && (
+      {displayedError && (
         <span id={fieldId} aria-live="polite" className={css.error}>
-          {error}
+          {displayedError}
         </span>
       )}
     </div>
