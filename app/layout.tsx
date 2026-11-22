@@ -16,7 +16,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://learn-lingo-one-delta.vercel.app'),
-  title: 'Learn Lingo',
+  title: 'Learn Lingo - Find Your Perfect Language Tutor',
   description:
     'Learn foreign languages with professional tutors. Browse teachers, read reviews, and book personalized lessons with Learn Lingo.',
   openGraph: {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       'Master new languages with experienced tutors. Discover personalized lessons, trusted reviews, and flexible scheduling.',
     images: [
       {
-        url: '/opengraph.webp',
+        url: '/opengraph.png',
         width: 1200,
         height: 630,
         alt: 'Learn Lingo',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Learn Lingo - Find Your Perfect Language Tutor',
     description:
       'Master new languages with experienced tutors and personalized online lessons.',
-    images: ['/opengraph.webp'],
+    images: ['/opengraph.png'],
   },
 };
 
