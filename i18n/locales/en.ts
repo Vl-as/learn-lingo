@@ -30,6 +30,7 @@ export const en = {
       'Welcome back! Enter your details to access your account and continue finding a teacher.',
     loginPending: 'Logging in',
     loginSubmit: 'Log in',
+    forgotPassword: 'Forgot password?',
     registerTitle: 'Registration',
     registerIntro:
       'Thanks for your interest in our platform. Please share a few details to create your account.',
@@ -58,6 +59,22 @@ export const en = {
     avatarUploadFailed: 'Could not upload the photo. Please try again.',
     showPassword: 'Show password',
     hidePassword: 'Hide password',
+  },
+  resetPassword: {
+    title: 'Reset password',
+    text: 'Enter the email you used to sign up and we will send you a link to set a new password.',
+    emailPlaceholder: 'Email',
+    emailInvalid: 'Please enter a valid email address',
+    emailRequired: 'Email is required',
+    submit: 'Send reset link',
+    sending: 'Sending',
+    backToLogin: 'Back to log in',
+    sentTitle: 'Check your email',
+    sentText:
+      'If an account exists for {email}, we have sent a link to reset the password. Check your inbox and the spam folder.',
+    tooManyRequests: 'Too many attempts. Please try again later.',
+    networkError: 'Network error. Check your connection and try again.',
+    failed: 'Could not send the email. Please try again.',
   },
   booking: {
     title: 'Book a trial lesson',

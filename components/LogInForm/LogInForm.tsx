@@ -27,9 +27,10 @@ const LogInFormSchema = Yup.object({
 
 interface LogInFormProps {
   onSuccess: () => void;
+  onForgotPassword: () => void;
 }
 
-function LogInForm({ onSuccess }: LogInFormProps) {
+function LogInForm({ onSuccess, onForgotPassword }: LogInFormProps) {
   const { t } = useT();
   const {
     register,
@@ -58,9 +59,7 @@ function LogInForm({ onSuccess }: LogInFormProps) {
         setError('root', {
           type: 'manual',
           message:
-            errorKey === 'auth.genericError'
-              ? 'auth.signInFailed'
-              : errorKey,
+            errorKey === 'auth.genericError' ? 'auth.signInFailed' : errorKey,
         });
       }
     },
@@ -103,6 +102,13 @@ function LogInForm({ onSuccess }: LogInFormProps) {
             )}
           </Button>
           {rootError && <span className={css.error}>{rootError}</span>}
+          <button
+            type="button"
+            className={css.forgot}
+            onClick={onForgotPassword}
+          >
+            {t('auth.forgotPassword')}
+          </button>
         </fieldset>
       </form>
     </div>

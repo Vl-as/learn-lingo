@@ -19,11 +19,12 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 import AccentPicker from '../AccentPicker/AccentPicker';
 import Logo from '../Logo/Logo';
 import { useT } from '@/i18n/useT';
+import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
 
 function Header() {
-  const [modal, setModal] = useState<'login' | 'register' | 'profile' | null>(
-    null
-  );
+  const [modal, setModal] = useState<
+    'login' | 'register' | 'profile' | 'reset' | null
+  >(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading } = useAuth();
   const { t } = useT();
@@ -209,7 +210,15 @@ function Header() {
       </Container>
       {modal === 'login' && (
         <Modal onClose={() => setModal(null)}>
-          <LogInForm onSuccess={() => setModal(null)} />
+          <LogInForm
+            onSuccess={() => setModal(null)}
+            onForgotPassword={() => setModal('reset')}
+          />
+        </Modal>
+      )}
+      {modal === 'reset' && (
+        <Modal onClose={() => setModal(null)}>
+          <ResetPasswordForm onBack={() => setModal('login')} />
         </Modal>
       )}
       {modal === 'register' && (

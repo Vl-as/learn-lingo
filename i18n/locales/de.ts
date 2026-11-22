@@ -33,6 +33,7 @@ const de: Widen<typeof en> = {
       'Schön, dass du wieder da bist! Gib deine Zugangsdaten ein und finde weiter eine passende Lehrkraft.',
     loginPending: 'Anmeldung läuft',
     loginSubmit: 'Anmelden',
+    forgotPassword: 'Passwort vergessen?',
     registerTitle: 'Registrieren',
     registerIntro:
       'Danke für dein Interesse. Fülle ein paar Angaben aus, um dein Konto zu erstellen.',
@@ -61,6 +62,22 @@ const de: Widen<typeof en> = {
     avatarUploadFailed: 'Foto konnte nicht hochgeladen werden. Bitte versuche es erneut.',
     showPassword: 'Passwort anzeigen',
     hidePassword: 'Passwort verbergen',
+  },
+  resetPassword: {
+    title: 'Passwort zurücksetzen',
+    text: 'Gib die E-Mail-Adresse ein, mit der du dich registriert hast. Wir senden dir einen Link zum Festlegen eines neuen Passworts.',
+    emailPlaceholder: 'E-Mail',
+    emailInvalid: 'Bitte gib eine gültige E-Mail-Adresse ein',
+    emailRequired: 'E-Mail ist erforderlich',
+    submit: 'Link senden',
+    sending: 'Wird gesendet',
+    backToLogin: 'Zurück zur Anmeldung',
+    sentTitle: 'Prüfe dein Postfach',
+    sentText:
+      'Falls ein Konto für {email} existiert, haben wir einen Link zum Zurücksetzen des Passworts gesendet. Prüfe dein Postfach und den Spam-Ordner.',
+    tooManyRequests: 'Zu viele Versuche. Bitte versuche es später erneut.',
+    networkError: 'Netzwerkfehler. Prüfe deine Verbindung und versuche es erneut.',
+    failed: 'Die E-Mail konnte nicht gesendet werden. Bitte versuche es erneut.',
   },
   booking: {
     title: 'Probestunde buchen',

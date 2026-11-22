@@ -1,6 +1,7 @@
 import { auth, db } from '@/lib/firebase';
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -72,4 +73,16 @@ export async function loginUser({ email, password }: LoginData) {
 
 export async function logoutUser() {
   await signOut(auth);
+}
+
+export async function requestPasswordReset({
+  email,
+  locale,
+}: {
+  email: string;
+  locale: string;
+}) {
+  auth.languageCode = locale;
+
+  await sendPasswordResetEmail(auth, email);
 }

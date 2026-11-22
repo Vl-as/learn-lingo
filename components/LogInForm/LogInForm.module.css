@@ -10,7 +10,6 @@
   letter-spacing: -0.02em;
 }
 
-
 .text {
   margin-bottom: 40px;
   line-height: 1.375;
@@ -48,7 +47,12 @@
 .loader {
   width: 18px;
   aspect-ratio: 1;
-  --_c: no-repeat radial-gradient(farthest-side, var(--color-text) 92%, var(--color-transparent));
+  --_c: no-repeat
+    radial-gradient(
+      farthest-side,
+      var(--color-text) 92%,
+      var(--color-transparent)
+    );
   background:
     var(--_c) top,
     var(--_c) left,
@@ -60,6 +64,28 @@
 @keyframes l7 {
   to {
     transform: rotate(0.5turn);
+  }
+}
+
+.forgot {
+  display: block;
+  margin: 16px auto 0;
+  padding: 4px;
+  border: none;
+  background: none;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--color-text-60);
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: color 0.3s ease-in-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .forgot:hover {
+    color: var(--color-text);
   }
 }
 
