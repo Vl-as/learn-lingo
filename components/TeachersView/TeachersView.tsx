@@ -5,7 +5,7 @@ import Dropdown from '../Dropdown/Dropdown';
 import TeachersList from '../TeachersList/TeachersList';
 import css from './TeachersView.module.css';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useOptimistic, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '../Icon/Icon';
 import { Filters } from '@/types/filters';
@@ -59,53 +59,38 @@ interface TeachersViewProps {
 
 type FilterKey = keyof Filters;
 
-function areFiltersEqual(a: Filters, b: Filters) {
-  return (
-    a.language === b.language && a.level === b.level && a.price === b.price
-  );
+function buildUrl(filters: Filters) {
+  const params = new URLSearchParams();
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value) {
+      params.set(key, value);
+    }
+  });
+
+  return params.toString() ? `/teachers?${params}` : '/teachers';
 }
 
 function TeachersView({ selectedFilters }: TeachersViewProps) {
   const { t } = useT();
-  const [filters, setFilters] = useState(selectedFilters);
-  const [syncedFilters, setSyncedFilters] = useState(selectedFilters);
   const router = useRouter();
+  const [, startTransition] = useTransition();
+  const [filters, setOptimisticFilters] = useOptimistic(selectedFilters);
 
-  if (!areFiltersEqual(selectedFilters, syncedFilters)) {
-    setSyncedFilters(selectedFilters);
-    setFilters(selectedFilters);
-  }
+  const navigate = (next: Filters) => {
+    startTransition(() => {
+      setOptimisticFilters(next);
+      router.push(buildUrl(next), { scroll: false });
+    });
+  };
 
   const changeFilters = (value: string, key: FilterKey) => {
-    setFilters(prev => ({
-      ...prev,
-      [key]: value,
-    }));
+    navigate({ ...filters, [key]: value });
   };
 
   const clearFilters = () => {
-    setFilters({
-      language: '',
-      level: '',
-      price: '',
-    });
+    navigate({ language: '', level: '', price: '' });
   };
-
-  useEffect(() => {
-    if (areFiltersEqual(filters, selectedFilters)) return;
-
-    const params = new URLSearchParams();
-
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
-        params.set(key, value);
-      }
-    });
-
-    router.replace(params.toString() ? `/teachers?${params}` : '/teachers', {
-      scroll: false,
-    });
-  }, [filters, selectedFilters, router]);
 
   const {
     data,
@@ -115,8 +100,8 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['teachers', filters],
-    queryFn: ({ pageParam = 0 }) => fetchTeachers(pageParam, filters),
+    queryKey: ['teachers', selectedFilters],
+    queryFn: ({ pageParam = 0 }) => fetchTeachers(pageParam, selectedFilters),
     initialPageParam: 0,
     placeholderData: keepPreviousData,
     getNextPageParam: lastPage => lastPage.nextPage,
@@ -188,9 +173,7 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
           </button>
         )}
         <Link href="/level-test" className={css.levelHint}>
-          <span className={css.levelHintText}>
-            {t('filters.unsureLevel')}
-          </span>
+          <span className={css.levelHintText}>{t('filters.unsureLevel')}</span>
           <span className={css.levelHintAction}>
             {t('filters.takeLevelTest')}
             <span className={css.levelHintArrow} aria-hidden="true">
@@ -210,7 +193,7 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
         onLoadMore={fetchNextPage}
         teachers={teachers}
         isFetchingNextPage={isFetchingNextPage}
-        chosenLevel={filters.level}
+        chosenLevel={selectedFilters.level}
         isError={isError}
         onReset={clearFilters}
         buttonText={t('teachers.showAllTeachers')}
