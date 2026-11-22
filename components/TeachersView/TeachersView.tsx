@@ -38,9 +38,21 @@ interface TeachersViewProps {
 
 type FilterKey = keyof Filters;
 
+function areFiltersEqual(a: Filters, b: Filters) {
+  return (
+    a.language === b.language && a.level === b.level && a.price === b.price
+  );
+}
+
 function TeachersView({ selectedFilters }: TeachersViewProps) {
   const [filters, setFilters] = useState(selectedFilters);
+  const [syncedFilters, setSyncedFilters] = useState(selectedFilters);
   const router = useRouter();
+
+  if (!areFiltersEqual(selectedFilters, syncedFilters)) {
+    setSyncedFilters(selectedFilters);
+    setFilters(selectedFilters);
+  }
 
   const changeFilters = (value: string, key: FilterKey) => {
     setFilters(prev => ({
@@ -58,6 +70,8 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
   };
 
   useEffect(() => {
+    if (areFiltersEqual(filters, selectedFilters)) return;
+
     const params = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, value]) => {
@@ -69,7 +83,7 @@ function TeachersView({ selectedFilters }: TeachersViewProps) {
     router.replace(params.toString() ? `/teachers?${params}` : '/teachers', {
       scroll: false,
     });
-  }, [filters, router]);
+  }, [filters, selectedFilters, router]);
 
   const {
     data,
